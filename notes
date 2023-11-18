@@ -1,0 +1,44 @@
+FDF - Notes & Planning
+
+
+Aim:
+
+Render a 3d wireframe, reading its coords from a plain text file.
+
+This project utilises the graphics library MiniLibX, which provides the tools needed to open a window, create images and handle keyboard and mouse events.
+
+
+General Instructions:
+
+Project is written in C, following the Norm.
+No crashes or mem leaks.
+Makefile with $(NAME), all, clean, fclean, re
+Any bonuses must be compiled with a 'bonus' makefile rule.
+Bonuses must be in a different file with format *_bonus.{c/h}
+You can use libft
+Submit in school git repo.
+
+
+Permitted external functions:
+- open, close, read, write, malloc, free, perror, strerror, exit
+- All functios from math library:
+	- -lm compiler option
+	- man 3 math
+- All functions from MiniLibX
+
+
+Project specific instructions:
+- You must use MiniLibX
+- You must turn in a non-relinking makefile
+- No global vars
+
+- Program must render an isometric projection.
+- Coords are stored in a .fdf plain-text file, passed as a param to the program.
+- Horizontal position is the axis, vertical is ordinate and vale is altitude.
+
+- program must display image in a window
+- Window mgmt must be smooth (i.e. you can switch windows, minimize, etc)
+- Pressing ESC must close the window and quit the program.
+- Clicking the cross in the window's frame must quit the program.
+- The use of 'images' from MiniLibX is mandatory.
+

@@ -2,5 +2,4 @@
 *.out
 *.o
 obj/
-MLX42/
 fdf

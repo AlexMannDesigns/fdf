@@ -25,7 +25,7 @@ MLX_FLAGS = -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/"
 
 #################################################################
 
-all: libmlx $(NAME)
+all: $(NAME)
 
 libmlx:
 	cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4 
@@ -37,16 +37,16 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
 	$(CC)  -I$(INCLUDE_DIR) -I$(MLX_INCLUDE_DIR) -c $< -o $@
 
-.PHONY: all clean fclean re libmlx
+.PHONY: all clean fclean re libmlx libmlx_clean
 
 clean:
 	rm -rf $(OBJ_DIR)
 
-fclean: clean
-	rm -f $(NAME)
+libmlx_clean:
 	make -C $(MLX_DIR)/build clean
 
+fclean: clean
+	rm -f $(NAME)
+
 re: fclean all
-
-
 

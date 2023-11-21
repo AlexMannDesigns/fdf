@@ -76,3 +76,4 @@ fclean_all: fclean libft_fclean libmlx_clean
 complete: libraries all
 
 .PHONY: all clean fclean re libmlx libmlx_clean libft
+

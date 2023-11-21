@@ -14,8 +14,6 @@ SRC_DIR = ./src
 
 SRC_FILES = example.c
 
-SRCS := $(patsubst %, $(SRC_DIR)/%, $(SRC_FILES))
-
 OBJ_DIR = ./obj
 OBJS := $(patsubst %, $(OBJ_DIR)/%, $(SRC_FILES:.c=.o))
 

@@ -1,4 +1,6 @@
 #!/bin/sh
 
-sed -i '' "s/SRC_FILES = .*/SRC_FILES = $(ls src | xargs)/" Makefile
+files=$(find src -type f -name '*.c' -exec basename {} \; | xargs)
+
+sed -i '' "s/SRC_FILES = .*/SRC_FILES = $files/" Makefile
 

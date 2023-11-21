@@ -31,11 +31,11 @@ libmlx:
 	cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4 
 
 $(NAME): $(MLX_PATH) $(OBJS)
-	$(CC)  $(OBJS) -o $(NAME) $(MLX_PATH) $(MLX_FLAGS)
+	$(CC) $(GCC_FLAGS) $(OBJS) -o $(NAME) $(MLX_PATH) $(MLX_FLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
-	$(CC)  -I$(INCLUDE_DIR) -I$(MLX_INCLUDE_DIR) -c $< -o $@
+	$(CC) $(GCC_FLAGS) -I$(INCLUDE_DIR) -I$(MLX_INCLUDE_DIR) -c $< -o $@
 
 .PHONY: all clean fclean re libmlx libmlx_clean
 

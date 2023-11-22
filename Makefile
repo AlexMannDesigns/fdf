@@ -51,12 +51,12 @@ re: fclean all
 
 ##### LIBRARY RECIPES #####
 
-libraries: libmlx libft
+libraries: $(MLX_PATH) $(LIBFT) 
 
-libmlx:
+$(MLX_PATH):
 	cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4 
 
-libft:
+$(LIBFT):
 	make -C $(LIBFT_DIR)
 
 libmlx_clean:

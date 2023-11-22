@@ -12,13 +12,9 @@
 
 NAME = libft.a
 
-CC = gcc
+INCLUDE_DIR = ./includes
 
-FLAGS = -Wall -Wextra -Werror
-
-LIB_DIR = srcs/
-GNL_DIR	= get_next_line/
-
+LIB_DIR = ./srcs
 LIB_FILES = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c			\
 		ft_isdigit.c ft_islower.c ft_lstiter.c ft_memcpy.c ft_memcmp.c			\
 		ft_itoa.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c ft_isprint.c			\
@@ -36,32 +32,43 @@ LIB_FILES = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c			\
 		ft_array_len.c ft_print_array.c ft_is_dir.c ft_is_valid_path.c			\
 		ft_string_insert.c ft_remove_from_array.c ft_lst_len.c
 
-GNL_FILES = get_next_line.c gnl_helpers.c
+GNL_DIR	:= get_next_line
+GNL_SRCS = get_next_line.c gnl_helpers.c
+GNL_FILES = $(patsubst %, $(GNL_DIR)/%, $(GNL_SRCS)) 
 
-LIB_SRCS := $(patsubst %, $(LIB_DIR)/%, $(LIB_FILES)) 
-GNL_SRCS := $(patsubst %, $(GNL_DIR)/%, $(GNL_FILES)) 
 
-SRCS = $(LIB_SRCS) $(GNL_SRCS)
 
 OBJ_DIR = ./obj
-OBJS = $(patsubst %, $(OBJ_DIR)/%, $(SRCS:.c=.o)) 
+LIB_OBJS := $(patsubst %, $(OBJ_DIR)/%, $(LIB_FILES:.c=.o))  
+GNL_OBJS := $(patsubst %, $(OBJ_DIR)/%, $(GNL_FILES:.c=.o))  
+
+CC = gcc
+FLAGS = -Wall -Wextra -Werror
 
 
-all: $(NAME)
+##### RULES #####
 
-$(NAME):
-	@ar rcs $(NAME) $(LIB_OBJ) $(GNL_OBJ)
+test:
+	@echo $(OBJS)
+
+$(NAME): $(LIB_OBJS) $(GNL_OBJS)
+	ar rcs $(NAME) $(LIB_OBJS) $(GNL_OBJS)
 	@echo "\n\033[32mlibft.a compiled\033[0m\n"
 
+$(OBJ_DIR)/%.o: $(LIB_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(FLAGS) -I$(INCLUDE_DIR) -c $< -o $@	
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
 clean:
-	@$(MAKE) -C $(LIB_DIR) clean
-	@$(MAKE) -C $(GNL_DIR) clean
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@$(MAKE) -C $(LIB_DIR) fclean
-	@$(MAKE) -C $(GNL_DIR) fclean
-	@/bin/rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
 .PHONY: all clean fclean re
+
+all: $(NAME)

@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 	if (argc == 1 || ft_strequ(argv[1], HELP_FLAG))
 		return (print_error(RETURN_ERROR, USAGE));
 	// parse map
-	if (map_parser_control(&fdf, *(argv + map_path_idx(argv))) == RETURN_ERROR)
+	if (!map_parser_control(&fdf, *(argv + map_path_idx(argv))))
 		return (RETURN_ERROR);
 	// fdf starts...
 	/*

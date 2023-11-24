@@ -6,6 +6,7 @@
 
 # include "libft.h"
 
+# include <fcntl.h>
 # include <stdio.h>  // TODO delete
 
 /***** CONSTANTS *****/
@@ -34,6 +35,7 @@
 # define ERROR_INVALID_PERMISSIONS "Error: map file could not be opened"
 # define ERROR_INVALID_VALUES "Error: map must only contain numeric characters"
 # define ERROR_INVALID_LENGTH "Error: all lines must be of equal length"
+# define ERROR_MALLOC "Error: malloc failed"
 
 
 /***** STRUCTS *****/

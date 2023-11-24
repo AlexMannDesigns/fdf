@@ -16,9 +16,8 @@ TIMEOUT: Final = 5
 	],
 )
 def test_maps(
-	path_to_map: str,
-	expected_error_output: str | None,
-	expected_return_value: int) -> None:
+	path_to_map: str, expected_error_output: str | None, expected_return_value: int
+) -> None:
 	try:
 		result = run(
 			[FDF, TEST_FLAG, path_to_map],

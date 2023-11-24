@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/../includes/libft.h"
+#include "libft.h"
 
 long long	ft_abs_long(long long i)
 {

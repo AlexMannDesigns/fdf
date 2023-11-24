@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/../includes/libft.h"
+#include "libft.h"
 
 char	*itoa_reverse(char *str)
 {

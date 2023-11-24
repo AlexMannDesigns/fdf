@@ -21,7 +21,7 @@ Submit in school git repo.
 
 Permitted external functions:
 - open, close, read, write, malloc, free, perror, strerror, exit
-- All functios from math library:
+- All functions from math library:
 	- -lm compiler option
 	- man 3 math
 - All functions from MiniLibX

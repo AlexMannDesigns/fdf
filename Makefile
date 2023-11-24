@@ -8,6 +8,7 @@ INCLUDE_DIR = ./include
 
 LIBFT_DIR = ./libft
 LIBFT := $(LIBFT_DIR)/libft.a 
+LIBFT_INCLUDE_DIR := $(LIBFT_DIR)/include
 
 MLX_DIR = ./MLX42
 MLX_PATH := $(MLX_DIR)/build/libmlx42.a
@@ -15,7 +16,7 @@ MLX_INCLUDE_DIR := $(MLX_DIR)/include/
 
 SRC_DIR = ./src
 
-SRC_FILES = example.c
+SRC_FILES = main.c
 
 OBJ_DIR = ./obj
 OBJS := $(patsubst %, $(OBJ_DIR)/%, $(SRC_FILES:.c=.o))
@@ -38,7 +39,7 @@ $(NAME): $(MLX_PATH) $(LIBFT) $(OBJS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
-	$(CC) $(GCC_FLAGS) -I$(INCLUDE_DIR) -I$(MLX_INCLUDE_DIR) -c $< -o $@
+	$(CC) $(GCC_FLAGS) -I$(INCLUDE_DIR) -I$(LIBFT_INCLUDE_DIR) -I$(MLX_INCLUDE_DIR) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)

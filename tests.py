@@ -4,7 +4,7 @@ from typing import Final
 import pytest
 
 
-FDF: Final = "fdf"
+FDF: Final = "./fdf"
 TEST_FLAG: Final = "--test-parser"
 TIMEOUT: Final = 5
 
@@ -28,6 +28,6 @@ def test_maps(
 	except TimeoutExpired:
 		print(f"map: {path_to_map}: timeout expired, please review!")
 	
-	assert result.returncode == expected_return_value
-	assert result.stderr == expected_error_output
+	assert result.returncode == expected_return_value, "Error: incorrect return value"
+	assert result.stderr == expected_error_output, "Error: incorrect error message"
 

@@ -12,7 +12,7 @@
 
 NAME = libft.a
 
-INCLUDE_DIR = ./includes
+INCLUDE_DIR = ./include
 
 LIB_DIR = ./srcs
 LIB_FILES = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c			\

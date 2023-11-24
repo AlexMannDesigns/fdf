@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/../includes/libft.h"
+#include "libft.h"
 
 static char	*itoa_helper_unsigned(unsigned long long nb, int base, char *res)
 {

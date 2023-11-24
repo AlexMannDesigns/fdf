@@ -43,5 +43,32 @@ Project specific instructions:
 - The use of 'images' from MiniLibX is mandatory.
 
 
-MiniLibX:
+MLX42
+
+- decided to use this library instead of minilibx
+- github repo: 
+
+
+
+TODO:
+
+- make a parser for the maps
+	- TESTS!
+		- consider validation process.
+		- build a load of test maps, write a script to run them all.
+		- check return value and error message.
+		- check argv and option flags are handled properly
+			- no args
+			- invalid args
+		- maps must be of equal width.
+		- do we need a value range for altitudes?
+		- what happens with one value?
+		- what happens with no values?
+		- what happens with just whitespace?
+		- what happens with invalid values?
+
+- 
+
+
+
  

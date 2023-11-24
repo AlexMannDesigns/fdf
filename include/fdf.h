@@ -13,6 +13,11 @@
 # define RETURN_SUCCESS 0
 # define RETURN_ERROR 1
 
+# define TRUE 1
+# define FALSE 0
+
+# define FDF_EXT ".fdf"
+
 # define USAGE "Welcome to FDF!\n\nUsage:\n./fdf [options...] [path-to-map]\n" \
 	"\n" \
 	"options:\n--help: displays this message\n" \

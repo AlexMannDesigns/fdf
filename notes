@@ -60,6 +60,8 @@ TODO:
 		- check argv and option flags are handled properly
 			- no args
 			- invalid args
+		- check file has '.fdf' extention
+		- check file can be opened for reading
 		- maps must be of equal width.
 		- do we need a value range for altitudes?
 		- what happens with one value?

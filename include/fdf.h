@@ -6,6 +6,7 @@
 
 # include "libft.h"
 
+# include <stdio.h>  // TODO delete
 
 /***** CONSTANTS *****/
 
@@ -32,10 +33,28 @@
 
 /***** STRUCTS *****/
 
+typedef struct s_coord
+{
+	int		x;
+	int		y;
+	int		z;
+	struct t_coord	*next;
+}			t_coord;
 
 typedef struct s_fdf
 {
-	char	*error;	
+	char	*error;
+	t_coord	*coord_list;
 }		t_fdf;
+
+
+/***** FUNCTIONS *****/
+
+/* main.c */
+int	print_error(int ret, char *msg);
+
+/* map_parser.c */
+
+int     map_parser_control(t_fdf *fdf, char *path);
 
 #endif

@@ -16,7 +16,7 @@ MLX_INCLUDE_DIR := $(MLX_DIR)/include/
 
 SRC_DIR = ./src
 
-SRC_FILES = main.c
+SRC_FILES = main.c map_parser.c
 
 OBJ_DIR = ./obj
 OBJS := $(patsubst %, $(OBJ_DIR)/%, $(SRC_FILES:.c=.o))

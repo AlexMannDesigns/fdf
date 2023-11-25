@@ -109,8 +109,6 @@ int	map_parser_control(t_fdf *fdf, char *path)
 	int	gnl_ret;
 	char	*line;
 
-	if (path == NULL)
-		return (print_error(FALSE, USAGE));	
 	if (!validate_file_name(path))
 		return (print_error(FALSE, ERROR_INVALID_FILE));
 	fd = open(path, O_RDONLY);
@@ -126,14 +124,6 @@ int	map_parser_control(t_fdf *fdf, char *path)
 			return (FALSE); 	
 		ft_strdel(&line);
 		gnl_ret = get_next_line(fd, &line);
-	}
-	t_coord	*current;
-	current = fdf->coord_list;
-	//print coords for testing
-	while (current)
-	{
-		printf("x = %d | y = %d | z = %d\n", current->x, current->y, current->z);
-		current = current->next;
 	}
 	return (TRUE);
 }

@@ -13,6 +13,13 @@ int	print_error(int ret, char *msg)
 	return (ret);
 }
 
+//TODO debug function: delete
+void	print_array(char **arr)
+{
+	for (int i = 0 ; arr[i] ; i++)
+		printf("%s\n", arr[i]);
+}
+
 static int	map_path_idx(char **argv)
 {
 	int	i;
@@ -30,6 +37,7 @@ int	main(int argc, char **argv)
 	// struct...?
 	if (argc == 1 || ft_strequ(argv[1], HELP_FLAG))
 		return (print_error(RETURN_ERROR, USAGE));
+	ft_bzero((void *) &fdf, sizeof(t_fdf));
 	// parse map
 	if (!map_parser_control(&fdf, *(argv + map_path_idx(argv))))
 		return (RETURN_ERROR);

@@ -45,12 +45,13 @@ typedef struct s_coord
 	int		x;
 	int		y;
 	int		z;
-	struct t_coord	*next;
+	struct s_coord	*next;
 }			t_coord;
 
 typedef struct s_fdf
 {
 	char	*error;
+	int	width;
 	t_coord	*coord_list;
 }		t_fdf;
 
@@ -59,6 +60,7 @@ typedef struct s_fdf
 
 /* main.c */
 int	print_error(int ret, char *msg);
+void    print_array(char **arr); //TODO delete
 
 /* map_parser.c */
 

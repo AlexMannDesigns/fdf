@@ -66,6 +66,8 @@ TODO:
 		- do we need a value range for altitudes?
 		- what happens with one value?
 		- what happens with no values?
+		- negative value
+		- lt int_min gt int_max? 
 		- what happens with just whitespace?
 		- what happens with invalid values?
 

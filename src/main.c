@@ -3,6 +3,27 @@
 #include "fdf.h"
 
 /*
+ * Frees any heap-allocated memory and then returns the exit value
+ */
+int	free_and_exit(t_fdf *fdf, int value)
+{
+	t_coord	*coord;
+	t_coord	*next;
+
+	coord = fdf->coord_list;
+	if (!coord)
+		return (value);
+	while (coord)
+	{
+		next = coord->next;
+		ft_memdel((void **)&coord);
+		coord = next;
+	}
+	return (value);
+}
+
+
+/*
  * All-purpose error message printer
  * Prints 'msg' to STDERR, followed by NL, and then returns 'ret'
  */
@@ -34,17 +55,16 @@ int	main(int argc, char **argv)
 {
 	t_fdf	fdf;
 
-	// struct...?
 	if (argc == 1 || ft_strequ(argv[1], HELP_FLAG))
 		return (print_error(RETURN_ERROR, USAGE));
 	ft_bzero((void *) &fdf, sizeof(t_fdf));
 	// parse map
 	if (!map_parser_control(&fdf, *(argv + map_path_idx(argv))))
-		return (RETURN_ERROR);
+		return (free_and_exit(&fdf, RETURN_ERROR));
 	// fdf starts...
 	/*
 	if (!ft_strequ(argv[1], TEST_PARSER)
 		fdf_control()
 	*/
-	return (RETURN_SUCCESS);
+	return (free_and_exit(&fdf, RETURN_SUCCESS));
 }

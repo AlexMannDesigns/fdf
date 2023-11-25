@@ -34,14 +34,23 @@ static int	validate_line_chars(char *line)
  * The coordinates for the image are added to a linked list, contained
  * in the t_fdf state struct.
  */
-static int	add_coord(t_coord *coord, int i, int row, char *val)
+static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 {
-	if (coord)
+	t_coord	*coord;
+
+	if (!(fdf->coord_list))
 	{
+		fdf->coord_list = (t_coord *) ft_memalloc(sizeof(t_coord));
+		coord = fdf->coord_list;
+	}
+	else
+	{
+		coord = fdf->coord_list;
 		while (coord->next)
 			coord = coord->next;
+		coord->next = (t_coord *) ft_memalloc(sizeof(t_coord));
+		coord = coord->next;
 	}
-	coord = (t_coord *) ft_memalloc(sizeof(t_coord));
 	if (coord == NULL)
 		return (print_error(FALSE, ERROR_MALLOC));
 	coord->x = i;
@@ -71,10 +80,11 @@ static int	create_coords(t_fdf *fdf, char *line)
 	i = 0;
 	while (arr[i])
 	{
-		if (!add_coord(fdf->coord_list, i, row, arr[i]))
+		if (!add_coord(fdf, i, row, arr[i]))
 			return (FALSE);
 		i++;
 	}
+	ft_free_char_array(&arr);
 	if (fdf->width == 0)
 		fdf->width = i;
 	else if (fdf->width != i)
@@ -109,13 +119,21 @@ int	map_parser_control(t_fdf *fdf, char *path)
 	gnl_ret = get_next_line(fd, &line);  //TODO re-build a simplified GNL, nb handle malloc errors
 	while (gnl_ret)
 	{
-		printf("%s length :%zu\n", line, ft_strlen(line));
+		//printf("%s length :%zu\n", line, ft_strlen(line));
 		if (!validate_line_chars(line))
 			return (print_error(FALSE, ERROR_INVALID_VALUES));
 		if (!create_coords(fdf, line))
 			return (FALSE); 	
 		ft_strdel(&line);
 		gnl_ret = get_next_line(fd, &line);
+	}
+	t_coord	*current;
+	current = fdf->coord_list;
+	//print coords for testing
+	while (current)
+	{
+		printf("x = %d | y = %d | z = %d\n", current->x, current->y, current->z);
+		current = current->next;
 	}
 	return (TRUE);
 }

@@ -59,11 +59,15 @@ typedef struct s_fdf
 /***** FUNCTIONS *****/
 
 /* main.c */
-int	print_error(int ret, char *msg);
 void    print_array(char **arr); //TODO delete
 
 /* map_parser.c */
 
 int     map_parser_control(t_fdf *fdf, char *path);
+
+/* utils.c */
+
+int	print_error(int ret, char *msg);
+int     free_and_exit(t_fdf *fdf, int value);
 
 #endif

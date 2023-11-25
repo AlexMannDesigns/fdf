@@ -30,7 +30,8 @@ LIB_FILES = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c			\
 		ft_toupper.c ft_abs_long.c ft_lstadd_back.c ft_strndup.c ft_isupper.c	\
 		ft_itoa_base.c ft_itoa_base_unsigned.c ft_split_whitespace.c			\
 		ft_array_len.c ft_print_array.c ft_is_dir.c ft_is_valid_path.c			\
-		ft_string_insert.c ft_remove_from_array.c ft_lst_len.c
+		ft_string_insert.c ft_remove_from_array.c ft_lst_len.c \
+		ft_free_char_array.c
 
 GNL_DIR	:= ./get_next_line
 GNL_FILES = get_next_line.c gnl_helpers.c

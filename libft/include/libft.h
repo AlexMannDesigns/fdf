@@ -74,6 +74,7 @@ char		*ft_string_insert(char *orig, char *insert, int idx,	\
 /* char arrays */
 size_t		ft_array_len(char **arr);
 void		ft_remove_from_array(char ***orig, size_t idx);
+void		ft_free_char_array(char ***char_array);
 
 /* file path checkers */
 int			ft_is_dir(char *path);

@@ -34,7 +34,7 @@ LIB_FILES = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c			\
 		ft_free_char_array.c
 
 GNL_DIR	:= ./get_next_line
-GNL_FILES = get_next_line.c gnl_helpers.c
+GNL_FILES = get_next_line.c
 
 OBJ_DIR = ./obj
 LIB_OBJS := $(patsubst %, $(OBJ_DIR)/%, $(LIB_FILES:.c=.o))  
@@ -42,7 +42,7 @@ GNL_OBJ_DIR := $(GNL_DIR)/obj
 GNL_OBJS := $(patsubst %, $(GNL_OBJ_DIR)/%, $(GNL_FILES:.c=.o))  
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 
 
 ##### RULES #####
@@ -52,10 +52,10 @@ $(NAME): $(LIB_OBJS) $(GNL_OBJS)
 	@echo "\n\033[32mlibft.a compiled\033[0m\n"
 
 $(OBJ_DIR)/%.o: $(LIB_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(FLAGS) -I$(INCLUDE_DIR) -c $< -o $@	
+	$(CC) $(FLAGS) -I$(INCLUDE_DIR) -I$(GNL_DIR) -c $< -o $@
 
 $(GNL_OBJ_DIR)/%.o: $(GNL_DIR)/%.c | $(GNL_OBJ_DIR)
-	$(CC) $(FLAGS) -I$(INCLUDE_DIR) -c $< -o $@	
+	$(CC) $(FLAGS) -I$(INCLUDE_DIR) -I$(GNL_DIR) -c $< -o $@
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)

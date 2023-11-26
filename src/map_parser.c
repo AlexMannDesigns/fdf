@@ -106,7 +106,6 @@ static int	create_coords(t_fdf *fdf, char *line)
 int	map_parser_control(t_fdf *fdf, char *path)
 {
 	int	fd;
-	int	gnl_ret;
 	char	*line;
 
 	if (!validate_file_name(path))
@@ -114,16 +113,16 @@ int	map_parser_control(t_fdf *fdf, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (print_error(FALSE, ERROR_INVALID_PERMISSIONS));
-	gnl_ret = get_next_line(fd, &line);  //TODO re-build a simplified GNL, nb handle malloc errors
-	while (gnl_ret)
+	line = get_next_line(fd);
+	while (line)
 	{
-		//printf("%s length :%zu\n", line, ft_strlen(line));
+		printf("%s length :%zu\n", line, ft_strlen(line));
 		if (!validate_line_chars(line))
 			return (print_error(FALSE, ERROR_INVALID_VALUES));
 		if (!create_coords(fdf, line))
 			return (FALSE); 	
 		ft_strdel(&line);
-		gnl_ret = get_next_line(fd, &line);
+		line = get_next_line(fd);
 	}
 	return (TRUE);
 }

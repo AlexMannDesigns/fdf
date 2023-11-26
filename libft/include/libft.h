@@ -21,6 +21,10 @@
 # include <limits.h>
 # include <sys/stat.h>
 
+/***** CUSTOM HEADERS *****/
+
+# include "get_next_line.h"
+
 /***** STRUCT PROTOTYPES *****/
 
 typedef struct s_list
@@ -140,6 +144,4 @@ void		ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 size_t		ft_lst_len(t_list *lst);
 
-/* read functions */
-int			get_next_line(const int fd, char **line);
 #endif

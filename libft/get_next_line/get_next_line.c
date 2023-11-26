@@ -19,10 +19,51 @@ static char	*free_return_null(char **line)
 	return (NULL);
 }
 
-static char	*find_newline(char *buff)
+static size_t	get_buff_len(char **buff)
 {
-	
+	if (*buff)
+		return (ft_strlen(*buff));
+	ft_bzero((void *) *buff, BUFF_SIZE + 1);
+	return (0);
+}
 
+/*
+	if (!line)
+		return (NULL);
+	if ((*buff)[len] == '\n')
+	{
+		ft_strcpy(temp_buff, *buff + len);
+		ft_bzero((void *) *buff, BUFF_SIZE);
+		ft_strcpy(*buff, temp_buff);	
+	}
+	else
+		ft_bzero((void *) *buff, BUFF_SIZE);
+	return (line);
+*/
+
+static void	dup_to_nl(char **line, char **buff)
+{
+	size_t	len;
+	char	temp_line[BUFF_SIZE];
+	char	new_line[BUFF_SIZE];
+	char	temp_buff[BUFF_SIZE];
+
+	ft_bzero((void *) new_line, BUFF_SIZE);
+	len = 0;
+	while ((*buff)[len] && (*buff)[len] != '\n')
+	{
+		new_line[len] = (*buff)[len];
+		len++;
+	}
+	if (!(*line))
+		*line = ft_strdup(new_line);
+	else
+	{
+		ft_strcpy(temp_line, *line);
+		free(*line);
+		*line = ft_strjoin(temp_line, new_line);
+	}
+	return ;
 }
 
 /*
@@ -36,18 +77,13 @@ char	*get_next_line(const int fd)
 	char		*line;
 	ssize_t		bytes_read;
 	
-	ft_bzero((void *) buff, BUFF_SIZE + 1);
-	bytes_read = read(fd, (void *) buff, BUFF_SIZE);
+	line = NULL;
+	bytes_read = read(fd, (void *) (buff + get_buff_len(&buff)), BUFF_SIZE);
 	while (bytes_read)
 	{
 		if (bytes_read == -1 || bytes_read < BUFF_SIZE)
-			return (free_return_null(&line));
-		line = find_newline(buff);
-		if (!line)
 			return (NULL);
-		if (ft_strchr(line, '\n'))
-			break ;
-		ft_bzero((void *) buff, BUFF_SIZE + 1);
+		dup_to_nl(&line, &buff); // No malloc prot needed - will return NULL either way
 		bytes_read = read(fd, (void *) buff, BUFF_SIZE);
 	}
 	// if (bytes_read == 0) end of file?

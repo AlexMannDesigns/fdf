@@ -15,16 +15,7 @@
 
 # include "libft.h"
 
-# define BUFF_SIZE 1
+# define BUFF_SIZE 42
 
-typedef struct a_list
-{
-	int				filedes;
-	char			*str;
-	struct a_list	*next;
-}					t_lines;
-
-int	get_next_line(const int fd, char **line);
-int	read_file_helper(t_lines **lst, char *buf);
-int	set_line_helper(t_lines **lst);
+char	*get_next_line(const int fd);
 #endif

@@ -83,7 +83,8 @@ static int	dup_to_nl(char **line, char *buff, size_t *len)
 /*
  * Returns either the read line or null in the event of an error or nothing 
  * else to read
- * Should be able to read from stdin 
+ * Should be able to read from stdin
+ * TODO more testing needed - large buffs infinite loop, small buffs crash 
  */
 char	*get_next_line(const int fd)
 {

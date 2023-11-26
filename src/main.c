@@ -23,9 +23,9 @@ static int	handle_option_flags(t_fdf *fdf, char **argv)
 		arg = argv[fdf->path_idx];
 		if (arg[0] != '-')
 			break ;
-		if (ft_strequ(HELP_FLAG, arg))
+		else if (ft_strequ(HELP_FLAG, arg))
 			fdf->help = TRUE;
-		if (ft_strequ(TEST_PARSER, arg))
+		else if (ft_strequ(TEST_PARSER, arg))
 			fdf->test_parser = TRUE;
 		else
 			return (print_error(FALSE, ERROR_INVALID_OPTION));

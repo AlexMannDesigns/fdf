@@ -17,6 +17,8 @@
 # define TRUE 1
 # define FALSE 0
 
+# define SPACE ' '
+
 # define FDF_EXT ".fdf"
 
 # define USAGE_LONG "Welcome to FDF!\n\nUsage:\n./fdf [options...] [path-to-map]\n" \
@@ -34,7 +36,7 @@
 # define ERROR_INVALID_OPTION "Error: invalid option. For help, use './fdf --help'"
 # define ERROR_INVALID_FILE "Error: map file must be plain-text format and have '.fdf' extension"
 # define ERROR_INVALID_PERMISSIONS "Error: map file could not be opened"
-# define ERROR_INVALID_VALUES "Error: map must only contain numeric characters"
+# define ERROR_INVALID_VALUES "Error: map must only contain numeric characters, spaces: ' ', and newlines: '\\n'"
 # define ERROR_INVALID_LENGTH "Error: all lines must be of equal length"
 # define ERROR_MALLOC "Error: malloc failed"
 

@@ -23,7 +23,7 @@ static int	validate_line_chars(char *line)
 {
 	while (*line)
 	{
-		if (!ft_isdigit(*line) && !ft_iswhitespace(*line))
+		if (!ft_isdigit(*line) && *line != SPACE)
 			return (FALSE);
 		line++;
 	}
@@ -74,7 +74,7 @@ static int	create_coords(t_fdf *fdf, char *line)
 	char		**arr;
 	int		i;
 
-	arr = ft_strsplit(line, ' ');
+	arr = ft_strsplit(line, SPACE);
 	if (arr == NULL)
 		return (print_error(FALSE, ERROR_MALLOC));
 	i = 0;

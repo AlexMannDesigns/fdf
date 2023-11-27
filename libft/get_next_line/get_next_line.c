@@ -24,22 +24,22 @@
  * We must also ensure the size of len is updated to represent how much can
  * be read into the buff during the next read() call.
  */
-static int	check_nl_update_buff(char *buff, size_t *len)
+static int	check_nl_update_buff(t_gnl *gnl, char *buff)
 {
 	char	temp_buff[BUFF_SIZE + 1];
 
-	if (buff[*len] == '\n')
+	if (buff[gnl->len] == '\n')
 	{
-		ft_strcpy(temp_buff, buff + (*len + 1));
+		ft_strcpy(temp_buff, buff + (gnl->len + 1));
 		ft_bzero((void *) buff, BUFF_SIZE);
 		ft_strcpy(buff, temp_buff);
-		return (1);
+		return (TRUE);
 	}
 	else
 	{
 		ft_bzero((void *) buff, BUFF_SIZE);
-		*len = 0;
-		return (0);
+		gnl->len = 0;
+		return (FALSE);
 	}
 }
 
@@ -52,32 +52,49 @@ static int	check_nl_update_buff(char *buff, size_t *len)
  * Otherwise, we copy the existing line into another temp var, free it, then
  * strjoin the two temp vars together to make a new line.
  */
-static int	dup_to_nl(char **line, char *buff, size_t *len)
+static int	dup_to_nl(t_gnl *gnl, char *buff)
 {
 	char	temp_line[BUFF_SIZE + 1];
 	char	new_line[BUFF_SIZE + 1];
 
 	//printf("buff: %s\nlen: %zu\nline: %s\n\n", buff, *len, *line );
-	*len = 0;
-	while (buff[*len] && buff[*len] != '\n')
+	gnl->len = 0;
+	while (buff[gnl->len] && buff[gnl->len] != '\n')
 	{
-		new_line[*len] = buff[*len];
-		(*len)++;
+		new_line[gnl->len] = buff[gnl->len];
+		(gnl->len)++;
 	}
-	new_line[*len] = '\0';
-	if (!(*line))
-		*line = ft_strdup(new_line);
+	new_line[gnl->len] = '\0';
+	if (!(gnl->line))
+		gnl->line = ft_strdup(new_line);
 	else
 	{
-		ft_strcpy(temp_line, *line);
+		ft_strcpy(temp_line, gnl->line);
 	//	printf("tl = %s\n", temp_line);
-		free(*line);
-		*line = ft_strjoin(temp_line, new_line);
+		free(gnl->line);
+		gnl->line = ft_strjoin(temp_line, new_line);
 	//	printf("nl = %s\n", *line);
 	}
-	if (!(*line))
-		return (0);
-	return (1);
+	if (!(gnl->line))
+		return (FALSE);
+	return (TRUE);
+}
+
+static void	gnl_control(t_gnl *gnl, char *buff)
+{
+	if (!ft_strchr(buff, '\n'))
+		return ;
+	if (!dup_to_nl(gnl, buff))
+	{
+		gnl->nl = TRUE;
+		return ;
+	}
+	if (check_nl_update_buff(gnl, buff))
+	{
+		gnl->nl = TRUE;
+		return ;
+	}
+	return ;
 }
 
 /*
@@ -89,27 +106,27 @@ static int	dup_to_nl(char **line, char *buff, size_t *len)
 char	*get_next_line(const int fd)
 {
 	static char	buff[BUFF_SIZE + 1];
-	char		*line;
-	size_t		len;
-	ssize_t		bytes_read;
+	t_gnl		gnl;
 	
-	line = NULL;
-	len = ft_strlen(buff);
-	bytes_read = read(fd, (void *) (buff + len), BUFF_SIZE - len);
-	while (bytes_read)
+	ft_bzero((void *) &gnl, sizeof(t_gnl));
+	gnl_control(&gnl, buff);
+	if (gnl.nl)
+		return (gnl.line);
+	gnl.len = ft_strlen(buff);
+	gnl.bytes_read = read(fd, (void *) (buff + gnl.len), BUFF_SIZE - gnl.len);
+	while (gnl.bytes_read)
 	{
-		if (bytes_read == -1)
+		if (gnl.bytes_read == -1)
 		{
-			free(line);
+			free(gnl.line);
 			return (NULL);
 		}
-		if (!dup_to_nl(&line, buff, &len))
-			return (NULL);
-		if (check_nl_update_buff(buff, &len))
-			break ;
-		bytes_read = read(fd, (void *) (buff + len) , BUFF_SIZE - len);
+		gnl_control(&gnl, buff);
+		if (gnl.nl)
+			return (gnl.line);
+		gnl.bytes_read = read(fd, (void *) (buff + gnl.len) , BUFF_SIZE - gnl.len);
 	}
-	if (bytes_read == 0 && ft_strlen(buff) && !dup_to_nl(&line, buff, &len))
-		return (NULL);
-	return (line);
+	if (gnl.bytes_read == 0 && ft_strlen(buff))
+		gnl_control(&gnl, buff);	
+	return (gnl.line);
 }

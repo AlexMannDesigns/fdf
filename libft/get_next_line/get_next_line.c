@@ -24,23 +24,23 @@
  * We must also ensure the size of len is updated to represent how much can
  * be read into the buff during the next read() call.
  */
-static int	check_nl_update_buff(t_gnl *gnl, char *buff)
+static void	update_buff(t_gnl *gnl, char *buff)
 {
 	char	temp_buff[BUFF_SIZE + 1];
 
 	if (buff[gnl->len] == '\n')
 	{
+		gnl->nl = TRUE;
 		ft_strcpy(temp_buff, buff + (gnl->len + 1));
 		ft_bzero((void *) buff, BUFF_SIZE);
 		ft_strcpy(buff, temp_buff);
-		return (TRUE);
 	}
 	else
 	{
 		ft_bzero((void *) buff, BUFF_SIZE);
 		gnl->len = 0;
-		return (FALSE);
 	}
+	return ;
 }
 
 /*
@@ -57,7 +57,6 @@ static int	dup_to_nl(t_gnl *gnl, char *buff)
 	char	temp_line[BUFF_SIZE + 1];
 	char	new_line[BUFF_SIZE + 1];
 
-	//printf("buff: %s\nlen: %zu\nline: %s\n\n", buff, *len, *line );
 	gnl->len = 0;
 	while (buff[gnl->len] && buff[gnl->len] != '\n')
 	{
@@ -70,31 +69,13 @@ static int	dup_to_nl(t_gnl *gnl, char *buff)
 	else
 	{
 		ft_strcpy(temp_line, gnl->line);
-	//	printf("tl = %s\n", temp_line);
 		free(gnl->line);
 		gnl->line = ft_strjoin(temp_line, new_line);
-	//	printf("nl = %s\n", *line);
 	}
 	if (!(gnl->line))
 		return (FALSE);
+	update_buff(gnl, buff);
 	return (TRUE);
-}
-
-static void	gnl_control(t_gnl *gnl, char *buff)
-{
-	if (!ft_strchr(buff, '\n'))
-		return ;
-	if (!dup_to_nl(gnl, buff))
-	{
-		gnl->nl = TRUE;
-		return ;
-	}
-	if (check_nl_update_buff(gnl, buff))
-	{
-		gnl->nl = TRUE;
-		return ;
-	}
-	return ;
 }
 
 /*
@@ -109,24 +90,25 @@ char	*get_next_line(const int fd)
 	t_gnl		gnl;
 	
 	ft_bzero((void *) &gnl, sizeof(t_gnl));
-	gnl_control(&gnl, buff);
+	if (ft_strchr(buff, '\n') && !dup_to_nl(&gnl, buff))
+		return (NULL);
 	if (gnl.nl)
 		return (gnl.line);
 	gnl.len = ft_strlen(buff);
 	gnl.bytes_read = read(fd, (void *) (buff + gnl.len), BUFF_SIZE - gnl.len);
 	while (gnl.bytes_read)
 	{
-		if (gnl.bytes_read == -1)
+		if (gnl.bytes_read == -1) // read error
 		{
 			free(gnl.line);
 			return (NULL);
 		}
-		gnl_control(&gnl, buff);
+		if (!dup_to_nl(&gnl, buff))
+			return (NULL);
 		if (gnl.nl)
 			return (gnl.line);
 		gnl.bytes_read = read(fd, (void *) (buff + gnl.len) , BUFF_SIZE - gnl.len);
 	}
-	if (gnl.bytes_read == 0 && ft_strlen(buff))
-		gnl_control(&gnl, buff);	
+	dup_to_nl(&gnl, buff);
 	return (gnl.line);
 }

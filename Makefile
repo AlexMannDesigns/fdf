@@ -35,12 +35,15 @@ LIBFT_FLAGS := -L$(LIBFT_DIR) -lft
 
 all: $(NAME)
 
-$(NAME): $(MLX_PATH) $(LIBFT) $(OBJS)
-	$(CC) $(GCC_FLAGS) $(OBJS) -o $(NAME) $(MLX_PATH) $(MLX_FLAGS) $(LIBFT_FLAGS)
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(GCC_FLAGS) $(OBJS) -o $(NAME)  $(LIBFT_FLAGS)
+#$(MLX_PATH) $(MLX_FLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
-	$(CC) $(GCC_FLAGS) -I$(INCLUDE_DIR) -I$(LIBFT_INCLUDE_DIR) -I$(GNL_INCLUDE_DIR) -I$(MLX_INCLUDE_DIR) -c $< -o $@
+	$(CC) $(GCC_FLAGS) -I$(INCLUDE_DIR) -I$(LIBFT_INCLUDE_DIR) -I$(GNL_INCLUDE_DIR) -c $< -o $@
+
+#-I$(MLX_INCLUDE_DIR) 
 
 clean:
 	rm -rf $(OBJ_DIR)
@@ -53,10 +56,12 @@ re: fclean all
 
 ##### LIBRARY RECIPES #####
 
-libraries: $(MLX_PATH) $(LIBFT) 
+libraries:  $(LIBFT) 
 
-$(MLX_PATH):
-	cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4 
+#$(MLX_PATH)
+
+#$(MLX_PATH):
+#	cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4 
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)

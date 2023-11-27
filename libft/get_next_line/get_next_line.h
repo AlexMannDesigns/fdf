@@ -15,7 +15,7 @@
 
 # include "libft.h"
 
-# define BUFF_SIZE 32
+# define BUFF_SIZE 8
 
 # define TRUE 1
 # define FALSE 0

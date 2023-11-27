@@ -14,6 +14,20 @@
 
 #include <stdio.h>
 
+static int	dup_to_nl(t_gnl *gnl, char *buff);
+
+/*
+ * After read returns 0 we need to copy across any remaining contents from the
+ * buff or return NULL
+ */
+static char	*wrap_up(t_gnl *gnl, char *buff)
+{
+	if (!ft_strlen(buff))
+		return (NULL);
+	dup_to_nl(gnl, buff);
+	return (gnl->line);
+}
+
 /*
  * Here, we handle the buff after copying to line.
  * len represents the length of what was copied from it. So, if there is a nl
@@ -54,7 +68,7 @@ static void	update_buff(t_gnl *gnl, char *buff)
  */
 static int	dup_to_nl(t_gnl *gnl, char *buff)
 {
-	char	temp_line[BUFF_SIZE + 1];
+	char	*temp_line;
 	char	new_line[BUFF_SIZE + 1];
 
 	gnl->len = 0;
@@ -68,15 +82,16 @@ static int	dup_to_nl(t_gnl *gnl, char *buff)
 		gnl->line = ft_strdup(new_line);
 	else
 	{
-		ft_strcpy(temp_line, gnl->line);
+		temp_line = ft_strjoin(gnl->line, new_line);
 		free(gnl->line);
-		gnl->line = ft_strjoin(temp_line, new_line);
+		gnl->line = temp_line;
 	}
 	if (!(gnl->line))
 		return (FALSE);
 	update_buff(gnl, buff);
 	return (TRUE);
 }
+
 
 /*
  * Returns either the read line or null in the event of an error or nothing 
@@ -95,10 +110,10 @@ char	*get_next_line(const int fd)
 	if (gnl.nl)
 		return (gnl.line);
 	gnl.len = ft_strlen(buff);
-	gnl.bytes_read = read(fd, (void *) (buff + gnl.len), BUFF_SIZE - gnl.len);
-	while (gnl.bytes_read)
+	gnl.r_ret = read(fd, (void *) (buff + gnl.len), BUFF_SIZE - gnl.len);
+	while (gnl.r_ret)
 	{
-		if (gnl.bytes_read == -1) // read error
+		if (gnl.r_ret == -1) // read error
 		{
 			free(gnl.line);
 			return (NULL);
@@ -107,8 +122,7 @@ char	*get_next_line(const int fd)
 			return (NULL);
 		if (gnl.nl)
 			return (gnl.line);
-		gnl.bytes_read = read(fd, (void *) (buff + gnl.len) , BUFF_SIZE - gnl.len);
+		gnl.r_ret = read(fd, (void *) (buff + gnl.len) , BUFF_SIZE - gnl.len);
 	}
-	dup_to_nl(&gnl, buff);
-	return (gnl.line);
+	return (wrap_up(&gnl, buff));
 }

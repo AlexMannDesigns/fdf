@@ -15,7 +15,8 @@
 
 # include "libft.h"
 
-# define BUFF_SIZE 42
+# define BUFF_SIZE 42 
+# define MAX_FD 1024 
 
 # define TRUE 1
 # define FALSE 0

@@ -1,7 +1,6 @@
 
 #include "fdf.h"
 
-// TODO write a list of weird filenames and cmd line to test
 /*
  * File-name for the map file must have extension '.fdf'
  * This function is a simple check for that.

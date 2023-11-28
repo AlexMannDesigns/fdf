@@ -12,22 +12,6 @@
 
 #include "get_next_line.h"
 
-#include <stdio.h>
-
-static int	dup_to_nl(t_gnl *gnl, char *buff);
-
-/*
- * After read returns 0 we need to copy across any remaining contents from the
- * buff or return NULL
- */
-static char	*wrap_up(t_gnl *gnl, char *buff)
-{
-	if (!ft_strlen(buff))
-		return (NULL);
-	dup_to_nl(gnl, buff);
-	return (gnl->line);
-}
-
 /*
  * Here, we handle the buff after copying to line.
  * len represents the length of what was copied from it. So, if there is a nl
@@ -92,37 +76,68 @@ static int	dup_to_nl(t_gnl *gnl, char *buff)
 	return (TRUE);
 }
 
+/*
+ * Wrapper around the read call, handling the varying relative buff sizes.
+ */
+static void	gnl_read(t_gnl *gnl, int fd, char *buff)
+{
+	void	*read_ptr;
+	size_t	n_bytes;
+
+	read_ptr = (void *) (buff + gnl->len);
+	n_bytes = (size_t) (BUFF_SIZE - gnl->len);
+	gnl->r_ret = read(fd, read_ptr, n_bytes);
+	return ;
+}
+
+/*
+ * Initial set-up for get_next_line. Zeroes-out the struct and handles any
+ * existing nl char in the buff from previous reads. If so, FALSE can be
+ * returned to ensure an immediate exit. Otherwise, we return TRUE and enter
+ * the read loop. Also, fd's higher than MAX_FD are dismissed.
+ */
+static int	gnl_setup(t_gnl *gnl, int fd, char *buff)
+{
+	if (fd >= MAX_FD)
+		return (FALSE);
+	ft_bzero((void *) gnl, sizeof(t_gnl));
+	if (ft_strchr(buff, '\n'))
+	{
+		dup_to_nl(gnl, buff);
+		return (FALSE);
+	}
+	gnl->len = ft_strlen(buff);
+	return (TRUE);
+}
 
 /*
  * Returns either the read line or null in the event of an error or nothing 
  * else to read
  * Should be able to read from stdin
- * TODO more testing needed - large buffs infinite loop, small buffs crash 
  */
 char	*get_next_line(const int fd)
 {
-	static char	buff[BUFF_SIZE + 1];
+	static char	buff[MAX_FD][BUFF_SIZE + 1];
 	t_gnl		gnl;
 	
-	ft_bzero((void *) &gnl, sizeof(t_gnl));
-	if (ft_strchr(buff, '\n') && !dup_to_nl(&gnl, buff))
-		return (NULL);
-	if (gnl.nl)
+	if (!gnl_setup(&gnl, fd, buff[fd]))
 		return (gnl.line);
-	gnl.len = ft_strlen(buff);
-	gnl.r_ret = read(fd, (void *) (buff + gnl.len), BUFF_SIZE - gnl.len);
+	gnl_read(&gnl, fd, buff[fd]);
 	while (gnl.r_ret)
 	{
-		if (gnl.r_ret == -1) // read error
+		if (gnl.r_ret == -1)
 		{
 			free(gnl.line);
 			return (NULL);
 		}
-		if (!dup_to_nl(&gnl, buff))
+		if (!dup_to_nl(&gnl, buff[fd]))
 			return (NULL);
 		if (gnl.nl)
 			return (gnl.line);
-		gnl.r_ret = read(fd, (void *) (buff + gnl.len) , BUFF_SIZE - gnl.len);
+		gnl_read(&gnl, fd, buff[fd]);
 	}
-	return (wrap_up(&gnl, buff));
+	if (!ft_strlen(buff[fd]))
+		return (NULL);
+	dup_to_nl(&gnl, buff[fd]);
+	return (gnl.line);
 }

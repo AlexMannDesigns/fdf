@@ -49,8 +49,7 @@ int	main(int argc, char **argv)
 		return (print_error(RETURN_SUCCESS, USAGE));
 	if (!map_parser_control(&fdf, argv[fdf.path_idx]))
 		return (free_and_exit(&fdf, RETURN_ERROR));
-	
-	t_coord	*current;
+/*	t_coord	*current;
 	current = fdf.coord_list;
 	//print coords for testing
 	while (current)
@@ -59,9 +58,32 @@ int	main(int argc, char **argv)
 		current = current->next;
 	}
 	// fdf starts...
-	/*
+
 	if (!(fdf->test_parser))
 		fdf_control()
 	*/
 	return (free_and_exit(&fdf, RETURN_SUCCESS));
 }
+
+/*	
+	int bible_fd;
+	int alice_fd;
+
+	char *alice;
+	char *bible;
+
+	bible_fd = open("maps/bible.fdf", O_RDONLY);
+	alice_fd = open("maps/alice.fdf", O_RDONLY);
+	int i = 0;
+	while (i < 100)
+	{
+		alice = get_next_line(alice_fd);
+		bible = get_next_line(bible_fd);
+		printf("alice = %s\nbible = %s\n", alice, bible);
+		free(alice);
+		free(bible);
+		i++;
+	}
+	while (1)
+		;
+*/

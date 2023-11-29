@@ -3,7 +3,7 @@ from typing import Final
 
 import pytest
 
-
+# constants
 FDF: Final = "./fdf"
 TEST_FLAG: Final = "--test-parser"
 TIMEOUT: Final = 5
@@ -18,6 +18,12 @@ TIMEOUT: Final = 5
 def test_maps(
 	path_to_map: str, expected_error_output: str | None, expected_return_value: int
 ) -> None:
+	"""
+	Testing steps:
+	1. run fdf in subprocess with map file-path
+	2. check return value matches expected value
+	3. check captured output matches expected output
+	"""
 	try:
 		result = run(
 			[FDF, TEST_FLAG, path_to_map],

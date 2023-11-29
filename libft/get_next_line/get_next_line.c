@@ -98,9 +98,9 @@ static void	gnl_read(t_gnl *gnl, int fd, char *buff)
  */
 static int	gnl_setup(t_gnl *gnl, int fd, char *buff)
 {
+	ft_bzero((void *) gnl, sizeof(t_gnl));
 	if (fd >= MAX_FD)
 		return (FALSE);
-	ft_bzero((void *) gnl, sizeof(t_gnl));
 	if (ft_strchr(buff, '\n'))
 	{
 		dup_to_nl(gnl, buff);

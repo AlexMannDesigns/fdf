@@ -4,4 +4,11 @@
 obj/
 MLX42/
 fdf
+
 maps/invalid_permission.fdf
+maps/alice.fdf
+maps/bible.fdf
+
+venv/
+.idea/
+__pycache__/

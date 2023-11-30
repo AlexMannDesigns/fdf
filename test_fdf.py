@@ -12,6 +12,7 @@ TIMEOUT: Final = 5
 NO_OUTPUT: Final = ""
 PARAMS: Final = ("option", "expected_output", "expected_error_output", "expected_return_value")
 
+# error messages
 ERROR_INVALID_OPTION: Final = "Error: invalid option. For help, use './fdf --help'\n"
 ERROR_INVALID_FILE: Final = "Error: map file must be plain-text format and have '.fdf' extension\n"
 ERROR_INVALID_PERMISSIONS: Final = "Error: map file could not be opened\n"
@@ -145,4 +146,3 @@ def test_multiple_args(
 	assert result.returncode == expected_return_value, "Error: incorrect return value"
 	assert result.stderr == expected_error_output, "Error: incorrect error message"
 	assert result.stdout == expected_output, "Error: incorrect output"
-

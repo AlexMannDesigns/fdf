@@ -115,7 +115,7 @@ int	map_parser_control(t_fdf *fdf, char *path)
 	line = get_next_line(fd);
 	while (line)
 	{
-		printf("%s length :%zu\n", line, ft_strlen(line));
+		//printf("%s length :%zu\n", line, ft_strlen(line));
 		if (!validate_line_chars(line))
 			return (print_error(FALSE, ERROR_INVALID_VALUES));
 		if (!create_coords(fdf, line))

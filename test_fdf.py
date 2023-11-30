@@ -23,7 +23,7 @@ USAGE_LONG: Final = "Welcome to FDF!\n\nUsage:\n./fdf [options...] [path-to-map]
 	"\npath-to-map:\nMust be a file path to a valid fdf map, with file-extension '.fdf'\n"
 
 
-def _run_fdf(args: list | None) -> CompletedProcess:
+def _run_fdf(args: list | None) -> CompletedProcess | None:
 	"""
 	Runs fdf with the passed arg list in a sub-process
 	"""
@@ -46,7 +46,6 @@ def _run_fdf(args: list | None) -> CompletedProcess:
 @pytest.mark.parametrize(
 	("path_to_map", "expected_output", "expected_error_output", "expected_return_value"),
 	[
-
 		("maps/abc", NO_OUTPUT, ERROR_INVALID_FILE, 1),
 		("maps/", NO_OUTPUT, ERROR_INVALID_FILE, 1),
 		(" ", NO_OUTPUT, ERROR_INVALID_FILE, 1),
@@ -104,6 +103,7 @@ def test_option_flags(
 	"""
 	result = _run_fdf([option])
 
+	assert result is not None
 	assert result.returncode == expected_return_value, "Error: incorrect return value"
 	assert result.stderr == expected_error_output, "Error: incorrect error message"
 	assert result.stdout == expected_output, "Error: incorrect output"
@@ -115,6 +115,7 @@ def test_no_args_prints_usage() -> None:
 	"""
 	result = _run_fdf([TEST_FLAG])
 
+	assert result is not None
 	assert result.returncode == 0, "Error: incorrect return value"
 	assert result.stderr == USAGE, "Error: incorrect error message"
 	assert result.stdout == NO_OUTPUT, "Error: incorrect output"
@@ -127,6 +128,8 @@ def test_no_args_prints_usage() -> None:
 		([" -", "--help", VALID_MAP], NO_OUTPUT, ERROR_INVALID_FILE, 1),
 		(["  ", "--help", VALID_MAP], NO_OUTPUT, ERROR_INVALID_FILE, 1),
 		(["a", "b", "c", VALID_MAP], NO_OUTPUT, ERROR_INVALID_FILE, 1),
+		(["", "", "", " ", "x", "123", VALID_MAP], NO_OUTPUT, ERROR_INVALID_FILE, 1),
+		([TEST_FLAG, VALID_MAP, "x", "y", "z", "--", "x", "123"], NO_OUTPUT, NO_OUTPUT, 0),
 	],
 )
 def test_multiple_args(
@@ -134,9 +137,11 @@ def test_multiple_args(
 ) -> None:
 	"""
 	Test ensures that an error is returned when valid params follow invalid params
+	Test also ensures an error is not returned with invalid params following valid params
 	"""
 	result = _run_fdf(option)
 
+	assert result is not None
 	assert result.returncode == expected_return_value, "Error: incorrect return value"
 	assert result.stderr == expected_error_output, "Error: incorrect error message"
 	assert result.stdout == expected_output, "Error: incorrect output"

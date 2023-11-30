@@ -63,7 +63,7 @@ def test_invalid_maps(path_to_map: str, expected_output: str, expected_error_out
 	"""
 	result = _run_fdf([path_to_map])
 
-	assert result is not None
+	assert result is not None, "Error: subprocess failed"
 	assert result.returncode == expected_return_value, "Error: incorrect return value"
 	assert result.stderr == expected_error_output, "Error: incorrect error message"
 	assert result.stdout == expected_output, "Error: incorrect output"
@@ -75,7 +75,7 @@ def test_valid_map() -> None:
 	"""
 	result = _run_fdf([TEST_FLAG, VALID_MAP])
 
-	assert result is not None
+	assert result is not None, "Error: subprocess failed"
 	assert result.returncode == 0, "Error: incorrect return value"
 	assert result.stderr == NO_OUTPUT, "Error: incorrect error message"
 	assert result.stdout == NO_OUTPUT, "Error: incorrect output"
@@ -103,7 +103,7 @@ def test_option_flags(
 	"""
 	result = _run_fdf([option])
 
-	assert result is not None
+	assert result is not None, "Error: subprocess failed"
 	assert result.returncode == expected_return_value, "Error: incorrect return value"
 	assert result.stderr == expected_error_output, "Error: incorrect error message"
 	assert result.stdout == expected_output, "Error: incorrect output"
@@ -115,7 +115,7 @@ def test_no_args_prints_usage() -> None:
 	"""
 	result = _run_fdf([TEST_FLAG])
 
-	assert result is not None
+	assert result is not None, "Error: subprocess failed"
 	assert result.returncode == 0, "Error: incorrect return value"
 	assert result.stderr == USAGE, "Error: incorrect error message"
 	assert result.stdout == NO_OUTPUT, "Error: incorrect output"
@@ -141,7 +141,7 @@ def test_multiple_args(
 	"""
 	result = _run_fdf(option)
 
-	assert result is not None
+	assert result is not None, "Error: subprocess failed"
 	assert result.returncode == expected_return_value, "Error: incorrect return value"
 	assert result.stderr == expected_error_output, "Error: incorrect error message"
 	assert result.stdout == expected_output, "Error: incorrect output"

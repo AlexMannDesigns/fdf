@@ -3,6 +3,9 @@ from typing import Final
 
 import pytest
 
+# TODO: Install mypy
+
+
 # constants
 FDF: Final = "./fdf"
 TEST_FLAG: Final = "--test-parser"

@@ -2,13 +2,13 @@
 #ifndef FDF_H
 # define FDF_H
 
-
 /***** LIBRARIES *****/
-
-# include "libft.h"
 
 # include <fcntl.h>
 # include <stdio.h>  // TODO delete
+
+# include "libft.h"
+# include "MLX42/MLX42.h"
 
 
 /***** CONSTANTS *****/
@@ -61,6 +61,7 @@ typedef struct s_fdf
 	int	test_parser;
 	int	help;
 	int	exit_status;
+	mlx_t	*mlx;
 	t_coord	*coord_list;
 }		t_fdf;
 

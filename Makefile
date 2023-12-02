@@ -24,9 +24,9 @@ OBJS := $(patsubst %, $(OBJ_DIR)/%, $(SRC_FILES:.c=.o))
 
 GCC_FLAGS = -Wall -Wextra -Werror -g
 
-MLX_FLAGS = -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/"
+MLX_FLAGS = -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -lglfw -L"$(MLX_DIR)/build" -lmlx42
 
-LIBFT_FLAGS := -L$(LIBFT_DIR) -lft
+LIBFT_FLAGS := -L"$(LIBFT_DIR)" -lft
 
 INCLUDE_FLAGS := -I$(INCLUDE_DIR) -I$(LIBFT_INCLUDE_DIR) -I$(GNL_INCLUDE_DIR) -I$(MLX_INCLUDE_DIR)
 

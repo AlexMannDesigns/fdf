@@ -17,7 +17,7 @@ MLX_INCLUDE_DIR := $(MLX_DIR)/include/
 
 SRC_DIR = ./src
 
-SRC_FILES = utils.c main.c map_parser.c
+SRC_FILES = fdf_control.c utils.c main.c map_parser.c
 
 OBJ_DIR = ./obj
 OBJS := $(patsubst %, $(OBJ_DIR)/%, $(SRC_FILES:.c=.o))
@@ -76,8 +76,6 @@ libft_fclean: libft_clean
 ##### RECIPES FOR ALL #####
 
 fclean_all: fclean libft_fclean libmlx_clean
-
-complete: libraries all
 
 .PHONY: all clean fclean re libmlx libmlx_clean libft
 

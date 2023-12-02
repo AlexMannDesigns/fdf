@@ -41,6 +41,7 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 		return (print_error(RETURN_SUCCESS, USAGE));
 	ft_bzero((void *) &fdf, sizeof(t_fdf));
+	fdf.exit_status = RETURN_ERROR;
 	if (!handle_option_flags(&fdf, argv))
 		return (RETURN_ERROR);
 	if (fdf.help)
@@ -48,21 +49,22 @@ int	main(int argc, char **argv)
 	if (!(argv[fdf.path_idx]))
 		return (print_error(RETURN_SUCCESS, USAGE));
 	if (!map_parser_control(&fdf, argv[fdf.path_idx]))
-		return (free_and_exit(&fdf, RETURN_ERROR));
-/*	t_coord	*current;
+		return (free_and_exit(&fdf));
+	/*
+	t_coord	*current;
 	current = fdf.coord_list;
 	//print coords for testing
 	while (current)
 	{
-		printf("x = %d | y = %d | z = %d\n", current->x, current->y, current->z);
+		printf("x = %2d | y = %2d | z = %2d\n", current->x, current->y, current->z);
 		current = current->next;
 	}
-	// fdf starts...
-
-	if (!(fdf->test_parser))
-		fdf_control()
 	*/
-	return (free_and_exit(&fdf, RETURN_SUCCESS));
+	// fdf starts...
+	if (!(fdf.test_parser))
+		fdf_control(&fdf);
+	fdf.exit_status = RETURN_SUCCESS; // for testing, this should be set in fdf_control	
+	return (free_and_exit(&fdf));
 }
 
 /*	

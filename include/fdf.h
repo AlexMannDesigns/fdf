@@ -58,22 +58,24 @@ typedef struct s_fdf
 	size_t	path_idx;
 	int	test_parser;
 	int	help;
+	int	exit_status;
 	t_coord	*coord_list;
 }		t_fdf;
 
 
 /***** FUNCTIONS *****/
 
+/* fdf_control.c */
+void	fdf_control(t_fdf *fdf);
+
 /* main.c */
 void    print_array(char **arr); //TODO delete
 
 /* map_parser.c */
-
 int     map_parser_control(t_fdf *fdf, char *path);
 
 /* utils.c */
-
 int	print_error(int ret, char *msg);
-int     free_and_exit(t_fdf *fdf, int value);
+int     free_and_exit(t_fdf *fdf);
 
 #endif

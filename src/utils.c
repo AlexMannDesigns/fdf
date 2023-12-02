@@ -5,21 +5,21 @@
 /*
  * Frees any heap-allocated memory and then returns the exit value
  */
-int	free_and_exit(t_fdf *fdf, int value)
+int	free_and_exit(t_fdf *fdf)
 {
 	t_coord	*coord;
 	t_coord	*next;
 
 	coord = fdf->coord_list;
 	if (!coord)
-		return (value);
+		return (fdf->exit_status);
 	while (coord)
 	{
 		next = coord->next;
 		ft_memdel((void **)&coord);
 		coord = next;
 	}
-	return (value);
+	return (fdf->exit_status);
 }
 
 

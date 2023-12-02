@@ -2,12 +2,14 @@
 #ifndef FDF_H
 # define FDF_H
 
+
 /***** LIBRARIES *****/
 
 # include "libft.h"
 
 # include <fcntl.h>
 # include <stdio.h>  // TODO delete
+
 
 /***** CONSTANTS *****/
 
@@ -21,6 +23,9 @@
 
 # define FDF_EXT ".fdf"
 
+# define HELP_FLAG "--help"
+# define TEST_PARSER "--test-parser"
+
 # define USAGE_LONG "Welcome to FDF!\n\nUsage:\n./fdf [options...] [path-to-map]\n" \
 	"\n" \
 	"options:\n--help: displays this message\n" \
@@ -29,9 +34,6 @@
 	"path-to-map:\n" \
 	"Must be a file path to a valid fdf map, with file-extension '.fdf'"
 # define USAGE "Usage:\n./fdf [options...] [path-to-map]"
-
-# define HELP_FLAG "--help"
-# define TEST_PARSER "--test-parser"
 
 # define ERROR_INVALID_OPTION "Error: invalid option. For help, use './fdf --help'"
 # define ERROR_INVALID_FILE "Error: map file must be plain-text format and have '.fdf' extension"

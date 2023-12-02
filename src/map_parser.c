@@ -11,8 +11,8 @@ static int	validate_file_name(char *path)
 
 	len = ft_strlen(path);
 	if (len < 5 || !ft_strequ(FDF_EXT, path + (len - 4)))
-		return FALSE;
-	return TRUE;
+		return (FALSE);
+	return (TRUE);
 }
 
 /*

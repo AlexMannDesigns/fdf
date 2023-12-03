@@ -58,7 +58,7 @@ re: fclean all
 libraries:  $(LIBFT) $(MLX)
 
 $(MLX):
-	cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4 
+	cmake -DDEBUG=1 $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4 
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)

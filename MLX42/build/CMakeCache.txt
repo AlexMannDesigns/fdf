@@ -232,7 +232,7 @@ CMAKE_TAPI:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/tapi
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Build MLX42 in debug mode, enabling assertions
-DEBUG:BOOL=OFF
+DEBUG:BOOL=1
 
 //Path to a file.
 GLFW3_INCLUDE_PATH:PATH=/opt/homebrew/include

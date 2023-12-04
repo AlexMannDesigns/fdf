@@ -46,7 +46,17 @@ Project specific instructions:
 MLX42
 
 - decided to use this library instead of minilibx
-- github repo: 
+- github repo: https://github.com/codam-coding-college/MLX42
+
+
+DRAWING ISOMETRIC PROJECTIONS
+
+An article: https://clintbellanger.net/articles/isometric_math/
+
+Probably need to add a bit more info to our fdf struct:
+	
+	- dimensions of the image. i.e. max x and max y (maybe max + min z?)
+	Will help us to determine how far apart to draw each point
 
 
 
@@ -66,10 +76,10 @@ TODO:
 		- do we need a value range for altitudes?
 		- what happens with one value?
 		- what happens with no values?
-		- negative value
-		- lt int_min gt int_max? 
 		- what happens with just whitespace?
 		- what happens with invalid values?
+		- negative value
+		- lt int_min gt int_max? 
 
 - 
 

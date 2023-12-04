@@ -18,7 +18,10 @@ static void	hooksu(void *param)
 	const mlx_t	*mlx;
 
 	mlx = param;
-	printf("WIDTH: %d | HEIGHT: %d | COLOUR: %0#10x\n", mlx->width, mlx->height, get_rgba(255, 0, 0, 255));
+	printf("WIDTH: %d | HEIGHT: %d | COLOUR: %0#10x\n",
+		mlx->width,
+		mlx->height,
+		get_rgba(255, 0, 0, 255));
 }
 
 void	fdf_control(t_fdf *fdf)
@@ -36,13 +39,17 @@ void	fdf_control(t_fdf *fdf)
 	img = mlx_new_image(fdf->mlx, 128, 128);
 
 	// set every pixel in the image to a specific value	
-	//ft_memset(img->pixels, 128, img->width * img->height * BPP);
+	ft_memset(img->pixels, 0, img->width * img->height * BPP);
 	
 	mlx_image_to_window(fdf->mlx, img, 0, 0);
 
 	uint32_t i = 0;
 	while (i < img->height)
-		mlx_put_pixel(img, img->width / 2, i++, 0x00FF00FF);
+	{
+		mlx_put_pixel(img, (img->width / 2), i, 0xFF0000FF);
+		mlx_put_pixel(img, i, (img->height / 2), 0xFF0000FF);
+		i++;
+	}
 	mlx_loop_hook(fdf->mlx, hooksu, fdf->mlx);
 	mlx_loop(fdf->mlx);
 	mlx_terminate(fdf->mlx);

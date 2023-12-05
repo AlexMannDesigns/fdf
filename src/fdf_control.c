@@ -7,7 +7,7 @@
 
 // TODO re-implement RETURN_SUCCESS/ERROR as EXIT_SUCCESS/FAILURE ??
 
-
+/*
 static int	get_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
@@ -23,34 +23,57 @@ static void	hooksu(void *param)
 		mlx->height,
 		get_rgba(255, 0, 0, 255));
 }
-
+*/
 void	fdf_control(t_fdf *fdf)
 {
 	mlx_image_t	*img;
 		
-	// open window
-	// define behaviour before start-up
-	//mlx_set_setting(MLX_MAXIMIZED, true);
 	fdf->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
 	if (!fdf->mlx)
 		return ; // Error handling for mlx42 needed	
-	
-	
-	img = mlx_new_image(fdf->mlx, 128, 128);
-
-	// set every pixel in the image to a specific value	
-	ft_memset(img->pixels, 0, img->width * img->height * BPP);
-	
+	img = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
+	//ft_memset(img->pixels, 0x00, img->width * img->height * BPP);
 	mlx_image_to_window(fdf->mlx, img, 0, 0);
 
-	uint32_t i = 0;
-	while (i < img->height)
+	t_coord		*current;
+	t_coord		*next_x;
+	t_coord		*next_y;
+	uint32_t	c_x;
+	uint32_t	n_x;
+	uint32_t	c_y;
+	uint32_t	n_y;
+	uint32_t	x;
+	uint32_t	colour;
+	uint32_t	offset;
+
+	int i;
+	colour = 0XFFFF00FF;
+	offset = img->width / fdf->width / 2;
+	current = fdf->coord_list;	
+	while (current->next)
 	{
-		mlx_put_pixel(img, (img->width / 2), i, 0xFF0000FF);
-		mlx_put_pixel(img, i, (img->height / 2), 0xFF0000FF);
-		i++;
+		next_x = current->next;
+		
+		c_x = offset + current->x * (img->width / fdf->width);
+		c_y = offset + current->y * (img->height / fdf->width);
+		n_x = offset + next_x->x * (img->width / fdf->width);
+		x = c_x;
+		while (c_x < n_x)
+			mlx_put_pixel(img, c_x++, c_y, colour);
+		next_y = current;
+		i = 0;	
+		while (i < fdf->width && next_y)
+		{
+			next_y = next_y->next;
+			i++;
+		}
+		if (next_y)
+			n_y = offset + next_y->y * (img->height / fdf->width);
+		while (next_y && c_y < n_y)
+			mlx_put_pixel(img, x, c_y++, colour);
+		current = current->next;
 	}
-	mlx_loop_hook(fdf->mlx, hooksu, fdf->mlx);
+	//mlx_loop_hook(fdf->mlx, hooksu, fdf->mlx);
 	mlx_loop(fdf->mlx);
 	mlx_terminate(fdf->mlx);
 

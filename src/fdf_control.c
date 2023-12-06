@@ -1,8 +1,8 @@
 
 #include "fdf.h"
 
-#define WIDTH 256
-#define HEIGHT 256
+#define WIDTH 512
+#define HEIGHT 512
 #define BPP sizeof(int32_t)
 
 // TODO re-implement RETURN_SUCCESS/ERROR as EXIT_SUCCESS/FAILURE ??
@@ -36,31 +36,42 @@ void	fdf_control(t_fdf *fdf)
 	mlx_image_to_window(fdf->mlx, img, 0, 0);
 
 	t_coord		*current;
-	t_coord		*next_x;
-	t_coord		*next_y;
-	uint32_t	c_x;
-	uint32_t	n_x;
-	uint32_t	c_y;
-	uint32_t	n_y;
 	uint32_t	x;
+	uint32_t	y;
 	uint32_t	colour;
-	uint32_t	offset;
+	uint32_t	x_offset;
+	uint32_t	tile_width;
+	uint32_t	tile_height;
+	uint32_t	column;
+	uint32_t	row;
 
-	int i;
+
+	uint32_t i;
 	colour = 0XFFFF00FF;
-	offset = img->width / fdf->width / 2;
-	current = fdf->coord_list;	
-	while (current->next)
+	tile_width = img->width / fdf->width / 2;
+	x_offset = (img->width / 2) - tile_width;
+	tile_height = img->height / fdf->width / 4;
+	current = fdf->coord_list;
+	row = column = 0;	
+	while (current)
 	{
-		next_x = current->next;
-		
-		c_x = offset + current->x * (img->width / fdf->width);
-		c_y = offset + current->y * (img->height / fdf->width);
-		n_x = offset + next_x->x * (img->width / fdf->width);
-		x = c_x;
-		while (c_x < n_x)
-			mlx_put_pixel(img, c_x++, c_y, colour);
-		next_y = current;
+		if (column > (uint32_t) fdf->width)
+		{
+			column = 0;
+			row++;
+		}
+		x = (x_offset - (tile_width * column)) + (current->x * tile_width);
+		y = (row * tile_height) + current->y + (tile_height * column);
+		if (x < 0)
+			break ;
+		i = 0;
+		while (i < tile_width)
+		{
+			printf("x = %3d | y = %3d | width = %3d\n", x, y, tile_width);
+			mlx_put_pixel(img, x++, y++, colour);
+			i++;
+		}
+		/*
 		i = 0;	
 		while (i < fdf->width && next_y)
 		{
@@ -68,9 +79,14 @@ void	fdf_control(t_fdf *fdf)
 			i++;
 		}
 		if (next_y)
-			n_y = offset + next_y->y * (img->height / fdf->width);
-		while (next_y && c_y < n_y)
-			mlx_put_pixel(img, x, c_y++, colour);
+			n_y = next_y->y * (img->height / fdf->width / 4);
+		while (next_y && y < n_y - ((n_y - y) / 2))
+		{
+			printf("x = %3d | y = %3d\n", x, y);
+			mlx_put_pixel(img, x--, y++, colour);
+		}
+		*/
+		column++;
 		current = current->next;
 	}
 	//mlx_loop_hook(fdf->mlx, hooksu, fdf->mlx);

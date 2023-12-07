@@ -58,6 +58,30 @@ Probably need to add a bit more info to our fdf struct:
 	- dimensions of the image. i.e. max x and max y (maybe max + min z?)
 	Will help us to determine how far apart to draw each point
 
+A bit more reading needed. Let's figure out a mathematical formula to at
+least draw each point:
+
+ - first, we need to ascertain dimensions. 
+	- How wide is the window in pixels
+	- How wide is the image we are drawing in tiles
+	- What will be the dimensions of each tile as a result of the above
+ - then we need to find the start point.
+ - from there, the next point will be somewhere to the right and down
+ - how do we handle a new row of points
+	- Detect when we have reached the end of a row
+	- Find the start point of the next row
+		- somewhere to the left and down from start of previous row
+
+sooo a 3x3 grid would look like this:
+
+
+                      .
+                 .         .
+            .         .         .
+       .         .         .         .
+            .         .         .
+                 .         .
+                      .
 
 
 TODO:

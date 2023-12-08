@@ -62,8 +62,6 @@ void	fdf_control(t_fdf *fdf)
 		}
 		x = (x_offset - (tile_width * column)) + (current->x * tile_width);
 		y = (row * tile_height) + current->y + (tile_height * column);
-		if (x < 0)
-			break ;
 		i = 0;
 		while (i < tile_width)
 		{

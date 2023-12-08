@@ -65,8 +65,13 @@ least draw each point:
 	- How wide is the window in pixels
 	- How wide is the image we are drawing in tiles
 	- What will be the dimensions of each tile as a result of the above
+ 		- keeping in mind that isometric projection will result in a wider image
+		- projection width will be roughly diagonal width between opposite corners
  - then we need to find the start point.
+ 	- Can probably just start with the mid-point at top of window assuming each
+	  'tile' is square
  - from there, the next point will be somewhere to the right and down
+	- This is where the real math comes in.
  - how do we handle a new row of points
 	- Detect when we have reached the end of a row
 	- Find the start point of the next row
@@ -81,8 +86,8 @@ sooo a 3x3 grid would look like this:
        .         .         .         .
             .         .         .
                  .         .
-                      .
-
+                      .     
+      
 
 TODO:
 

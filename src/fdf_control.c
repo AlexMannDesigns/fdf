@@ -1,7 +1,7 @@
 
 #include "fdf.h"
 
-#define WIDTH 512
+#define WIDTH 800
 #define HEIGHT 512
 #define BPP sizeof(int32_t)
 
@@ -38,53 +38,39 @@ void	fdf_control(t_fdf *fdf)
 	t_coord		*current;
 	uint32_t	x;
 	uint32_t	y;
+	int		i;
 	uint32_t	colour;
 	uint32_t	x_offset;
+	uint32_t	y_offset;
 	uint32_t	tile_width;
 	uint32_t	tile_height;
-	uint32_t	column;
 	uint32_t	row;
 
 
-	uint32_t i;
 	colour = 0XFFFF00FF;
+	y_offset = 10;
 	tile_width = img->width / fdf->width / 2;
-	x_offset = (img->width / 2) - tile_width;
-	tile_height = img->height / fdf->width / 4;
+	x_offset = (img->width / 2) - ((fdf->width * tile_width) / 2);
+	tile_height = img->width / fdf->width / 3;
+	
+	printf("width = %d | height = %d | offset = %d\n", tile_width, tile_height, x_offset);
+//	row = column = 0;
+	i = x = y = row = 0;
 	current = fdf->coord_list;
-	row = column = 0;	
 	while (current)
 	{
-		if (column > (uint32_t) fdf->width)
+		if (i >= fdf->width)
 		{
-			column = 0;
+			x = 0;
+			i = 0;
 			row++;
+			y = row * tile_height;
+			x_offset -= (tile_width / 2);
 		}
-		x = (x_offset - (tile_width * column)) + (current->x * tile_width);
-		y = (row * tile_height) + current->y + (tile_height * column);
-		i = 0;
-		while (i < tile_width)
-		{
-			printf("x = %3d | y = %3d | width = %3d\n", x, y, tile_width);
-			mlx_put_pixel(img, x++, y++, colour);
-			i++;
-		}
-		/*
-		i = 0;	
-		while (i < fdf->width && next_y)
-		{
-			next_y = next_y->next;
-			i++;
-		}
-		if (next_y)
-			n_y = next_y->y * (img->height / fdf->width / 4);
-		while (next_y && y < n_y - ((n_y - y) / 2))
-		{
-			printf("x = %3d | y = %3d\n", x, y);
-			mlx_put_pixel(img, x--, y++, colour);
-		}
-		*/
-		column++;
+		mlx_put_pixel(img, x_offset + x, y_offset + y, colour);
+		x += tile_width;
+		y += tile_height;	
+		i++;
 		current = current->next;
 	}
 	//mlx_loop_hook(fdf->mlx, hooksu, fdf->mlx);

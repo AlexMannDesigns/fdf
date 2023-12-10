@@ -25,27 +25,31 @@ static void	hooksu(void *param)
 		get_rgba(255, 0, 0, 255));
 }
 */
-void	fdf_control(t_fdf *fdf)
+static int	draw_setup(t_fdf *fdf, t_draw *draw)
 {
-	mlx_image_t	*img;
-		
-	fdf->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
-	if (!fdf->mlx)
-		return ; // Error handling for mlx42 needed	
-	img = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
+	ft_bzero((void *) draw, sizeof(t_draw));
+	draw->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
+	if (!draw->mlx)
+		return (FALSE); // Error handling for mlx42 needed	
+	draw->img = mlx_new_image(draw->mlx, WIDTH, HEIGHT);
 	//ft_memset(img->pixels, 0x00, img->width * img->height * BPP);
-	mlx_image_to_window(fdf->mlx, img, 0, 0);
+	mlx_image_to_window(draw->mlx, draw->img, 0, 0); //draw image from top left corner
+	draw->y_offset = 10; //make this more scalable
+	draw->tile_width = draw->img->width / fdf->width / 2;
+	draw->x_offset = (draw->img->width / 2) - ((fdf->width * draw->tile_width) / 2);
+	draw->tile_height = draw->img->width / fdf->width / 3;
+	return (TRUE);
+}
 
+void	fdf_control(t_fdf *fdf)
+{	
 	t_coord	*current;
 	t_draw	draw;
 	int	i;
 
-	ft_bzero((void *) &draw, sizeof(t_draw));
-	draw.y_offset = 10; //make this more scalable
-	draw.tile_width = img->width / fdf->width / 2;
-	draw.x_offset = (img->width / 2) - ((fdf->width * draw.tile_width) / 2);
-	draw.tile_height = img->width / fdf->width / 3;
-	
+	if (!draw_setup(fdf, &draw))
+		return ;	
+
 	printf("width = %d | height = %d | offset = %d\n", draw.tile_width, draw.tile_height, draw.x_offset);
 //	row = column = 0;
 	i = 0;
@@ -60,7 +64,10 @@ void	fdf_control(t_fdf *fdf)
 			draw.y = draw.row * draw.tile_height;
 			draw.x_offset -= (draw.tile_width / 2);
 		}
-		mlx_put_pixel(img, draw.x_offset + draw.x, draw.y_offset + draw.y, COLOUR);
+		//printf("x_off %d, x %d, y_off %d, y %d\n",
+		//draw.x_offset, draw.x, draw.y_offset, draw.y
+		//);
+		mlx_put_pixel(draw.img, draw.x_offset + draw.x, draw.y_offset + draw.y, COLOUR);
 		//find next point across
 		//draw line to it
 		//plot_line(&draw);
@@ -72,8 +79,8 @@ void	fdf_control(t_fdf *fdf)
 		current = current->next;
 	}
 	//mlx_loop_hook(fdf->mlx, hooksu, fdf->mlx);
-	mlx_loop(fdf->mlx);
-	mlx_terminate(fdf->mlx);
+	mlx_loop(draw.mlx);
+	mlx_terminate(draw.mlx);
 
 	fdf->exit_status = RETURN_SUCCESS;
 	return ;

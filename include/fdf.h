@@ -61,7 +61,6 @@ typedef struct s_fdf
 	int	test_parser;
 	int	help;
 	int	exit_status;
-	mlx_t	*mlx;
 	t_coord	*coord_list;
 }		t_fdf;
 
@@ -76,6 +75,8 @@ typedef struct s_draw
 	uint32_t	tile_width;
 	uint32_t	tile_height;
 	uint32_t	row;
+	mlx_t		*mlx;
+	mlx_image_t	*img;
 }			t_draw;
 
 

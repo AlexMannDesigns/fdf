@@ -41,6 +41,15 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 	return (TRUE);
 }
 
+static void	newline_configure(t_draw *draw, int *i)
+{
+	draw->x = 0;
+	*i = 0;
+	(draw->row)++;
+	draw->y = draw->row * draw->tile_height;
+	draw->x_offset -= (draw->tile_width / 2);
+}
+
 void	fdf_control(t_fdf *fdf)
 {	
 	t_coord	*current;
@@ -57,13 +66,7 @@ void	fdf_control(t_fdf *fdf)
 	while (current)
 	{
 		if (i == fdf->width)
-		{
-			draw.x = 0;
-			i = 0;
-			(draw.row)++;
-			draw.y = draw.row * draw.tile_height;
-			draw.x_offset -= (draw.tile_width / 2);
-		}
+			newline_configure(&draw, &i);
 		//printf("x_off %d, x %d, y_off %d, y %d\n",
 		//draw.x_offset, draw.x, draw.y_offset, draw.y
 		//);

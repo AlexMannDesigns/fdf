@@ -1,6 +1,8 @@
 
 #include "fdf.h"
 
+#include <math.h>
+
 #define WIDTH 800
 #define HEIGHT 512
 #define BPP sizeof(int32_t)
@@ -54,14 +56,40 @@ static void	newline_configure(t_draw *draw, int *i)
 static void	plot_line(t_draw *draw)
 {
 	// line drawing algo goes here
-	printf("x0 %d x1 %d | y0 %d y1 %d\n",
-		draw->x0,
+	uint32_t	x, y, p, dx, dy;
+
+	if (draw->end_row)
+		return ;
+	
+	dx = draw->x1 - draw->x0;
+	dy = draw->y1 - draw->y0;
+	x = draw->x0;
+	y = draw->y0;
+	p = (2 * dy) - dx;
+	/*
+	printf("x0 %d y0 %d | x1 %d y1 %d | dx %d dy %d\n",
+		x,
+		y,
 		draw->x1,
-		draw->y0,
-		draw->y1
-	);
-	if (!draw->end_row)
-		mlx_put_pixel(draw->img, draw->x0, draw->y0, COLOUR);
+		draw->y1,
+		dx,
+		dy
+	);*/
+	ft_putendl("***");
+	while (x < draw->x1)
+	{
+		printf("x = %d y = %d p = %d\n", x, y, p);
+		mlx_put_pixel(draw->img, x, y, COLOUR);
+		if (p >= 0)
+		{
+			y++;
+			p = p + (2 * dy) - (2 * dx);
+		}
+		else
+			p = p + (2 * dy);	
+		
+		x++;
+	}
 	return ;
 }
 
@@ -81,7 +109,10 @@ static int	find_points(t_draw *draw, t_coord *current)
 	draw->y0 += draw->tile_height;
 
 	if (next->x == 0)
+	{
+		ft_putendl("wow wa wee wa");
 		draw->end_row = TRUE;
+	}
 	else
 	{
 		draw->end_row = FALSE;

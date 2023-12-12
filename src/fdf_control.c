@@ -56,7 +56,8 @@ static void	newline_configure(t_draw *draw, int *i)
 static void	plot_line(t_draw *draw)
 {
 	// line drawing algo goes here
-	uint32_t	x, y, p, dx, dy;
+	uint32_t	x, y, dx, dy;
+	int		p;
 
 	if (draw->end_row)
 		return ;
@@ -65,7 +66,7 @@ static void	plot_line(t_draw *draw)
 	dy = draw->y1 - draw->y0;
 	x = draw->x0;
 	y = draw->y0;
-	p = (2 * dy) - dx;
+	p = (int) (2 * dy) - dx;
 	/*
 	printf("x0 %d y0 %d | x1 %d y1 %d | dx %d dy %d\n",
 		x,
@@ -80,14 +81,12 @@ static void	plot_line(t_draw *draw)
 	{
 		printf("x = %d y = %d p = %d\n", x, y, p);
 		mlx_put_pixel(draw->img, x, y, COLOUR);
-		if (p >= 0)
+		if (p > 0)
 		{
 			y++;
-			p = p + (2 * dy) - (2 * dx);
+			p -= (2 * dx);
 		}
-		else
-			p = p + (2 * dy);	
-		
+		p += (2 * dy);	
 		x++;
 	}
 	return ;
@@ -109,10 +108,7 @@ static int	find_points(t_draw *draw, t_coord *current)
 	draw->y0 += draw->tile_height;
 
 	if (next->x == 0)
-	{
-		ft_putendl("wow wa wee wa");
 		draw->end_row = TRUE;
-	}
 	else
 	{
 		draw->end_row = FALSE;

@@ -66,8 +66,8 @@ typedef struct s_fdf
 
 typedef struct s_draw
 {
-	uint32_t	x;
-	uint32_t	y;
+	uint32_t	x0;
+	uint32_t	y0;
 	uint32_t	x1;
 	uint32_t	y1;
 	uint32_t	x_offset;
@@ -75,6 +75,7 @@ typedef struct s_draw
 	uint32_t	tile_width;
 	uint32_t	tile_height;
 	uint32_t	row;
+	int		end_row;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 }			t_draw;

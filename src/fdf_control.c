@@ -43,18 +43,52 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 
 static void	newline_configure(t_draw *draw, int *i)
 {
-	draw->x = 0;
+	draw->x0 = 0;
 	*i = 0;
 	(draw->row)++;
-	draw->y = draw->row * draw->tile_height;
+	draw->y0 = draw->row * draw->tile_height;
 	draw->x_offset -= (draw->tile_width / 2);
 	return ;
 }
 
 static void	plot_line(t_draw *draw)
 {
-	mlx_put_pixel(draw->img, draw->x_offset + draw->x, draw->y_offset + draw->y, COLOUR);
+	// line drawing algo goes here
+	printf("x0 %d x1 %d | y0 %d y1 %d\n",
+		draw->x0,
+		draw->x1,
+		draw->y0,
+		draw->y1
+	);
+	if (!draw->end_row)
+		mlx_put_pixel(draw->img, draw->x0, draw->y0, COLOUR);
 	return ;
+}
+
+static int	find_points(t_draw *draw, t_coord *current)
+{
+	// check next is not NULL
+	// check x value of next node.
+	// if next x < current x then we are at the end of the row
+	//	- this should not happen due to if check in fdf_control loop
+	//
+	t_coord	*next;
+
+	next = current->next;
+	if (!next)
+		return (FALSE);
+	draw->x0 = draw->x_offset + (draw->tile_width * current->x);
+	draw->y0 += draw->tile_height;
+
+	if (next->x == 0)
+		draw->end_row = TRUE;
+	else
+	{
+		draw->end_row = FALSE;
+		draw->x1 = draw->x_offset + (draw->tile_width * next->x);
+		draw->y1 = draw->y0 + draw->tile_height;
+	}	
+	return (TRUE);
 }
 
 void	fdf_control(t_fdf *fdf)
@@ -66,8 +100,10 @@ void	fdf_control(t_fdf *fdf)
 	if (!draw_setup(fdf, &draw))
 		return ;	
 
-	printf("width = %d | height = %d | offset = %d\n", draw.tile_width, draw.tile_height, draw.x_offset);
-//	row = column = 0;
+	printf("width = %d | height = %d | offset = %d\n",
+		draw.tile_width,
+		draw.tile_height,
+		draw.x_offset);
 	i = 0;
 	current = fdf->coord_list;
 	while (current)
@@ -81,16 +117,15 @@ void	fdf_control(t_fdf *fdf)
 		//draw line to it
 		//find next point down
 		//draw line to it
+		if (!find_points(&draw, current))
+			break ;
 		plot_line(&draw);
-		draw.x += draw.tile_width;
-		draw.y += draw.tile_height;	
 		i++;
 		current = current->next;
 	}
 	//mlx_loop_hook(fdf->mlx, hooksu, fdf->mlx);
 	mlx_loop(draw.mlx);
 	mlx_terminate(draw.mlx);
-
 	fdf->exit_status = RETURN_SUCCESS;
 	return ;
 }

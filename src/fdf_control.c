@@ -53,20 +53,6 @@ static void	newline_configure(t_draw *draw, int *i)
 	return ;
 }
 
-static void	plot_line(t_draw *draw)
-{
-	// line drawing algo goes here
-	uint32_t	x, y, dx, dy;
-	int		p;
-
-	if (draw->end_row)
-		return ;
-	
-	dx = draw->x1 - draw->x0;
-	dy = draw->y1 - draw->y0;
-	x = draw->x0;
-	y = draw->y0;
-	p = (int) (2 * dy) - dx;
 	/*
 	printf("x0 %d y0 %d | x1 %d y1 %d | dx %d dy %d\n",
 		x,
@@ -76,18 +62,49 @@ static void	plot_line(t_draw *draw)
 		dx,
 		dy
 	);*/
-	ft_putendl("***");
-	while (x < draw->x1)
+
+static void	plot_line(t_draw *draw)
+{
+	// line drawing algo goes here
+	int	x, y, dx, dy, sx, sy, error, e2;
+
+	if (draw->end_row)
+		return ;
+	
+	dx = ft_abs(draw->x1 - draw->x0);
+	dy = -(ft_abs(draw->y1 - draw->y0));
+	x = (int) draw->x0;
+	y = (int) draw->y0;
+	sx = 1;
+	sy = 1;
+	if (x > (int) draw->x1)
+		sx = -1;
+	if (y > (int) draw->y1)
+		sy = -1;
+	error = dx + dy;
+
+//	ft_putendl("***");
+	while (TRUE)
 	{
-		printf("x = %d y = %d p = %d\n", x, y, p);
+		//printf("x = %d y = %d p = %d\n", x, y, p);
 		mlx_put_pixel(draw->img, x, y, COLOUR);
-		if (p > 0)
+		if (x == (int) draw->x1 && y == (int) draw->y1)
+			break ;
+		e2 = 2 * error;
+		if (e2 >= dy)
 		{
-			y++;
-			p -= (2 * dx);
+			if (x == (int) draw->x1)
+				break ;
+			error = error + dy;
+			x = x + sx;
 		}
-		p += (2 * dy);	
-		x++;
+		if (e2 <= dx)
+		{
+			if (y == (int) draw->y1)
+				break ;
+			error = error + dx;
+			y = y + sy;
+		}
 	}
 	return ;
 }
@@ -140,10 +157,6 @@ void	fdf_control(t_fdf *fdf)
 		//printf("x_off %d, x %d, y_off %d, y %d\n",
 		//draw.x_offset, draw.x, draw.y_offset, draw.y
 		//);
-		//find next point across
-		//draw line to it
-		//find next point down
-		//draw line to it
 		if (!find_points(&draw, current))
 			break ;
 		plot_line(&draw);

@@ -1,13 +1,6 @@
 
 #include "fdf.h"
 
-#include <math.h>
-
-#define WIDTH 800
-#define HEIGHT 512
-#define BPP sizeof(int32_t)
-#define	COLOUR 0XFFFF00FF
-
 // TODO re-implement RETURN_SUCCESS/ERROR as EXIT_SUCCESS/FAILURE ??
 
 /*
@@ -62,56 +55,7 @@ static void	newline_configure(t_draw *draw, int *i)
 		dx,
 		dy
 	);*/
-
-static void	plot_line(t_draw *draw)
-{
-	// line drawing algo goes here
-	int	x, y, dx, dy, sx, sy, error, e2;
-
-	if (draw->end_row)
-	{
-		draw->end_row = FALSE;
-		return ;
-	}
-	dx = ft_abs(draw->x1 - draw->x0);
-	dy = -(ft_abs(draw->y1 - draw->y0));
-	x = (int) draw->x0;
-	y = (int) draw->y0;
-	sx = 1;
-	sy = 1;
-	if (x > (int) draw->x1)
-		sx = -1;
-	if (y > (int) draw->y1)
-		sy = -1;
-	error = dx + dy;
-
-//	ft_putendl("***");
-	while (TRUE)
-	{
-		//printf("x = %d y = %d p = %d\n", x, y, p);
-		mlx_put_pixel(draw->img, x, y, COLOUR);
-		if (x == (int) draw->x1 && y == (int) draw->y1)
-			break ;
-		e2 = 2 * error;
-		if (e2 >= dy)
-		{
-			if (x == (int) draw->x1)
-				break ;
-			error = error + dy;
-			x = x + sx;
-		}
-		if (e2 <= dx)
-		{
-			if (y == (int) draw->y1)
-				break ;
-			error = error + dx;
-			y = y + sy;
-		}
-	}
-	return ;
-}
-
-static int	find_next_point_across(t_draw *draw, t_coord *current)
+static void	find_next_point_across(t_draw *draw, t_coord *current)
 {
 	// check next is not NULL
 	// check x value of next node.
@@ -122,38 +66,46 @@ static int	find_next_point_across(t_draw *draw, t_coord *current)
 
 	next = current->next;
 	if (!next)
-		return (FALSE);
+	{
+		draw->end_of_row = TRUE;
+		return ;
+	}
 	draw->x0 = draw->x_offset + (draw->tile_width * current->x);
 	draw->y0 += draw->tile_height;
 
 	if (next->x == 0)
-		draw->end_row = TRUE;
+		draw->end_of_row = TRUE;
 	else
 	{
-		draw->end_row = FALSE;
+		draw->end_of_row = FALSE;
 		draw->x1 = draw->x_offset + (draw->tile_width * next->x);
 		draw->y1 = draw->y0 + draw->tile_height;
 	}	
-	return (TRUE);
+	return ;
 }
 
-static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
+static void	find_next_point_down(t_draw *draw, t_coord *current, int width)
 {
 	t_coord	*next;
 	int	i;
 
+	if (draw->last_row)
+		return ;
 	i = 0;
 	next = current;
 	while (i < width)
 	{
 		next = next->next;
 		if (!next)
-			return (FALSE);
+		{
+			draw->last_row = TRUE;
+			return ;
+		}
 		i++;
-	} // this loop could be optimised with a 'last_row' flag
+	} 
 	draw->x1 = draw->x_offset + (draw->tile_width * next->x) - (draw->tile_width / 2);
 	draw->y1 = draw->y0 + draw->tile_height;
-	return (TRUE);
+	return ;
 }
 
 void	fdf_control(t_fdf *fdf)
@@ -164,29 +116,19 @@ void	fdf_control(t_fdf *fdf)
 
 	if (!draw_setup(fdf, &draw))
 		return ;	
-
-	printf("width = %d | height = %d | offset = %d\n",
-		draw.tile_width,
-		draw.tile_height,
-		draw.x_offset);
 	i = 0;
 	current = fdf->coord_list;
 	while (current)
 	{
 		if (i == fdf->width)
 			newline_configure(&draw, &i);
-		//printf("x_off %d, x %d, y_off %d, y %d\n",
-		//draw.x_offset, draw.x, draw.y_offset, draw.y
-		//);
-		if (!find_next_point_across(&draw, current))
-			break ;
-		plot_line(&draw);
-		if (find_next_point_down(&draw, current, fdf->width))
-			plot_line(&draw);	
+		find_next_point_across(&draw, current);
+		plot_line(&draw, FALSE);
+		find_next_point_down(&draw, current, fdf->width);
+		plot_line(&draw, TRUE);	
 		i++;
 		current = current->next;
 	}
-	//mlx_loop_hook(fdf->mlx, hooksu, fdf->mlx);
 	mlx_loop(draw.mlx);
 	mlx_terminate(draw.mlx);
 	fdf->exit_status = RETURN_SUCCESS;

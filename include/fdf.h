@@ -42,6 +42,11 @@
 # define ERROR_INVALID_LENGTH "Error: all lines must be of equal length"
 # define ERROR_MALLOC "Error: malloc failed"
 
+# define WIDTH 800
+# define HEIGHT 512
+# define BPP sizeof(int32_t)
+# define COLOUR 0XFFFF00FF
+
 
 /***** STRUCTS *****/
 
@@ -75,7 +80,8 @@ typedef struct s_draw
 	uint32_t	tile_width;
 	uint32_t	tile_height;
 	uint32_t	row;
-	int		end_row;
+	int		end_of_row;
+	int		last_row;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 }			t_draw;
@@ -91,6 +97,9 @@ void    print_array(char **arr); //TODO delete
 
 /* map_parser.c */
 int     map_parser_control(t_fdf *fdf, char *path);
+
+/* plot_line.c */
+void	plot_line(t_draw *draw, int drawing_down);
 
 /* utils.c */
 int	print_error(int ret, char *msg);

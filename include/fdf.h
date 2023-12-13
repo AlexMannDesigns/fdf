@@ -86,6 +86,17 @@ typedef struct s_draw
 	mlx_image_t	*img;
 }			t_draw;
 
+typedef struct s_algo
+{
+	int	x;
+	int	y;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	error;
+	int	e2;
+}		t_algo;
 
 /***** FUNCTIONS *****/
 

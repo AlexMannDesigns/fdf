@@ -3,23 +3,6 @@
 
 // TODO re-implement RETURN_SUCCESS/ERROR as EXIT_SUCCESS/FAILURE ??
 
-/*
-static int	get_rgba(int r, int g, int b, int a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
-
-static void	hooksu(void *param)
-{
-	const mlx_t	*mlx;
-
-	mlx = param;
-	printf("WIDTH: %d | HEIGHT: %d | COLOUR: %0#10x\n",
-		mlx->width,
-		mlx->height,
-		get_rgba(255, 0, 0, 255));
-}
-*/
 static int	draw_setup(t_fdf *fdf, t_draw *draw)
 {
 	ft_bzero((void *) draw, sizeof(t_draw));
@@ -27,11 +10,11 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 	if (!draw->mlx)
 		return (FALSE); // Error handling for mlx42 needed	
 	draw->img = mlx_new_image(draw->mlx, WIDTH, HEIGHT);
-	//ft_memset(img->pixels, 0x00, img->width * img->height * BPP);
 	mlx_image_to_window(draw->mlx, draw->img, 0, 0); //draw image from top left corner
 	draw->y_offset = 10; //make this more scalable
 	draw->tile_width = draw->img->width / fdf->width / 2;
-	draw->x_offset = (draw->img->width / 2) - ((fdf->width * draw->tile_width) / 2);
+	draw->x_offset = (draw->img->width / 2);
+	draw->x_offset -= ((fdf->width * draw->tile_width) / 2);
 	draw->tile_height = draw->img->width / fdf->width / 3;
 	return (TRUE);
 }
@@ -46,22 +29,8 @@ static void	newline_configure(t_draw *draw, int *i)
 	return ;
 }
 
-	/*
-	printf("x0 %d y0 %d | x1 %d y1 %d | dx %d dy %d\n",
-		x,
-		y,
-		draw->x1,
-		draw->y1,
-		dx,
-		dy
-	);*/
 static void	find_next_point_across(t_draw *draw, t_coord *current)
 {
-	// check next is not NULL
-	// check x value of next node.
-	// if next x < current x then we are at the end of the row
-	//	- this should not happen due to if check in fdf_control loop
-	//
 	t_coord	*next;
 
 	next = current->next;
@@ -103,7 +72,8 @@ static void	find_next_point_down(t_draw *draw, t_coord *current, int width)
 		}
 		i++;
 	} 
-	draw->x1 = draw->x_offset + (draw->tile_width * next->x) - (draw->tile_width / 2);
+	draw->x1 = (draw->tile_width * next->x) - (draw->tile_width / 2);
+	draw->x1 += draw->x_offset;
 	draw->y1 = draw->y0 + draw->tile_height;
 	return ;
 }

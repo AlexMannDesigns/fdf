@@ -69,8 +69,10 @@ static void	plot_line(t_draw *draw)
 	int	x, y, dx, dy, sx, sy, error, e2;
 
 	if (draw->end_row)
+	{
+		draw->end_row = FALSE;
 		return ;
-	
+	}
 	dx = ft_abs(draw->x1 - draw->x0);
 	dy = -(ft_abs(draw->y1 - draw->y0));
 	x = (int) draw->x0;
@@ -109,7 +111,7 @@ static void	plot_line(t_draw *draw)
 	return ;
 }
 
-static int	find_points(t_draw *draw, t_coord *current)
+static int	find_next_point_across(t_draw *draw, t_coord *current)
 {
 	// check next is not NULL
 	// check x value of next node.
@@ -135,6 +137,25 @@ static int	find_points(t_draw *draw, t_coord *current)
 	return (TRUE);
 }
 
+static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
+{
+	t_coord	*next;
+	int	i;
+
+	i = 0;
+	next = current;
+	while (i < width)
+	{
+		next = next->next;
+		if (!next)
+			return (FALSE);
+		i++;
+	} // this loop could be optimised with a 'last_row' flag
+	draw->x1 = draw->x_offset + (draw->tile_width * next->x) - (draw->tile_width / 2);
+	draw->y1 = draw->y0 + draw->tile_height;
+	return (TRUE);
+}
+
 void	fdf_control(t_fdf *fdf)
 {	
 	t_coord	*current;
@@ -157,9 +178,11 @@ void	fdf_control(t_fdf *fdf)
 		//printf("x_off %d, x %d, y_off %d, y %d\n",
 		//draw.x_offset, draw.x, draw.y_offset, draw.y
 		//);
-		if (!find_points(&draw, current))
+		if (!find_next_point_across(&draw, current))
 			break ;
 		plot_line(&draw);
+		if (find_next_point_down(&draw, current, fdf->width))
+			plot_line(&draw);	
 		i++;
 		current = current->next;
 	}

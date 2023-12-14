@@ -19,6 +19,14 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 	return (TRUE);
 }
 
+/**
+ * Every time we reach the end of a row (x-axis), we have to reset
+ * x0 and i to zero and increment the row count.
+ * The x_offset (i.e. the point the drawing starts), is slightly decremented
+ * in order to create the isometric layout.
+ * The 'angle' of the projection is determined by the distance between the rows
+ * and x_offset.
+ */
 static void	newline_configure(t_draw *draw, int *i)
 {
 	draw->x0 = 0;
@@ -29,6 +37,13 @@ static void	newline_configure(t_draw *draw, int *i)
 	return ;
 }
 
+/**
+ * Here we first check if we have reached the end of a row or final coord, as these
+ * need to be handled differently. We do not need to draw across to the next point in 
+ * this scenario. 
+ * Otherwise, we are finding the current and next x&y coords from the list and adding
+ * them to the draw struct.
+ */
 static void	find_next_point_across(t_draw *draw, t_coord *current)
 {
 	t_coord	*next;
@@ -41,7 +56,6 @@ static void	find_next_point_across(t_draw *draw, t_coord *current)
 	}
 	draw->x0 = draw->x_offset + (draw->tile_width * current->x);
 	draw->y0 += draw->tile_height;
-
 	if (next->x == 0)
 		draw->end_of_row = TRUE;
 	else
@@ -53,6 +67,14 @@ static void	find_next_point_across(t_draw *draw, t_coord *current)
 	return ;
 }
 
+/*
+ * Finding the next point down is a little more tricky. We need to move by the
+ * width of the image down the list. We have a last_row flag to optimise this
+ * process slightly, as we do not need to draw down from any of the last row 
+ * of coords.
+ * We do not need to set x0 and y0 here as these will not have changed from
+ * find_next_point_across().
+ */
 static void	find_next_point_down(t_draw *draw, t_coord *current, int width)
 {
 	t_coord	*next;

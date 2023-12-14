@@ -55,6 +55,10 @@ static int bresenham(t_algo *algo, t_draw *draw)
 	return (TRUE);
 }
 
+/*
+ * Called in a loop from fdf_control, handles the drawing of a line between
+ * two points in the image.
+ */
 void	plot_line(t_draw *draw, int drawing_down)
 {
 	// line drawing algo goes here

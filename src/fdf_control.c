@@ -15,6 +15,8 @@
  */
 static int	draw_setup(t_fdf *fdf, t_draw *draw)
 {
+	// TODO check neither WIDTH nor HEIGHT exceed int_max, or some arbitrary lower value,
+	// e.g. something reasonable given the dimensions of modern monitors
 	ft_bzero((void *) draw, sizeof(t_draw));
 	draw->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
 	if (!draw->mlx)

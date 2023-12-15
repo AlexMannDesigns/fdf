@@ -18,7 +18,7 @@ static void	plot_line_setup(t_draw *draw, t_algo *algo)
 	return ;
 }
 
-static int check_end(t_draw *draw, int drawing_down)
+static int	check_end(t_draw *draw, int drawing_down)
 {
 	if (draw->end_of_row)
 	{
@@ -26,6 +26,19 @@ static int check_end(t_draw *draw, int drawing_down)
 		return (TRUE);
 	}
 	if (drawing_down && draw->last_row)
+		return (TRUE);
+	return (FALSE);
+}
+
+/*
+ * Checks that the x and y coords respect the boundaries of the mlx image
+ * before attempting to plot them.
+ * Casting values to int is safe because we set limits for these in
+ * fdf_control.c::draw_setup 
+ */
+static int	check_boundaries(t_draw *draw, int x, int y)
+{
+	if (x < (int) draw->img->width && y < (int) draw->img->height)
 		return (TRUE);
 	return (FALSE);
 }
@@ -71,7 +84,8 @@ void	plot_line(t_draw *draw, int drawing_down)
 	while (TRUE)
 	{
 		//printf("x = %d y = %d p = %d\n", x, y, p);
-		mlx_put_pixel(draw->img, algo.x, algo.y, COLOUR);
+		if (check_boundaries(draw, algo.x, algo.y))
+			mlx_put_pixel(draw->img, algo.x, algo.y, COLOUR);
 		if (!bresenham(&algo, draw))
 			break ;
 	}

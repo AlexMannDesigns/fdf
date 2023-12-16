@@ -86,8 +86,8 @@ sooo a 3x3 grid would look like this:
        .         .         .         .
             .         .         .
                  .         .
-                      .     
-      
+                      .           
+
 
 TODO:
 
@@ -110,7 +110,15 @@ TODO:
 		- negative value
 		- lt int_min gt int_max? 
 
-- 
+Line drawing algo has now been implemented.
+
+Look further into the geometry of isometric projections:
+https://planetcalc.com/8316/
+https://en.wikipedia.org/wiki/Isometric_projection
+https://en.wikipedia.org/wiki/Rotation_matrix#
+
+Looks like some funky matrix calculations will be needed to factor in the z axis of
+each point. 
 
 
 

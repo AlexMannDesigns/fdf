@@ -55,6 +55,8 @@ static void	newline_configure(t_draw *draw, int *i)
  * this scenario. 
  * Otherwise, we are finding the current and next x&y coords from the list and adding
  * them to the draw struct.
+ * The z axis essentially pulls the point up and to the left, provided it is positive.
+ *
  */
 static void	find_next_point_across(t_draw *draw, t_coord *current)
 {

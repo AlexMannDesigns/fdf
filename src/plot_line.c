@@ -78,6 +78,7 @@ void	plot_line(t_draw *draw)
 {
 	t_algo	algo;
 
+	projection_control(draw);
 	plot_line_setup(draw, &algo);
 	while (TRUE)
 	{

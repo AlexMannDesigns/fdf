@@ -16,9 +16,14 @@ static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
 	return ;
 }
 
-void	projection_control(t_draw *draw, int *x, int *y, int *z)
+void	projection_control(t_draw *draw)
 {
 	// this might become an array of function pointers/jump table thing
-	isometric_projection(draw, x, y, z);
+	if (draw->current)
+	{
+		draw->current = FALSE;
+		isometric_projection(draw, &(draw->x0), &(draw->y0), &(draw->z0));
+	}
+	isometric_projection(draw, &(draw->x1), &(draw->y1), &(draw->z1));
 	return ;
 }

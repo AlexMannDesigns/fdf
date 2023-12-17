@@ -80,6 +80,7 @@ typedef struct s_draw
 	int		x1;
 	int		y1;
 	int		z1;
+	int		current;
 	int		x_offset;
 	int		y_offset;
 	int		z_factor;
@@ -116,7 +117,7 @@ int     map_parser_control(t_fdf *fdf, char *path);
 void	plot_line(t_draw *draw);
 
 /* projection_control.c */
-void	projection_control(t_draw *draw, int *x, int *y, int *z);
+void	projection_control(t_draw *draw);
 
 /* utils.c */
 int	print_error(int ret, char *msg);

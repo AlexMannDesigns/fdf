@@ -43,7 +43,6 @@ static int	find_next_point_across(t_draw *draw, t_coord *current)
 	draw->x1 = next->x;
 	draw->y1 = next->y;
 	draw->z1 = next->z;
-	projection_control(draw, &(draw->x1), &(draw->y1), &(draw->z1));
 	return (TRUE);
 }
 
@@ -75,20 +74,19 @@ static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
 	draw->x1 = next->x; 
 	draw->y1 = next->y;
 	draw->z1 = next->z;
-	projection_control(draw, &(draw->x1), &(draw->y1), &(draw->z1));
 	return (TRUE);
 }
 
 /*
- * Takes x,y,z values of the current coord and multiplies by the scaling and
- * formula for the chosen projection.
+ * Takes x,y,z values of the current coord. Sets 'current' flag in the draw
+ * struct to ensure projection calcs are only completed on its values once.
  */
 static void	set_current_point(t_draw *draw, t_coord *current)
 {
+	draw->current = TRUE;
 	draw->x0 = current->x;
 	draw->y0 = current->y;
 	draw->z0 = current->z;
-	projection_control(draw, &(draw->x0), &(draw->y0), &(draw->z0));
 	return ;
 }
 

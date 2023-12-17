@@ -28,6 +28,11 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 	return (TRUE);
 }
 
+/*
+ * The x,y,z coords from the next node are taken to give us the end point of
+ * the horizontal line. The exception being when we get to the end of the row
+ * which is checked at the start of the function.
+ */
 static int	find_next_point_across(t_draw *draw, t_coord *current)
 {
 	t_coord	*next;
@@ -42,6 +47,12 @@ static int	find_next_point_across(t_draw *draw, t_coord *current)
 	return (TRUE);
 }
 
+/*
+ * For each point, we also draw down to the point at the same x axis but on the
+ * y axis + 1. This means we need to loop forward in coord nodes by the width
+ * of the image. A flag has been added to optimise the final row. We no longer
+ * need to draw down to the next row once we have reached the final row.
+ */
 static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
 {
 	t_coord	*next;
@@ -68,7 +79,10 @@ static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
 	return (TRUE);
 }
 
-
+/*
+ * Takes x,y,z values of the current coord and multiplies by the scaling and
+ * formula for the chosen projection.
+ */
 static void	set_current_point(t_draw *draw, t_coord *current)
 {
 	draw->x0 = current->x;
@@ -78,6 +92,12 @@ static void	set_current_point(t_draw *draw, t_coord *current)
 	return ;
 }
 
+/*
+ * Control loop which handles the drawing of the image. This is 'where the
+ * magic happens'. We loop through the coord list, at each point mapping out
+ * the next coordinate across and down, and plotting lines between them,
+ * until we reach the end of the image.
+ */
 void	fdf_control(t_fdf *fdf)
 {	
 	t_coord	*current;

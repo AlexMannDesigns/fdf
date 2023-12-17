@@ -79,10 +79,8 @@ void	plot_line(t_draw *draw)
 	t_algo	algo;
 
 	plot_line_setup(draw, &algo);
-//	ft_putendl("***");
 	while (TRUE)
 	{
-		//printf("x = %d y = %d p = %d\n", x, y, p);
 		if (check_boundaries(draw, algo.x, algo.y))
 		{
 			mlx_put_pixel(

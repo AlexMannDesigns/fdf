@@ -120,6 +120,14 @@ https://en.wikipedia.org/wiki/Rotation_matrix#
 Looks like some funky matrix calculations will be needed to factor in the z axis of
 each point. 
 
+Now that isometric projection has been implemented, we need to rethink the logic
+of the program.
+	- fdf_control should be re-factored, the isometric projection math can
+	be applied to each point in a far less clunky manner  without having to
+	pass a boolean arg.
+	- we can also start to flesh out draw set-up and think about adding some
+	keyboard controls to move the image around and resize it.
+
 
 
  

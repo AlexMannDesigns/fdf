@@ -46,6 +46,9 @@
 # define HEIGHT 512
 # define BPP sizeof(int32_t)
 # define COLOUR 0XFFFF00FF
+#define COS_30 0.8660254
+#define SIN_30 0.5
+
 
 
 /***** STRUCTS *****/
@@ -79,8 +82,8 @@ typedef struct s_draw
 	uint32_t	z1;
 	uint32_t	x_offset;
 	uint32_t	y_offset;
+	uint32_t	z_factor;
 	uint32_t	tile_width;
-	uint32_t	tile_height;
 	uint32_t	row;
 	int		end_of_row;
 	int		last_row;

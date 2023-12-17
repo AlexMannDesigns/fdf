@@ -1,6 +1,11 @@
 
 #include "fdf.h"
 
+/*
+ * This is the setup for bresenham's line drawing algo.
+ * We need the difference in value between the xy coords of the two points.
+ * We also need to determine the direction that the line goes.
+ */
 static void	plot_line_setup(t_draw *draw, t_algo *algo)
 {
 	ft_bzero((void *) algo, sizeof(t_algo));
@@ -18,6 +23,8 @@ static void	plot_line_setup(t_draw *draw, t_algo *algo)
 	return ;
 }
 
+// This is kinda horrible, we should be able to come up with a better
+// process that alleviates the need to do this.
 static int	check_end(t_draw *draw, int drawing_down)
 {
 	if (draw->end_of_row)
@@ -38,14 +45,22 @@ static int	check_end(t_draw *draw, int drawing_down)
  */
 static int	check_boundaries(t_draw *draw, int x, int y)
 {
-	if (x >= 0 && y >= 0
-		&& x < (int) draw->img->width && y < (int) draw->img->height)
+	if (
+		x >= 0
+		&& y >= 0
+		&& x < (int) draw->img->width
+		&& y < (int) draw->img->height
+	)
 		return (TRUE);
 	return (FALSE);
 }
 
 /*
  * My implementation of Bresenham's line drawing algo.
+ * In essence, we are moving pixel by pixel between the two xy coords at the
+ * beginning and end of each line. This algo determines whether we use the
+ * next pixel across or down in order to estimate a straight line through
+ * the grid.
  */
 static int bresenham(t_algo *algo, t_draw *draw)
 {
@@ -75,9 +90,9 @@ static int bresenham(t_algo *algo, t_draw *draw)
  */
 void	plot_line(t_draw *draw, int drawing_down)
 {
-	// line drawing algo goes here
 	t_algo	algo;
-	
+
+	// TODO get rid, see comments where function is defined.	
 	if (check_end(draw, drawing_down))
 		return ;
 	plot_line_setup(draw, &algo);

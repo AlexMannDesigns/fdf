@@ -30,7 +30,7 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 	draw->tile_width = draw->img->width / fdf->width / 1.2;
 	draw->x_offset = (draw->img->width / 1.5);
 	draw->x_offset -= ((fdf->width * draw->tile_width) / 2);
-	draw->tile_height = draw->img->width / fdf->width / 1.2;
+	draw->z_factor = 5;
 	return (TRUE);
 }
 
@@ -71,6 +71,8 @@ static void	find_next_point_across(t_draw *draw, t_coord *current)
 		draw->end_of_row = TRUE;
 		return ;
 	}
+	// this should be done elsewhere...
+	// How about we just find the current point at the start of each iteration?
 	draw->x0 = current->x;
 	draw->y0 = current->y;
 	draw->z0 = current->z;
@@ -118,17 +120,6 @@ static void	find_next_point_down(t_draw *draw, t_coord *current, int width)
 	draw->z1 = next->z;
 	return ;
 }
-/*
-static int	check_boundaries(t_draw *draw, int x, int y)
-{
-	if (x >= 0 && x < (int) draw->img->width
-		&& y >= 0 && y < (int) draw->img->height)
-		return (TRUE);
-	return (FALSE);
-}*/
-
-#define COS_30 0.8660254
-#define SIN_30 0.5
 
 void	isometric_projection_test(t_draw *draw, int draw_across)
 {
@@ -136,20 +127,21 @@ void	isometric_projection_test(t_draw *draw, int draw_across)
 	int y;
 	int z;
 
+	// Horrible code repetition here, please fix
 	if (draw_across)
 	{
 		x = draw->x0 * draw->tile_width;
 		y = draw->y0 * draw->tile_width;
-		z = draw->z0 * 2;
+		z = draw->z0 * draw->z_factor;
 		draw->x0 = draw->x_offset + (int) ((x - y) * COS_30);
-		draw->y0 = (int) (-z + (x + y) * SIN_30);
+		draw->y0 = draw->y_offset + (int) (-z + (x + y) * SIN_30);
 	}
-	printf("x = %d | y = %d\n", draw->x0, draw->y0);
+	//printf("x = %d | y = %d\n", draw->x0, draw->y0);
 	x = draw->x1 * draw->tile_width;
 	y = draw->y1 * draw->tile_width;
-	z = draw->z1 * 2;	
+	z = draw->z1 * draw->z_factor;	
 	draw->x1 = draw->x_offset + (int) ((x - y) * COS_30);
-	draw->y1 = (int) (-z + (x + y) * SIN_30);
+	draw->y1 = draw->y_offset + (int) (-z + (x + y) * SIN_30);
 	return ;
 }
 
@@ -157,29 +149,25 @@ void	fdf_control(t_fdf *fdf)
 {	
 	t_coord	*current;
 	t_draw	draw;
-	//int	i;
 
 	if (!draw_setup(fdf, &draw))
 		return ;	
-	//i = 0;
 	current = fdf->coord_list;
+	// this loop is a bit of a mess. We should find a way of doing this
+	// without having to pass around booleans.
 	while (current)
 	{
-		/*
-		if (check_boundaries(&draw, draw.x0, draw.y0))
-			mlx_put_pixel(draw.img, draw.x0, draw.y0, COLOUR);
-		(void) i;	
-		
-		if (i == fdf->width)
-			newline_configure(&draw, &i);
-		*/
+		//set current point first...?
+		// this is happening in find_next_point_across() then skipped in
+		// find_next_point_down() -> might be more readable if it happens separately
 		find_next_point_across(&draw, current);
 		isometric_projection_test(&draw, TRUE);
 		plot_line(&draw, FALSE);
+		
 		find_next_point_down(&draw, current, fdf->width);
 		isometric_projection_test(&draw, FALSE);
 		plot_line(&draw, TRUE);	
-		//i++;
+		
 		current = current->next;
 	}
 	mlx_loop(draw.mlx);

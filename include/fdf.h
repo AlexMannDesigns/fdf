@@ -45,9 +45,9 @@
 # define WIDTH 1600
 # define HEIGHT 1024
 # define BPP sizeof(int32_t)
-# define COLOUR 0XFFFF00FF
-#define COS_30 0.8660254
-#define SIN_30 0.5
+# define COLOUR 0XFF00FFFF
+# define COS_30 0.8660254
+# define SIN_30 0.5
 
 
 

@@ -16,6 +16,24 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 	if (!draw->mlx)
 		return (FALSE); // Error handling for mlx42 needed	
 	draw->img = mlx_new_image(draw->mlx, WIDTH, HEIGHT);
+	int i, j;
+	i = 0;
+	while (i < HEIGHT)
+	{
+		j = 0;
+		while (j < WIDTH)
+		{
+			mlx_put_pixel(
+				draw->img,
+				(uint32_t) j,
+				(uint32_t) i,
+				0X000000FF
+			);
+			j++;
+		}
+		i++;
+	}
+
 	mlx_image_to_window(draw->mlx, draw->img, 0, 0); //draw image from top left corner
 	// All of this below may not be necessary
 	// This was put in place to ensure the image was drawn in the 
@@ -24,7 +42,7 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 	draw->tile_width = draw->img->width / fdf->width / 1.5;
 	draw->x_offset = draw->img->width / 1.5;
 	draw->x_offset -= (fdf->width * draw->tile_width) / 2;
-	draw->z_factor = 2;
+	draw->z_factor = 4;
 	return (TRUE);
 }
 

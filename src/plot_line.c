@@ -38,7 +38,8 @@ static int	check_end(t_draw *draw, int drawing_down)
  */
 static int	check_boundaries(t_draw *draw, int x, int y)
 {
-	if (x < (int) draw->img->width && y < (int) draw->img->height)
+	if (x >= 0 && y >= 0
+		&& x < (int) draw->img->width && y < (int) draw->img->height)
 		return (TRUE);
 	return (FALSE);
 }

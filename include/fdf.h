@@ -73,8 +73,10 @@ typedef struct s_draw
 {
 	uint32_t	x0;
 	uint32_t	y0;
+	uint32_t	z0;
 	uint32_t	x1;
 	uint32_t	y1;
+	uint32_t	z1;
 	uint32_t	x_offset;
 	uint32_t	y_offset;
 	uint32_t	tile_width;

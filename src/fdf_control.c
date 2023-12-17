@@ -23,11 +23,14 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 		return (FALSE); // Error handling for mlx42 needed	
 	draw->img = mlx_new_image(draw->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(draw->mlx, draw->img, 0, 0); //draw image from top left corner
-	draw->y_offset = 10; //make this more scalable
-	draw->tile_width = draw->img->width / fdf->width / 2;
-	draw->x_offset = (draw->img->width / 2);
+	// All of this below may not be necessary
+	// This was put in place to ensure the image was drawn in the 
+	// centre of the window before the projection algo was determined
+	draw->y_offset = 10; 
+	draw->tile_width = draw->img->width / fdf->width / 1.2;
+	draw->x_offset = (draw->img->width / 1.5);
 	draw->x_offset -= ((fdf->width * draw->tile_width) / 2);
-	draw->tile_height = draw->img->width / fdf->width / 3;
+	draw->tile_height = draw->img->width / fdf->width / 1.2;
 	return (TRUE);
 }
 
@@ -38,7 +41,7 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
  * in order to create the isometric layout.
  * The 'angle' of the projection is determined by the distance between the rows
  * and x_offset.
- */
+
 static void	newline_configure(t_draw *draw, int *i)
 {
 	draw->x0 = 0;
@@ -47,9 +50,9 @@ static void	newline_configure(t_draw *draw, int *i)
 	draw->y0 = draw->row * draw->tile_height;
 	draw->x_offset -= (draw->tile_width / 2);
 	return ;
-}
+}*/
 
-/**
+/*
  * Here we first check if we have reached the end of a row or final coord, as these
  * need to be handled differently. We do not need to draw across to the next point in 
  * this scenario. 
@@ -57,7 +60,7 @@ static void	newline_configure(t_draw *draw, int *i)
  * them to the draw struct.
  * The z axis essentially pulls the point up and to the left, provided it is positive.
  *
- */
+*/
 static void	find_next_point_across(t_draw *draw, t_coord *current)
 {
 	t_coord	*next;
@@ -68,15 +71,17 @@ static void	find_next_point_across(t_draw *draw, t_coord *current)
 		draw->end_of_row = TRUE;
 		return ;
 	}
-	draw->x0 = draw->x_offset + (draw->tile_width * current->x);
-	draw->y0 += draw->tile_height;
+	draw->x0 = current->x;
+	draw->y0 = current->y;
+	draw->z0 = current->z;
 	if (next->x == 0)
 		draw->end_of_row = TRUE;
 	else
 	{
 		draw->end_of_row = FALSE;
-		draw->x1 = draw->x_offset + (draw->tile_width * next->x);
-		draw->y1 = draw->y0 + draw->tile_height;
+		draw->x1 = next->x;
+		draw->y1 = next->y;
+		draw->z1 = next->z;
 	}	
 	return ;
 }
@@ -88,7 +93,7 @@ static void	find_next_point_across(t_draw *draw, t_coord *current)
  * of coords.
  * We do not need to set x0 and y0 here as these will not have changed from
  * find_next_point_across().
- */
+*/
 static void	find_next_point_down(t_draw *draw, t_coord *current, int width)
 {
 	t_coord	*next;
@@ -108,9 +113,43 @@ static void	find_next_point_down(t_draw *draw, t_coord *current, int width)
 		}
 		i++;
 	} 
-	draw->x1 = (draw->tile_width * next->x) - (draw->tile_width / 2);
-	draw->x1 += draw->x_offset;
-	draw->y1 = draw->y0 + draw->tile_height;
+	draw->x1 = next->x; 
+	draw->y1 = next->y;
+	draw->z1 = next->z;
+	return ;
+}
+/*
+static int	check_boundaries(t_draw *draw, int x, int y)
+{
+	if (x >= 0 && x < (int) draw->img->width
+		&& y >= 0 && y < (int) draw->img->height)
+		return (TRUE);
+	return (FALSE);
+}*/
+
+#define COS_30 0.8660254
+#define SIN_30 0.5
+
+void	isometric_projection_test(t_draw *draw, int draw_across)
+{
+	int x;
+	int y;
+	int z;
+
+	if (draw_across)
+	{
+		x = draw->x0 * draw->tile_width;
+		y = draw->y0 * draw->tile_width;
+		z = draw->z0 * 2;
+		draw->x0 = draw->x_offset + (int) ((x - y) * COS_30);
+		draw->y0 = (int) (-z + (x + y) * SIN_30);
+	}
+	printf("x = %d | y = %d\n", draw->x0, draw->y0);
+	x = draw->x1 * draw->tile_width;
+	y = draw->y1 * draw->tile_width;
+	z = draw->z1 * 2;	
+	draw->x1 = draw->x_offset + (int) ((x - y) * COS_30);
+	draw->y1 = (int) (-z + (x + y) * SIN_30);
 	return ;
 }
 
@@ -118,21 +157,29 @@ void	fdf_control(t_fdf *fdf)
 {	
 	t_coord	*current;
 	t_draw	draw;
-	int	i;
+	//int	i;
 
 	if (!draw_setup(fdf, &draw))
 		return ;	
-	i = 0;
+	//i = 0;
 	current = fdf->coord_list;
 	while (current)
 	{
+		/*
+		if (check_boundaries(&draw, draw.x0, draw.y0))
+			mlx_put_pixel(draw.img, draw.x0, draw.y0, COLOUR);
+		(void) i;	
+		
 		if (i == fdf->width)
 			newline_configure(&draw, &i);
+		*/
 		find_next_point_across(&draw, current);
+		isometric_projection_test(&draw, TRUE);
 		plot_line(&draw, FALSE);
 		find_next_point_down(&draw, current, fdf->width);
+		isometric_projection_test(&draw, FALSE);
 		plot_line(&draw, TRUE);	
-		i++;
+		//i++;
 		current = current->next;
 	}
 	mlx_loop(draw.mlx);

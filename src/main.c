@@ -67,25 +67,3 @@ int	main(int argc, char **argv)
 	return (free_and_exit(&fdf));
 }
 
-/*	
-	int bible_fd;
-	int alice_fd;
-
-	char *alice;
-	char *bible;
-
-	bible_fd = open("maps/bible.fdf", O_RDONLY);
-	alice_fd = open("maps/alice.fdf", O_RDONLY);
-	int i = 0;
-	while (i < 100)
-	{
-		alice = get_next_line(alice_fd);
-		bible = get_next_line(bible_fd);
-		printf("alice = %s\nbible = %s\n", alice, bible);
-		free(alice);
-		free(bible);
-		i++;
-	}
-	while (1)
-		;
-*/

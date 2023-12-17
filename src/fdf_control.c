@@ -24,7 +24,7 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 	draw->tile_width = draw->img->width / fdf->width / 1.5;
 	draw->x_offset = draw->img->width / 1.5;
 	draw->x_offset -= (fdf->width * draw->tile_width) / 2;
-	draw->z_factor = 5;
+	draw->z_factor = 2;
 	return (TRUE);
 }
 

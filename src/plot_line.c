@@ -23,20 +23,6 @@ static void	plot_line_setup(t_draw *draw, t_algo *algo)
 	return ;
 }
 
-// This is kinda horrible, we should be able to come up with a better
-// process that alleviates the need to do this.
-static int	check_end(t_draw *draw, int drawing_down)
-{
-	if (draw->end_of_row)
-	{
-		draw->end_of_row = FALSE;
-		return (TRUE);
-	}
-	if (drawing_down && draw->last_row)
-		return (TRUE);
-	return (FALSE);
-}
-
 /*
  * Checks that the x and y coords respect the boundaries of the mlx image
  * before attempting to plot them.
@@ -88,13 +74,10 @@ static int bresenham(t_algo *algo, t_draw *draw)
  * Called in a loop from fdf_control, handles the drawing of a line between
  * two points in the image.
  */
-void	plot_line(t_draw *draw, int drawing_down)
+void	plot_line(t_draw *draw)
 {
 	t_algo	algo;
 
-	// TODO get rid, see comments where function is defined.	
-	if (check_end(draw, drawing_down))
-		return ;
 	plot_line_setup(draw, &algo);
 //	ft_putendl("***");
 	while (TRUE)

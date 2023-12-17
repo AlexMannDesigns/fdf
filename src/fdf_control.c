@@ -2,16 +2,10 @@
 #include "fdf.h"
 
 // TODO re-implement RETURN_SUCCESS/ERROR as EXIT_SUCCESS/FAILURE ??
-// TODO make draw_setup better (see comment)
 
 /**
  * This is where we set up the window, mlx image and scale of the wireframe
  * we draw into it.
- * At the moment, each 'square' of the grid is scaled based on the width
- * of the mlx image. This is to prevent attempting to draw outside of it
- * and causing a crash (i.e. put_pixel outside to coords outside of img
- * boundaries). We could implement better error handling to allow more
- * flexibility and user control here...
  */
 static int	draw_setup(t_fdf *fdf, t_draw *draw)
 {

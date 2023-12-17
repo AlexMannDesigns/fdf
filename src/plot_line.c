@@ -84,7 +84,14 @@ void	plot_line(t_draw *draw)
 	{
 		//printf("x = %d y = %d p = %d\n", x, y, p);
 		if (check_boundaries(draw, algo.x, algo.y))
-			mlx_put_pixel(draw->img, algo.x, algo.y, COLOUR);
+		{
+			mlx_put_pixel(
+				draw->img,
+				(uint32_t) algo.x,
+				(uint32_t) algo.y,
+				COLOUR
+			);
+		}
 		if (!bresenham(&algo, draw))
 			break ;
 	}

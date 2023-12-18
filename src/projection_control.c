@@ -19,6 +19,9 @@ static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
 void	projection_control(t_draw *draw)
 {
 	// this might become an array of function pointers/jump table thing
+	// As this is called twice per coord (once for drawing across, once for down)
+	// we need a check to ensure we only do the projection math on the origin 
+	// coord once.
 	if (draw->current)
 	{
 		draw->current = FALSE;

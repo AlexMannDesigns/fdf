@@ -1,7 +1,6 @@
 
 #include "fdf.h"
 
-# define BLACK 0X000000FF
 
 // TODO re-implement RETURN_SUCCESS/ERROR as EXIT_SUCCESS/FAILURE ??
 // TODO check neither WIDTH nor HEIGHT exceed int_max, or some arbitrary lower value,
@@ -37,12 +36,16 @@ int	mlx_setup(t_draw *draw)
 	return (TRUE);
 }
 
-void my_keyhook(mlx_key_data_t keydata, void* param)
+void	set_fdf_values(mlx_key_data_t keydata, void* fdf_ptr)
 {
+	t_fdf	*fdf;
+
+	fdf = (t_fdf *) fdf_ptr;
 	// If we PRESS the 'J' key, print "Hello".
 	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
-		puts("Hello ");
-	(void) param;
+		fdf->draw_values.x += 5;	
+	draw_wireframe(fdf);
+	return ;
 }
 
 /*
@@ -52,14 +55,14 @@ void my_keyhook(mlx_key_data_t keydata, void* param)
  */
 void	fdf_control(t_fdf *fdf)
 {	
-	t_draw	draw;
-
-	if (!mlx_setup(&draw))
+	if (!mlx_setup(&(fdf->draw)))
 		return ;
-	mlx_key_hook(draw.mlx, &my_keyhook, NULL);
-	draw_wireframe(fdf, &draw);
-	mlx_loop(draw.mlx);
-	mlx_terminate(draw.mlx);
+	mlx_key_hook(fdf->draw.mlx, &set_fdf_values, (void *) fdf);
+	fdf->draw_values.width = 20;
+	fdf->draw_values.z = 3;
+	draw_wireframe(fdf);
+	mlx_loop(fdf->draw.mlx);
+	mlx_terminate(fdf->draw.mlx);
 	fdf->exit_status = RETURN_SUCCESS;
 	return ;
 }

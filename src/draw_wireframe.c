@@ -8,11 +8,10 @@
  */
 static int	draw_setup(t_fdf *fdf, t_draw *draw)
 {
-	draw->y_offset = 10; 
-	draw->tile_width = draw->img->width / fdf->width / 2;
-	draw->x_offset = draw->img->width / 1.5;
-	draw->x_offset -= (fdf->width * draw->tile_width) / 2;
-	draw->z_factor = -3;
+	draw->y_offset = fdf->draw_values.y; 
+	draw->tile_width = fdf->draw_values.width;
+	draw->x_offset = fdf->draw_values.x;
+	draw->z_factor = fdf->draw_values.z;
 	return (TRUE);
 }
 
@@ -84,10 +83,12 @@ static void	set_current_point(t_draw *draw, t_coord *current)
  * the next coordinate across and down, and plotting lines between them,
  * until we reach the end of the image.
  */
-void	draw_wireframe(t_fdf *fdf, t_draw *draw)
+void	draw_wireframe(t_fdf *fdf)
 {
 	t_coord	*current;
+	t_draw	*draw;
 	
+	draw = &(fdf->draw);
 	if (!draw_setup(fdf, draw))
 		return ;	
 	current = fdf->coord_list;

@@ -46,6 +46,7 @@
 # define HEIGHT 1024
 # define BPP sizeof(int32_t)
 # define COLOUR 0XFF00FFFF
+# define BLACK 0X000000FF
 # define COS_30 0.8660254
 # define SIN_30 0.5
 
@@ -60,17 +61,6 @@ typedef struct s_coord
 	int		z;
 	struct s_coord	*next;
 }			t_coord;
-
-typedef struct s_fdf
-{
-	char	*error;
-	int	width;
-	size_t	path_idx;
-	int	test_parser;
-	int	help;
-	int	exit_status;
-	t_coord	*coord_list;
-}		t_fdf;
 
 typedef struct s_draw
 {
@@ -91,6 +81,28 @@ typedef struct s_draw
 	mlx_image_t	*bg;
 }			t_draw;
 
+typedef struct s_draw_values
+{
+	int	x;
+	int	y;
+	int	z;
+	int	width;
+}		t_draw_values;
+
+typedef struct s_fdf
+{
+	char		*error;
+	int		width;
+	size_t		path_idx;
+	int		test_parser;
+	int		help;
+	int		exit_status;
+	t_coord		*coord_list;
+	t_draw		draw;
+	t_draw_values	draw_values;
+}			t_fdf;
+
+
 typedef struct s_algo
 {
 	int	x;
@@ -106,7 +118,7 @@ typedef struct s_algo
 /***** FUNCTIONS *****/
 
 /* draw_wireframe.c */
-void	draw_wireframe(t_fdf *fdf, t_draw *draw);
+void	draw_wireframe(t_fdf *fdf);
 
 /* fdf_control.c */
 void	fdf_control(t_fdf *fdf);

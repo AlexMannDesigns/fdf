@@ -8,6 +8,7 @@
  */
 static int	draw_setup(t_fdf *fdf, t_draw *draw)
 {
+	draw->last_row = FALSE;
 	draw->y_offset = fdf->draw_values.y; 
 	draw->tile_width = fdf->draw_values.width;
 	draw->x_offset = fdf->draw_values.x;

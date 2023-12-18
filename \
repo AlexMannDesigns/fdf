@@ -36,10 +36,39 @@ int	mlx_setup(t_draw *draw)
 	return (TRUE);
 }
 
-static void	set_initial_draw_values(t_fdf *fdf)
+void	set_fdf_values(mlx_key_data_t keydata, void* fdf_ptr)
 {
-	// TODO figure out some math to centre the image in the window
-	fdf->draw_values.x = (fdf->draw.img->width / 2) - (fdf->width * 20 / 3);
+	t_fdf	*fdf;
+
+	fdf = (t_fdf *) fdf_ptr;
+	// If we PRESS the 'J' key, print "Hello".
+	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
+		fdf->draw_values.x += 10;
+	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
+		fdf->draw_values.x -= 10;
+	if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_PRESS)
+		fdf->draw_values.y += 10;
+	if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
+		fdf->draw_values.y -= 10;
+	if (keydata.key == MLX_KEY_EQUAL && keydata.action == MLX_PRESS)
+		fdf->draw_values.width += 1;
+	if (keydata.key == MLX_KEY_MINUS && keydata.action == MLX_PRESS)
+		fdf->draw_values.width -= 1;
+	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
+		fdf->draw_values.z += 1;
+	if (keydata.key == MLX_KEY_K && keydata.action == MLX_PRESS)
+		fdf->draw_values.z -= 1;
+
+	mlx_delete_image(fdf->draw.mlx, fdf->draw.img);
+	fdf->draw.img = mlx_new_image(fdf->draw.mlx, WIDTH, HEIGHT);
+	mlx_image_to_window(fdf->draw.mlx, fdf->draw.img, 0, 0); 
+	draw_wireframe(fdf);
+	return ;
+}
+
+void	set_initial_draw_values(t_fdf *fdf)
+{
+	fdf->draw_values.x = fdf->draw.img->width / 2;
 	fdf->draw_values.y = 20; 
 	fdf->draw_values.width = 20;
 	fdf->draw_values.z = 3;
@@ -55,9 +84,11 @@ void	fdf_control(t_fdf *fdf)
 {	
 	if (!mlx_setup(&(fdf->draw)))
 		return ;
+	mlx_key_hook(fdf->draw.mlx, &set_fdf_values, (void *) fdf);
+	
 	set_initial_draw_values(fdf);
 	draw_wireframe(fdf);
-	mlx_key_hook(fdf->draw.mlx, &key_events, (void *) fdf);
+
 	mlx_loop(fdf->draw.mlx);
 	mlx_terminate(fdf->draw.mlx);
 	fdf->exit_status = RETURN_SUCCESS;

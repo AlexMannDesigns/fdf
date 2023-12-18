@@ -123,6 +123,9 @@ void	draw_wireframe(t_fdf *fdf);
 /* fdf_control.c */
 void	fdf_control(t_fdf *fdf);
 
+/* key_events.c */
+void	key_events(mlx_key_data_t keydata, void* fdf_ptr);
+
 /* main.c */
 void    print_array(char **arr); //TODO delete
 

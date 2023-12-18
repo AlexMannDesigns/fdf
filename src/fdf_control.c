@@ -39,10 +39,10 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 	// This was put in place to ensure the image was drawn in the 
 	// centre of the window before the projection algo was determined
 	draw->y_offset = 10; 
-	draw->tile_width = draw->img->width / fdf->width ;
+	draw->tile_width = draw->img->width / fdf->width / 2;
 	draw->x_offset = draw->img->width / 1.5;
 	draw->x_offset -= (fdf->width * draw->tile_width) / 2;
-	draw->z_factor = 3;
+	draw->z_factor = -3;
 	return (TRUE);
 }
 

@@ -129,5 +129,6 @@ of the program.
 	keyboard controls to move the image around and resize it.
 
 
+INT16_MAX may be a good limit to impose on the drawn img as this is what MLX42 uses
 
  

@@ -88,6 +88,7 @@ typedef struct s_draw
 	int		last_row;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	mlx_image_t	*bg;
 }			t_draw;
 
 typedef struct s_algo
@@ -103,6 +104,9 @@ typedef struct s_algo
 }		t_algo;
 
 /***** FUNCTIONS *****/
+
+/* draw_wireframe.c */
+void	draw_wireframe(t_fdf *fdf, t_draw *draw);
 
 /* fdf_control.c */
 void	fdf_control(t_fdf *fdf);

@@ -16,7 +16,7 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 	if (!draw->mlx)
 		return (FALSE); // Error handling for mlx42 needed	
 	draw->img = mlx_new_image(draw->mlx, WIDTH, HEIGHT);
-/*	int i, j;
+	int i, j;
 	i = 0;
 	while (i < HEIGHT)
 	{
@@ -33,7 +33,7 @@ static int	draw_setup(t_fdf *fdf, t_draw *draw)
 		}
 		i++;
 	}
-*/
+
 	mlx_image_to_window(draw->mlx, draw->img, 0, 0); //draw image from top left corner
 	// All of this below may not be necessary
 	// This was put in place to ensure the image was drawn in the 

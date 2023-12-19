@@ -67,6 +67,53 @@ static int bresenham(t_algo *algo, t_draw *draw)
 }
 
 /*
+ * No algo needed if the points are level (either horizontally or vertically).
+ * We can just increment the x or y value in a loop, plotting pixels as we go.
+static int	check_horizontal_and_vertical(t_draw *draw)
+{
+	uint32_t	a;
+	uint32_t	b;
+
+	if (draw->x0 == draw->x1)
+	{
+		a = (uint32_t) draw->y0;
+		b = (uint32_t) draw->y1;
+		while (a < b)
+		{
+			if (check_boundaries(draw, draw->x0, (int) a))
+				mlx_put_pixel(draw->img, draw->x0, a, COLOUR);
+			a++;
+		}
+		while (a > b)
+		{
+			if (check_boundaries(draw, draw->x0, (int) a))
+				mlx_put_pixel(draw->img, draw->x0, a, COLOUR);
+			a--;
+		}
+		return (TRUE);
+	}
+	if (draw->y0 == draw->y1)
+	{
+		a = (uint32_t) draw->x0;
+		b = (uint32_t) draw->x1;
+		while (a < b)
+		{
+			if (check_boundaries(draw, (int) a, draw->y0))
+				mlx_put_pixel(draw->img, a, draw->y0, COLOUR);
+			a++;
+		}
+		while (a > b)
+		{
+			if (check_boundaries(draw, (int) a, draw->y0))
+				mlx_put_pixel(draw->img, a, draw->y0, COLOUR);
+			a--;
+		}
+		return (TRUE);
+	}
+	return (FALSE);
+}
+*/
+/*
  * Called in a loop from fdf_control, handles the drawing of a line between
  * two points in the image.
  */
@@ -76,6 +123,8 @@ void	plot_line(t_draw *draw)
 
 	projection_control(draw);
 	plot_line_setup(draw, &algo);
+//	if (check_horizontal_and_vertical(draw))
+//		return ;
 	while (TRUE)
 	{
 		if (check_boundaries(draw, algo.x, algo.y))

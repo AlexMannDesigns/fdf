@@ -14,6 +14,8 @@ static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
 	// TODO may need to separate out some of the math here
 	// Multiplying these values up leads to image stretching rather than scaling
 	// when zooming in and out, changing the slope angles
+	// zooming also gets 'slower' as the image gets bigger
+	// perhaps the width/z-factor math should be handled elsewhere and applied differently
 	_x = (*x) * draw->tile_width;
 	_y = (*y) * draw->tile_width;
 	_z = (*z) * draw->z_factor;	

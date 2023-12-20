@@ -37,6 +37,10 @@ int	mlx_setup(t_draw *draw)
 	return (TRUE);
 }
 
+/*
+ * Sets default values for the image projection.
+ * Scales image based on window size and initialises it in the centre.
+ */
 static void	set_initial_draw_values(t_fdf *fdf)
 {
 	// TODO figure out some math to centre the image in the window

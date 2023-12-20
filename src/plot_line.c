@@ -68,7 +68,8 @@ static int bresenham(t_algo *algo, t_draw *draw)
 
 /*
  * No algo needed if the points are level (either horizontally or vertically).
- * We can just increment the x or y value in a loop, plotting pixels as we go.
+ * We can just increment/decrement the x or y value in a loop, plotting pixels
+ * as we go.
 static int	check_horizontal_and_vertical(t_draw *draw)
 {
 	uint32_t	a;
@@ -127,6 +128,7 @@ void	plot_line(t_draw *draw)
 //		return ;
 	while (TRUE)
 	{
+		// maybe create a 'plot_pixel' util function?
 		if (check_boundaries(draw, algo.x, algo.y))
 		{
 			mlx_put_pixel(

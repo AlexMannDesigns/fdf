@@ -1,12 +1,19 @@
 
 #include "fdf.h"
 
+/*
+ * Handles the necessary geometry for plotting coordinates in isometric
+ * projection.
+ */
 static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
 {
 	int	_x;
 	int	_y;
 	int	_z;
 	
+	// TODO may need to separate out some of the math here
+	// Multiplying these values up leads to image stretching rather than scaling
+	// when zooming in and out, changing the slope angles
 	_x = (*x) * draw->tile_width;
 	_y = (*y) * draw->tile_width;
 	_z = (*z) * draw->z_factor;	

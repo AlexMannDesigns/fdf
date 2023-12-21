@@ -24,20 +24,6 @@ static void	plot_line_setup(t_draw *draw, t_algo *algo)
 }
 
 /*
- * Checks that the x and y coords respect the boundaries of the mlx image
- * before attempting to plot them.
- * Casting values to int is safe because we set limits for these in
- * fdf_control.c::draw_setup 
- */
-static int	check_boundaries(t_draw *draw, int x, int y)
-{
-	if (x >= 0 && y >= 0 && x < (int) draw->img->width
-		&& y < (int) draw->img->height)
-		return (TRUE);
-	return (FALSE);
-}
-
-/*
  * My implementation of Bresenham's line drawing algo.
  * In essence, we are moving pixel by pixel between the two xy coords at the
  * beginning and end of each line. This algo determines whether we use the
@@ -128,16 +114,7 @@ void	plot_line(t_draw *draw)
 //		return ;
 	while (TRUE)
 	{
-		// maybe create a 'plot_pixel' util function?
-		if (check_boundaries(draw, algo.x, algo.y))
-		{
-			mlx_put_pixel(
-				draw->img,
-				(uint32_t) algo.x,
-				(uint32_t) algo.y,
-				COLOUR
-			);
-		}
+		draw_pixel(draw, algo.x, algo.y);
 		if (!bresenham(&algo, draw))
 			break ;
 	}

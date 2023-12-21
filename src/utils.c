@@ -33,3 +33,18 @@ int	print_error(int ret, char *msg)
 	ft_putchar_fd('\n', STDERR_FILENO);
 	return (ret);
 }
+
+/*
+ * Checks coord respect img boundaries before plotting a pixel there
+ */
+void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y)
+{
+	if (
+		x >= 0
+		&& y >= 0
+		&& x < draw->img->width
+		&& y < draw->img->height
+	)
+		mlx_put_pixel(draw->img, x, y, COLOUR);
+	return;
+}

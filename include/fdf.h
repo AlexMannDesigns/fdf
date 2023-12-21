@@ -141,5 +141,6 @@ void	projection_control(t_draw *draw);
 /* utils.c */
 int	print_error(int ret, char *msg);
 int     free_and_exit(t_fdf *fdf);
+void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y);
 
 #endif

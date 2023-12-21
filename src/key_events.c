@@ -28,9 +28,9 @@ void	key_events(mlx_key_data_t keydata, void* fdf_ptr)
 	if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
 		fdf->draw_values.y -= 10;
 	if (keydata.key == MLX_KEY_EQUAL && keydata.action == MLX_PRESS)
-		fdf->draw_values.width += 1;
+		fdf->draw_values.width *= 1.05;
 	if (keydata.key == MLX_KEY_MINUS && keydata.action == MLX_PRESS)
-		fdf->draw_values.width -= 1;
+		fdf->draw_values.width *= 0.95;
 	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
 		fdf->draw_values.z += 1;
 	if (keydata.key == MLX_KEY_K && keydata.action == MLX_PRESS)

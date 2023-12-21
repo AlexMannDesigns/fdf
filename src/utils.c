@@ -40,11 +40,25 @@ int	print_error(int ret, char *msg)
 void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y)
 {
 	if (
-		x >= 0
+		draw->img
+		&& x >= 0
 		&& y >= 0
 		&& x < draw->img->width
 		&& y < draw->img->height
 	)
 		mlx_put_pixel(draw->img, x, y, COLOUR);
 	return;
+}
+
+/*
+ * Generates a new mlx image and draws it to the window.
+ */
+int	new_image(mlx_t *mlx, mlx_image_t **img)	
+{	
+	*img = mlx_new_image(mlx, WIDTH, HEIGHT); // can mlx_new_image() fail? 
+	if (!img)
+		return (print_error(FALSE, ERROR_MLX));
+	if (mlx_image_to_window(mlx, *img, 0, 0) == -1) //draw image from top left corner
+		return (print_error(FALSE, ERROR_MLX));
+	return (TRUE);
 }

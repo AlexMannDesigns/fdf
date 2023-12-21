@@ -90,7 +90,7 @@ void	draw_wireframe(t_fdf *fdf)
 	t_draw	*draw;
 	
 	draw = &(fdf->draw);
-	if (!draw_setup(fdf, draw))
+	if (!draw->mlx || !draw->img || !draw_setup(fdf, draw))
 		return ;	
 	current = fdf->coord_list;
 	while (current->next)

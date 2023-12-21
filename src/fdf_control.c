@@ -21,9 +21,8 @@ int	mlx_setup(t_draw *draw)
 	draw->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
 	if (!draw->mlx)
 		return (FALSE); // Error handling for mlx42 needed	
-	// maybe this process should be abstracted to a helper as we do it in 3 places now.
-	draw->bg = mlx_new_image(draw->mlx, WIDTH, HEIGHT); // can mlx_new_image() fail? 
-	mlx_image_to_window(draw->mlx, draw->bg, 0, 0); //draw image from top left corner
+	if (!new_image(draw->mlx, &(draw->bg)))
+		return (FALSE);
 	i = 0;
 	while (i < HEIGHT)
 	{
@@ -32,8 +31,8 @@ int	mlx_setup(t_draw *draw)
 			mlx_put_pixel(draw->bg, j++, i, BLACK);
 		i++;
 	}
-	draw->img = mlx_new_image(draw->mlx, WIDTH, HEIGHT);
-	mlx_image_to_window(draw->mlx, draw->img, 0, 0); //draw image from top left corner
+	if (!new_image(draw->mlx, &(draw->img)))
+		return (FALSE);
 	return (TRUE);
 }
 

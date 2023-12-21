@@ -4,8 +4,11 @@
 static void	re_draw_image(t_fdf *fdf)
 {
 	mlx_delete_image(fdf->draw.mlx, fdf->draw.img);
-	fdf->draw.img = mlx_new_image(fdf->draw.mlx, WIDTH, HEIGHT);
-	mlx_image_to_window(fdf->draw.mlx, fdf->draw.img, 0, 0); 
+	if (!new_image(fdf->draw.mlx, &(fdf->draw.img)))
+	{
+		mlx_terminate(fdf->draw.mlx);
+		exit(EXIT_FAILURE);
+	}
 	draw_wireframe(fdf);
 	return ;
 }

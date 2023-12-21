@@ -41,6 +41,7 @@
 # define ERROR_INVALID_VALUES "Error: map must only contain numeric characters, spaces: ' ', and newlines: '\\n'"
 # define ERROR_INVALID_LENGTH "Error: all lines must be of equal length"
 # define ERROR_MALLOC "Error: malloc failed"
+# define ERROR_MLX "Error: MLX42 function failed"
 
 # define WIDTH 1600
 # define HEIGHT 1024
@@ -142,5 +143,6 @@ void	projection_control(t_draw *draw);
 int	print_error(int ret, char *msg);
 int     free_and_exit(t_fdf *fdf);
 void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y);
+int	new_image(mlx_t *mlx, mlx_image_t **img);
 
 #endif

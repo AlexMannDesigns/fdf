@@ -4,6 +4,10 @@
 /*
  * Handles the necessary geometry for plotting coordinates in isometric
  * projection.
+ * We track the difference between current and original width so that z can
+ * be scaled accordingly. This gives a zoom effect when the width increases in
+ * size, rather than just stretching the image - i.e. the angles stay the same
+ * unless the value of z is changed directly.
  */
 static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
 {
@@ -12,13 +16,6 @@ static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
 	float	_z;
 	float	diff;
 
-	// TODO may need to separate out some of the math here
-	// Multiplying these values up leads to image stretching rather than scaling
-	// when zooming in and out, changing the slope angles
-	// zooming also gets 'slower' as the image gets bigger
-	// perhaps the width/z-factor math should be handled elsewhere and applied differently
-
-	// increment z_factor by % change in width??
 	_x = (float) (*x) * draw->tile_width;
 	_y = (float) (*y) * draw->tile_width;
 	_z = (float) (*z) * draw->z_factor;	

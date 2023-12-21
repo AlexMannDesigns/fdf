@@ -47,6 +47,7 @@ static void	set_initial_draw_values(t_fdf *fdf)
 	fdf->draw_values.y = 20; 
 	fdf->draw_values.width = 20;
 	fdf->draw_values.z = 1;
+	fdf->draw.orig_width = 20;
 	return ;
 }
 

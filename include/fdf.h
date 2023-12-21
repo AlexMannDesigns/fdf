@@ -77,6 +77,7 @@ typedef struct s_draw
 	int		z_factor;
 	int		tile_width;
 	int		last_row;
+	int		orig_width;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	mlx_image_t	*bg;

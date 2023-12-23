@@ -13,13 +13,21 @@ static int	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 	sign = 1;
 	if (a > b)
 		sign = -1;
-	while (a != b)
+	if (x)
 	{
-		if (x)
+		while (a != b)
+		{
 			draw_pixel(d, (uint32_t) a, (uint32_t) d->y0);
-		else
+			a += sign;
+		}
+	}
+	else
+	{
+		while (a != b)
+		{
 			draw_pixel(d, (uint32_t) d->x0, (uint32_t) a);
-		a += sign;
+			a += sign;
+		}
 	}
 	return (TRUE);	
 }

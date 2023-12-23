@@ -37,18 +37,12 @@ static int	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
  * We can just increment/decrement the x or y value in a loop, plotting pixels
  * as we go.
  */
-static int	check_horizontal_and_vertical(t_draw *draw)
+static int	check_horizontal_and_vertical(t_draw *d)
 {
-	if (draw->y0 == draw->y1)
-		return (draw_horizontal_vertical(draw,
-						draw->x0,
-						draw->x1,
-						TRUE));
-	if (draw->x0 == draw->x1)
-		return (draw_horizontal_vertical(draw,
-						draw->y0,
-						draw->y1,
-						FALSE));
+	if (d->y0 == d->y1)
+		return (draw_horizontal_vertical(d, d->x0, d->x1, TRUE));
+	if (d->x0 == d->x1)
+		return (draw_horizontal_vertical(d, d->y0, d->y1, FALSE));
 	return (FALSE);
 }
 

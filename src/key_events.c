@@ -15,7 +15,8 @@ static void	re_draw_image(t_fdf *fdf)
 
 void	key_events(mlx_key_data_t keydata, void* fdf_ptr)
 {
-	//TODO add functionality for press and hold? 
+	// TODO add functionality for press and hold? 
+	// TODO 5% of 0 is 0! fix this corner case for the zoom functionality 
 	t_fdf	*fdf;
 
 	fdf = (t_fdf *) fdf_ptr;

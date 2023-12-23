@@ -2,6 +2,49 @@
 #include "fdf.h"
 
 /*
+ * Plots either a horizontal or vertical line. In some situations 'a' will be 
+ * 'ahead' of 'b', for example when drawing an isometric projection. The
+ * sign variable takes care of this.
+ */
+static int	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
+{
+	int	sign;
+
+	sign = 1;
+	if (a > b)
+		sign = -1;
+	while (a != b)
+	{
+		if (x)
+			draw_pixel(d, (uint32_t) a, (uint32_t) d->y0);
+		else
+			draw_pixel(d, (uint32_t) d->x0, (uint32_t) a);
+		a += sign;
+	}
+	return (TRUE);	
+}
+
+/*
+ * No algo needed if the points are level (either horizontally or vertically).
+ * We can just increment/decrement the x or y value in a loop, plotting pixels
+ * as we go.
+ */
+static int	check_horizontal_and_vertical(t_draw *draw)
+{
+	if (draw->y0 == draw->y1)
+		return (draw_horizontal_vertical(draw,
+						draw->x0,
+						draw->x1,
+						TRUE));
+	if (draw->x0 == draw->x1)
+		return (draw_horizontal_vertical(draw,
+						draw->y0,
+						draw->y1,
+						FALSE));
+	return (FALSE);
+}
+
+/*
  * This is the setup for bresenham's line drawing algo.
  * We need the difference in value between the xy coords of the two points.
  * We also need to determine the direction that the line goes.
@@ -53,54 +96,6 @@ static int bresenham(t_algo *algo, t_draw *draw)
 }
 
 /*
- * No algo needed if the points are level (either horizontally or vertically).
- * We can just increment/decrement the x or y value in a loop, plotting pixels
- * as we go.
-static int	check_horizontal_and_vertical(t_draw *draw)
-{
-	uint32_t	a;
-	uint32_t	b;
-
-	if (draw->x0 == draw->x1)
-	{
-		a = (uint32_t) draw->y0;
-		b = (uint32_t) draw->y1;
-		while (a < b)
-		{
-			if (check_boundaries(draw, draw->x0, (int) a))
-				mlx_put_pixel(draw->img, draw->x0, a, COLOUR);
-			a++;
-		}
-		while (a > b)
-		{
-			if (check_boundaries(draw, draw->x0, (int) a))
-				mlx_put_pixel(draw->img, draw->x0, a, COLOUR);
-			a--;
-		}
-		return (TRUE);
-	}
-	if (draw->y0 == draw->y1)
-	{
-		a = (uint32_t) draw->x0;
-		b = (uint32_t) draw->x1;
-		while (a < b)
-		{
-			if (check_boundaries(draw, (int) a, draw->y0))
-				mlx_put_pixel(draw->img, a, draw->y0, COLOUR);
-			a++;
-		}
-		while (a > b)
-		{
-			if (check_boundaries(draw, (int) a, draw->y0))
-				mlx_put_pixel(draw->img, a, draw->y0, COLOUR);
-			a--;
-		}
-		return (TRUE);
-	}
-	return (FALSE);
-}
-*/
-/*
  * Called in a loop from fdf_control, handles the drawing of a line between
  * two points in the image.
  */
@@ -109,9 +104,9 @@ void	plot_line(t_draw *draw)
 	t_algo	algo;
 
 	projection_control(draw);
+	if (check_horizontal_and_vertical(draw))
+		return ;
 	plot_line_setup(draw, &algo);
-//	if (check_horizontal_and_vertical(draw))
-//		return ;
 	while (TRUE)
 	{
 		draw_pixel(draw, algo.x, algo.y);

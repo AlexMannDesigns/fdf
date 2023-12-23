@@ -6,7 +6,7 @@
  * 'ahead' of 'b', for example when drawing an isometric projection. The
  * sign variable takes care of this.
  */
-static int	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
+static void	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 {
 	int	sign;
 
@@ -20,16 +20,14 @@ static int	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 			draw_pixel(d, (uint32_t) a, (uint32_t) d->y0);
 			a += sign;
 		}
+		return ;
 	}
-	else
+	while (a != b)
 	{
-		while (a != b)
-		{
-			draw_pixel(d, (uint32_t) d->x0, (uint32_t) a);
-			a += sign;
-		}
+		draw_pixel(d, (uint32_t) d->x0, (uint32_t) a);
+		a += sign;
 	}
-	return (TRUE);	
+	return ;	
 }
 
 /*
@@ -40,9 +38,15 @@ static int	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 static int	check_horizontal_and_vertical(t_draw *d)
 {
 	if (d->y0 == d->y1)
-		return (draw_horizontal_vertical(d, d->x0, d->x1, TRUE));
+	{
+		draw_horizontal_vertical(d, d->x0, d->x1, TRUE);
+		return (TRUE);
+	}
 	if (d->x0 == d->x1)
-		return (draw_horizontal_vertical(d, d->y0, d->y1, FALSE));
+	{
+		draw_horizontal_vertical(d, d->y0, d->y1, FALSE);
+		return (TRUE);
+	}
 	return (FALSE);
 }
 

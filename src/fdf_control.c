@@ -52,9 +52,11 @@ static void	set_initial_draw_values(t_fdf *fdf)
 }
 
 /*
- * Control loop which handles the setup of the mlx functionality. 
- * Here we create our window and call our hooks. We also call the draw
- * function which handles the creation of the wireframe image itself.
+ * Control function which handles the setup of the mlx functionality. 
+ * Here we create our window and call our hooks. 
+ * We set some initial default values to center the fdf image in the window.
+ * We also call the draw function which handles the creation of the
+ * wireframe image itself.
  */
 void	fdf_control(t_fdf *fdf)
 {	

@@ -68,6 +68,12 @@ void	key_events(mlx_key_data_t keydata, void* fdf_ptr)
 		scale_image_event(fdf, keydata);
 	else if (keydata.key == MLX_KEY_J || keydata.key == MLX_KEY_K)
 		gradient_event(fdf, keydata);
+	else if (keydata.key == MLX_KEY_ESCAPE)
+	{
+		mlx_terminate(fdf->draw.mlx);
+		exit(EXIT_SUCCESS);
+	}
+	
 	re_draw_image(fdf);
 	return ;
 }

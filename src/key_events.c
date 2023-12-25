@@ -73,7 +73,6 @@ void	key_events(mlx_key_data_t keydata, void* fdf_ptr)
 		mlx_terminate(fdf->draw.mlx);
 		exit(EXIT_SUCCESS);
 	}
-	
 	re_draw_image(fdf);
 	return ;
 }

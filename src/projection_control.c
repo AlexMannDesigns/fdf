@@ -34,16 +34,29 @@ static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
 	_y = (float) (*y) * draw->tile_width;
 	_z = (float) (*z) * draw->z_factor;	
 
+
 	diff = (float) draw->tile_width - draw->orig_width;
 	_z *= (diff / draw->orig_width) + 1;
+	//_z = -_z
 	*x = draw->x_offset + (int) ((_x - _y) * COS_30);
 	*y = draw->y_offset + (int) (-_z + (_x + _y) * SIN_30);
-	/*
+
 	int temp;
 	temp = *x;
-	*x = -(*y) + 300;
-	*y = temp;
-	*/
+	// (90 - z must be positive)
+	//*x = -(*y) + 300;
+	//*y = temp;
+	
+
+	// (180 - z must be positive)
+	//*x = 1000 + -(*x);
+	//*y = 300 + -(*y);
+	//
+
+	// (270)
+	*x = *y;
+	*y = 1000 + -temp;
+	
 	printf("x = %d | y = %d\n", *x, *y);
 	return ;
 }

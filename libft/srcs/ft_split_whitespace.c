@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit_multi.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amann <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: amann <amann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:32:22 by amann             #+#    #+#             */
 /*   Updated: 2022/07/13 15:41:29 by amann            ###   ########.fr       */

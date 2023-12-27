@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_string_insert.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amann <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: amann <amann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:52:44 by amann             #+#    #+#             */
 /*   Updated: 2022/08/29 16:21:57 by amann            ###   ########.fr       */

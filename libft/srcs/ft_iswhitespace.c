@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amann <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: amann <amann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 17:27:31 by amann             #+#    #+#             */
 /*   Updated: 2021/12/01 17:28:12 by amann            ###   ########.fr       */

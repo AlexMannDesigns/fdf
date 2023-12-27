@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_is_valid_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amann <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: amann <amann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 14:44:32 by amann             #+#    #+#             */
 /*   Updated: 2022/07/25 15:07:24 by amann            ###   ########.fr       */

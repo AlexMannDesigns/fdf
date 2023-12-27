@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amann <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: amann <amann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:08 by amann             #+#    #+#             */
 /*   Updated: 2022/07/13 15:45:16 by amann            ###   ########.fr       */

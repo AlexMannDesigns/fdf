@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_parser.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 13:59:09 by amann             #+#    #+#             */
+/*   Updated: 2023/12/30 14:01:02 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
@@ -54,7 +65,7 @@ static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 		return (print_error(FALSE, ERROR_MALLOC));
 	coord->x = i;
 	coord->y = row;
-	coord->z = ft_atoi(val);	
+	coord->z = ft_atoi(val);
 	return (TRUE);
 }
 
@@ -71,7 +82,7 @@ static int	create_coords(t_fdf *fdf, char *line)
 {
 	static int	row;
 	char		**arr;
-	int		i;
+	int			i;
 
 	arr = ft_strsplit(line, SPACE);
 	if (arr == NULL)
@@ -104,7 +115,7 @@ static int	create_coords(t_fdf *fdf, char *line)
  */
 int	map_parser_control(t_fdf *fdf, char *path)
 {
-	int	fd;
+	int		fd;
 	char	*line;
 
 	if (!validate_file_name(path))
@@ -115,11 +126,10 @@ int	map_parser_control(t_fdf *fdf, char *path)
 	line = get_next_line(fd);
 	while (line)
 	{
-		//printf("%s length :%zu\n", line, ft_strlen(line));
 		if (!validate_line_chars(line))
 			return (print_error(FALSE, ERROR_INVALID_VALUES));
 		if (!create_coords(fdf, line))
-			return (FALSE); 	
+			return (FALSE);
 		ft_strdel(&line);
 		line = get_next_line(fd);
 	}

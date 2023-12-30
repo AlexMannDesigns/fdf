@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 14:03:15 by amann             #+#    #+#             */
+/*   Updated: 2023/12/30 14:04:54 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
@@ -21,7 +31,6 @@ int	free_and_exit(t_fdf *fdf)
 	}
 	return (fdf->exit_status);
 }
-
 
 /*
  * All-purpose error message printer
@@ -47,18 +56,18 @@ void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y)
 		&& y < draw->img->height
 	)
 		mlx_put_pixel(draw->img, x, y, COLOUR);
-	return;
+	return ;
 }
 
 /*
  * Generates a new mlx image and draws it to the window.
  */
-int	new_image(mlx_t *mlx, mlx_image_t **img)	
-{	
-	*img = mlx_new_image(mlx, WIDTH, HEIGHT); // can mlx_new_image() fail? 
+int	new_image(mlx_t *mlx, mlx_image_t **img)
+{
+	*img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!img)
 		return (print_error(FALSE, ERROR_MLX));
-	if (mlx_image_to_window(mlx, *img, 0, 0) == -1) //draw image from top left corner
+	if (mlx_image_to_window(mlx, *img, 0, 0) == -1)
 		return (print_error(FALSE, ERROR_MLX));
 	return (TRUE);
 }

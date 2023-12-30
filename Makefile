@@ -24,7 +24,10 @@ OBJS := $(patsubst %, $(OBJ_DIR)/%, $(SRC_FILES:.c=.o))
 
 GCC_FLAGS = -Wall -Wextra -Werror -g
 
-MLX_FLAGS = -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -lglfw -L"$(MLX_DIR)/build" -lmlx42
+#MLX_FLAGS = -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -lglfw -L"$(MLX_DIR)/build" -lmlx42
+#if on hive imac:
+MLX_FLAGS = -L"/Users/$(USER)/.brew/opt/glfw/lib/" -lglfw -L"$(MLX_DIR)/build" -lmlx42
+
 
 LIBFT_FLAGS := -L"$(LIBFT_DIR)" -lft
 

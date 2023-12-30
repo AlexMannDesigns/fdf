@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plot_line.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 14:01:19 by amann             #+#    #+#             */
+/*   Updated: 2023/12/30 14:02:03 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
 /*
- * Plots either a horizontal or vertical line. In some situations 'a' will be 
+ * Plots either a horizontal or vertical line. In some situations 'a' will be
  * 'ahead' of 'b', for example when drawing an isometric projection. The
  * sign variable takes care of this.
  */
@@ -27,7 +38,7 @@ static void	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 		draw_pixel(d, (uint32_t) d->x0, (uint32_t) a);
 		a += sign;
 	}
-	return ;	
+	return ;
 }
 
 /*
@@ -79,7 +90,7 @@ static void	plot_line_setup(t_draw *draw, t_algo *algo)
  * next pixel across or down in order to estimate a straight line through
  * the grid.
  */
-static int bresenham(t_algo *algo, t_draw *draw)
+static int	bresenham(t_algo *algo, t_draw *draw)
 {
 	if (algo->x == (int) draw->x1 && algo->y == (int) draw->y1)
 		return (FALSE);
@@ -121,4 +132,3 @@ void	plot_line(t_draw *draw)
 	}
 	return ;
 }
-

@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf_control.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 13:52:23 by amann             #+#    #+#             */
+/*   Updated: 2023/12/30 13:55:17 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
-
 
 // TODO re-implement RETURN_SUCCESS/ERROR as EXIT_SUCCESS/FAILURE ??
 // TODO check neither WIDTH nor HEIGHT exceed int_max, or some arbitrary lower value,
@@ -16,11 +26,11 @@ int	mlx_setup(t_draw *draw)
 {
 	uint32_t	i;
 	uint32_t	j;
-	
+
 	ft_bzero((void *) draw, sizeof(t_draw));
 	draw->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
 	if (!draw->mlx)
-		return (FALSE); // Error handling for mlx42 needed	
+		return (FALSE); // Error handling for mlx42 needed
 	if (!new_image(draw->mlx, &(draw->bg)))
 		return (FALSE);
 	i = 0;
@@ -44,7 +54,7 @@ static void	set_initial_draw_values(t_fdf *fdf)
 {
 	// TODO figure out some math to centre the image in the window
 	fdf->draw_values.x = (fdf->draw.img->width / 2) - (fdf->width * 20 / 3);
-	fdf->draw_values.y = 20; 
+	fdf->draw_values.y = 20;
 	fdf->draw_values.width = 20;
 	fdf->draw_values.z = 1;
 	fdf->draw.orig_width = 20;
@@ -52,14 +62,14 @@ static void	set_initial_draw_values(t_fdf *fdf)
 }
 
 /*
- * Control function which handles the setup of the mlx functionality. 
- * Here we create our window and call our hooks. 
+ * Control function which handles the setup of the mlx functionality.
+ * Here we create our window and call our hooks.
  * We set some initial default values to center the fdf image in the window.
  * We also call the draw function which handles the creation of the
  * wireframe image itself.
  */
 void	fdf_control(t_fdf *fdf)
-{	
+{
 	if (!mlx_setup(&(fdf->draw)))
 		return ;
 	set_initial_draw_values(fdf);

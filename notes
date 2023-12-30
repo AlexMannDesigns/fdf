@@ -131,4 +131,12 @@ of the program.
 
 INT16_MAX may be a good limit to impose on the drawn img as this is what MLX42 uses
 
- 
+
+Make sure the build dir inside MLX42 is git ignored and removed from the remote.
+
+$ brew install glfw
+If the compiler fails to link the library.
+
+Install the 42brew if that doesn't work: https://github.com/kube/42homebrew
+
+j is down and k is up!

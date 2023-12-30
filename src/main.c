@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 13:57:33 by amann             #+#    #+#             */
+/*   Updated: 2023/12/30 13:58:56 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
@@ -63,7 +73,6 @@ int	main(int argc, char **argv)
 	// fdf starts...
 	if (!(fdf.test_parser))
 		fdf_control(&fdf);
-	fdf.exit_status = RETURN_SUCCESS; // for testing, this should be set in fdf_control	
+	fdf.exit_status = RETURN_SUCCESS; // for testing, this should be set in fdf_control
 	return (free_and_exit(&fdf));
 }
-

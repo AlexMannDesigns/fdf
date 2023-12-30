@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_wireframe.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 13:47:52 by amann             #+#    #+#             */
+/*   Updated: 2023/12/30 13:51:42 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
@@ -9,7 +20,7 @@
 static int	draw_setup(t_fdf *fdf, t_draw *draw)
 {
 	draw->last_row = FALSE;
-	draw->y_offset = fdf->draw_values.y; 
+	draw->y_offset = fdf->draw_values.y;
 	draw->tile_width = fdf->draw_values.width;
 	draw->x_offset = fdf->draw_values.x;
 	draw->z_factor = fdf->draw_values.z;
@@ -43,7 +54,7 @@ static int	find_next_point_across(t_draw *draw, t_coord *current)
 static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
 {
 	t_coord	*next;
-	int	i;
+	int		i;
 
 	if (draw->last_row)
 		return (FALSE);
@@ -58,8 +69,8 @@ static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
 			return (FALSE);
 		}
 		i++;
-	} 
-	draw->x1 = next->x; 
+	}
+	draw->x1 = next->x;
 	draw->y1 = next->y;
 	draw->z1 = next->z;
 	return (TRUE);
@@ -88,10 +99,10 @@ void	draw_wireframe(t_fdf *fdf)
 {
 	t_coord	*current;
 	t_draw	*draw;
-	
+
 	draw = &(fdf->draw);
 	if (!draw->mlx || !draw->img || !draw_setup(fdf, draw))
-		return ;	
+		return ;
 	current = fdf->coord_list;
 	while (current->next)
 	{
@@ -99,9 +110,8 @@ void	draw_wireframe(t_fdf *fdf)
 		if (find_next_point_across(draw, current))
 			plot_line(draw);
 		if (find_next_point_down(draw, current, fdf->width))
-			plot_line(draw);	
+			plot_line(draw);
 		current = current->next;
 	}
 	return ;
 }
-

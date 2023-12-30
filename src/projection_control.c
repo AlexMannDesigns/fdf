@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   projection_control.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 14:02:15 by amann             #+#    #+#             */
+/*   Updated: 2023/12/30 14:02:38 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
@@ -32,7 +43,7 @@ static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
 	// y = -x 
 	_x = (float) (*x) * draw->tile_width;
 	_y = (float) (*y) * draw->tile_width;
-	_z = (float) (*z) * draw->z_factor;	
+	_z = (float) (*z) * draw->z_factor;
 
 
 	diff = (float) draw->tile_width - draw->orig_width;

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   key_events.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 13:56:14 by amann             #+#    #+#             */
+/*   Updated: 2023/12/30 13:57:06 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
@@ -29,7 +40,7 @@ static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 static void	scale_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
 	int	scale;
-	
+
 	if (keydata.key == MLX_KEY_EQUAL && keydata.action == MLX_PRESS)
 	{
 		scale = fdf->draw_values.width * 0.1;
@@ -55,9 +66,8 @@ static void	gradient_event(t_fdf *fdf, mlx_key_data_t keydata)
 	return ;
 }
 
-void	key_events(mlx_key_data_t keydata, void* fdf_ptr)
+void	key_events(mlx_key_data_t keydata, void *fdf_ptr)
 {
-	// TODO add functionality for press and hold? 
 	t_fdf	*fdf;
 
 	fdf = (t_fdf *) fdf_ptr;

@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 14:02:15 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 14:02:38 by amann            ###   ########.fr       */
+/*   Updated: 2023/12/30 15:12:39 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
 	//*y = 300 + -(*y);
 	//
 	
-	printf("x = %d | y = %d\n", *x, *y);
+	//printf("x = %d | y = %d\n", *x, *y);
 	return ;
 }
 

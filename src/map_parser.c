@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:59:09 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 14:01:02 by amann            ###   ########.fr       */
+/*   Updated: 2023/12/30 15:14:16 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static int	create_coords(t_fdf *fdf, char *line)
 	else if (fdf->width != i)
 		return (print_error(FALSE, ERROR_INVALID_LENGTH));
 	++row;
+	fdf->height = row;
 	return (TRUE);
 }
 

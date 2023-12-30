@@ -6,11 +6,12 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:52:23 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 13:55:17 by amann            ###   ########.fr       */
+/*   Updated: 2023/12/30 15:16:34 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <math.h>
 
 // TODO re-implement RETURN_SUCCESS/ERROR as EXIT_SUCCESS/FAILURE ??
 // TODO check neither WIDTH nor HEIGHT exceed int_max, or some arbitrary lower value,
@@ -53,6 +54,30 @@ int	mlx_setup(t_draw *draw)
 static void	set_initial_draw_values(t_fdf *fdf)
 {
 	// TODO figure out some math to centre the image in the window
+	// Find the width of the image at its widest point
+	// Find the height of the image at its highest point
+	// With those values, we can think of the image as having a rectangular box around it
+	// The box can be placed in the centre of the screen, based on its dimensions.
+
+	// number of rows and columns of 'squares' in the image are
+	// height - 1 and width - 1 repsectively
+	//
+
+	/* formula from SO post...
+	 * W = U*(Nr+Nc)*sqrt(3)/2
+	 * H = U*(Nr+Nc)/2
+	 */
+	int w, h, u, nr, nc;
+
+	u = 20; //20px ...although this should scale down to a min value for huge maps
+	nc = fdf->width - 1;
+	nr = fdf->height - 1;
+
+	w = u * (nr + nc) * sqrt(3) / 2;
+	h = u * (nr + nc) / 2;
+
+	printf("w = %d, h = %d\n", w, h);
+
 	fdf->draw_values.x = (fdf->draw.img->width / 2) - (fdf->width * 20 / 3);
 	fdf->draw_values.y = 20;
 	fdf->draw_values.width = 20;

@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 14:05:44 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 14:16:39 by amann            ###   ########.fr       */
+/*   Updated: 2023/12/30 15:14:43 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_fdf
 {
 	char			*error;
 	int				width;
+	int				height;
 	size_t			path_idx;
 	int				test_parser;
 	int				help;

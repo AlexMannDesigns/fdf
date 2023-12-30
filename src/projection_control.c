@@ -27,55 +27,13 @@ static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
 	float	_z;
 	float	diff;
 
-
-	// see math from
-	//https://www.khanacademy.org/math/geometry/hs-geo-transformations/hs-geo-rotations/a/rotating-shapes
-	// to rotate by 90 degrees
-	// x = -y
-	// y = x
-	
-	// 180 degrees
-	// x = -x
-	// y = -y
-
-	// 270 degrees
-	// x = y
-	// y = -x 
 	_x = (float) (*x) * draw->tile_width;
 	_y = (float) (*y) * draw->tile_width;
 	_z = (float) (*z) * draw->z_factor;
-
-
 	diff = (float) draw->tile_width - draw->orig_width;
 	_z *= (diff / draw->orig_width) + 1;
-	//_z = -_z
 	*x = draw->x_offset + (int) ((_x - _y) * COS_30);
 	*y = draw->y_offset + (int) (-_z + (_x + _y) * SIN_30);
-
-
-	/*
-	TODO
-	- Move the rotation math to a seperate helper function
-	- Add variable to draw struct to monitor the rotation angle.
-		- This can be changed with a keypress
-	- Look into partial rotation (e.g. 45* instead of 90*) 
-	*/
-	//int temp;
-	//temp = *x;
-	// (90 - z must be positive)
-	//*x = -(*y) + 300;
-	//*y = temp;
-	
-	// (270)
-	//*x = *y;
-	//*y = 1000 + -temp;
-	
-	// (180 - z must be positive)
-	//*x = 1000 + -(*x);
-	//*y = 300 + -(*y);
-	//
-	
-	//printf("x = %d | y = %d\n", *x, *y);
 	return ;
 }
 

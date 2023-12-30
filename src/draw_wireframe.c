@@ -103,6 +103,10 @@ void	draw_wireframe(t_fdf *fdf)
 	draw = &(fdf->draw);
 	if (!draw->mlx || !draw->img || !draw_setup(fdf, draw))
 		return ;
+	// we COULD re-order the coord_list at this point in order to handle rotations
+	// for example, to rotate by 90 degrees, the first 'column' would become the first 'row'
+	// with the first point of the last row moving to position 0,0.
+	// The width would become the height and vice versa
 	current = fdf->coord_list;
 	while (current->next)
 	{

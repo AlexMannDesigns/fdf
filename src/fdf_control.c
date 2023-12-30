@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <math.h>
 
 // TODO re-implement RETURN_SUCCESS/ERROR as EXIT_SUCCESS/FAILURE ??
 // TODO check neither WIDTH nor HEIGHT exceed int_max, or some arbitrary lower value,
@@ -70,16 +69,16 @@ static void	set_initial_draw_values(t_fdf *fdf)
 	int w, h, u, nr, nc;
 
 	u = 20; //20px ...although this should scale down to a min value for huge maps
-	nc = fdf->width - 1;
-	nr = fdf->height - 1;
+	nc = fdf->width;
+	nr = fdf->height;
 
-	w = u * (nr + nc) * sqrt(3) / 2;
-	h = u * (nr + nc) / 2;
+	w = (u * (nr + nc) * ROOT_3 / 2) / 2;
+	h = (u * (nr + nc) / 2) / 2;
 
-	printf("w = %d, h = %d\n", w, h);
+	printf("w = %d, h = %d, x = %d\n", w, h, (int) (COS_30 * u * fdf->height));
 
-	fdf->draw_values.x = (fdf->draw.img->width / 2) - (fdf->width * 20 / 3);
-	fdf->draw_values.y = 20;
+	fdf->draw_values.x = WIDTH / 2 - w + (int) (COS_30 * u * fdf->height);
+	fdf->draw_values.y = HEIGHT / 2 - h; 
 	fdf->draw_values.width = 20;
 	fdf->draw_values.z = 1;
 	fdf->draw.orig_width = 20;

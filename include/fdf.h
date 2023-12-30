@@ -57,13 +57,14 @@
 # define ERROR_MALLOC "Error: malloc failed"
 # define ERROR_MLX "Error: MLX42 function failed"
 
-# define WIDTH 1600
-# define HEIGHT 1024
+# define WIDTH 800 
+# define HEIGHT 600
 # define BPP sizeof(int32_t)
 # define COLOUR 0XFF00FFFF
 # define BLACK 0X000000FF
 # define COS_30 0.8660254
 # define SIN_30 0.5
+# define ROOT_3 1.7320508
 
 /***** STRUCTS *****/
 

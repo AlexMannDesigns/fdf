@@ -52,8 +52,8 @@ void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y)
 		draw->img
 		&& x >= 0
 		&& y >= 0
-		&& x < draw->img->width
-		&& y < draw->img->height
+		&& x < WIDTH
+		&& y < HEIGHT
 	)
 		mlx_put_pixel(draw->img, x, y, COLOUR);
 	return ;

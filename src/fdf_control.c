@@ -52,36 +52,29 @@ int	mlx_setup(t_draw *draw)
  */
 static void	set_initial_draw_values(t_fdf *fdf)
 {
-	// TODO figure out some math to centre the image in the window
-	// Find the width of the image at its widest point
-	// Find the height of the image at its highest point
-	// With those values, we can think of the image as having a rectangular box around it
-	// The box can be placed in the centre of the screen, based on its dimensions.
+	int	w;
+	int	h;
+	int	u;
+	int	nr;
+	int	nc;
 
-	// number of rows and columns of 'squares' in the image are
-	// height - 1 and width - 1 repsectively
-	//
-
-	/* formula from SO post...
-	 * W = U*(Nr+Nc)*sqrt(3)/2
-	 * H = U*(Nr+Nc)/2
-	 */
-	int w, h, u, nr, nc;
-
-	u = 20; //20px ...although this should scale down to a min value for huge maps
-	nc = fdf->width;
+	nc = fdf->width - 1;
 	nr = fdf->height;
-
-	w = (u * (nr + nc) * ROOT_3 / 2) / 2;
-	h = (u * (nr + nc) / 2) / 2;
-
-	printf("w = %d, h = %d, x = %d\n", w, h, (int) (COS_30 * u * fdf->height));
-
-	fdf->draw_values.x = WIDTH / 2 - w + (int) (COS_30 * u * fdf->height);
-	fdf->draw_values.y = HEIGHT / 2 - h; 
-	fdf->draw_values.width = 20;
+	u = 20; 
+	w = u * (nr + nc) * ROOT_3 / 2;
+	h = u * (nr + nc) / 2;
+	while ((w > WIDTH || h > HEIGHT) && u > 3)
+	{
+		u--;
+		w = u * (nr + nc) * ROOT_3 / 2;
+		h = u * (nr + nc) / 2;
+	}
+	printf("width = %d, height = %d, w = %d, h = %d, u = %d\n", WIDTH, HEIGHT, w, h, u);
+	fdf->draw_values.x = (WIDTH / 2) - (w / 2) + (int) (COS_30 * u * nr);
+	fdf->draw_values.y = (HEIGHT / 2) - (h / 2); 
+	fdf->draw_values.width = u;
 	fdf->draw_values.z = 1;
-	fdf->draw.orig_width = 20;
+	fdf->draw.orig_width = u;
 	return ;
 }
 

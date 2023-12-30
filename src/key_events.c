@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:56:14 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 13:57:06 by amann            ###   ########.fr       */
+/*   Updated: 2023/12/30 14:29:42 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ static void	scale_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 static void	gradient_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
 	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
-		fdf->draw_values.z += 1;
-	else if (keydata.key == MLX_KEY_K && keydata.action == MLX_PRESS)
 		fdf->draw_values.z -= 1;
+	else if (keydata.key == MLX_KEY_K && keydata.action == MLX_PRESS)
+		fdf->draw_values.z += 1;
 	return ;
 }
 

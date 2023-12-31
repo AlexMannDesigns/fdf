@@ -1,14 +1,14 @@
 *.swp
 *.out
 *.o
+*.json
 obj/
 MLX42/
 fdf
-
 maps/invalid_permission.fdf
 maps/alice.fdf
 maps/bible.fdf
-
+.cache/
 venv/
 .idea/
 __pycache__/

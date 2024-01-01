@@ -70,31 +70,31 @@
 
 typedef struct s_coord
 {
-	int				x;
-	int				y;
-	int				z;
+	int		x;
+	int		y;
+	int		z;
 	struct s_coord	*next;
 }					t_coord;
 
 typedef struct s_draw
 {
-	int			x0;
-	int			y0;
-	int			z0;
-	int			x1;
-	int			y1;
-	int			z1;
-	int			current;
-	int			x_offset;
-	int			y_offset;
-	int			z_factor;
-	int			tile_width;
-	int			last_row;
-	int			orig_width;
+	int		x0;
+	int		y0;
+	int		z0;
+	int		x1;
+	int		y1;
+	int		z1;
+	int		current;
+	int		x_offset;
+	int		y_offset;
+	int		z_factor;
+	int		tile_width;
+	int		last_row;
+	int		orig_width;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	mlx_image_t	*bg;
-}				t_draw;
+}			t_draw;
 
 typedef struct s_draw_values
 {
@@ -106,15 +106,16 @@ typedef struct s_draw_values
 
 typedef struct s_fdf
 {
-	char			*error;
-	int				width;
-	int				height;
-	size_t			path_idx;
-	int				test_parser;
-	int				help;
-	int				exit_status;
-	t_coord			*coord_list;
-	t_draw			draw;
+	char		*error;
+	int		width;
+	int		height;
+	size_t		path_idx;
+	int		test_parser;
+	int		help;
+	int		exit_status;
+	int		rotate_angle;
+	t_coord		*coord_list;
+	t_draw		draw;
 	t_draw_values	draw_values;
 }					t_fdf;
 

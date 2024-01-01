@@ -58,13 +58,48 @@ static void	scale_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 	return ;
 }
 
+static void	zero_to_ninety(t_fdf *fdf)
+{
+	int	temp, w, h;
+	t_coord	*new;
+
+	h = fdf->height;
+	w = fdf->width;
+
+	temp = fdf->width;
+	fdf->width = fdf->height;
+	fdf->height = temp;
+	// the nodes from the first column become the first row
+	(void) new;
+	(void) w;
+	(void) h;
+	return ;
+}
+
+static void	back_to_zero(t_fdf *fdf)
+{
+	fdf->rotate_angle = 0;
+	return ;
+}
+
+void	rotate_ninety_degrees(t_fdf *fdf)
+{
+	fdf->rotate_angle += 90;
+	if (fdf->rotate_angle == 90)
+		zero_to_ninety(fdf);
+	if (fdf->rotate_angle == 360)
+		back_to_zero(fdf);
+	return ;
+}
+
 static void	modify_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
 	if (keydata.key == MLX_KEY_J)
 		fdf->draw_values.z -= 1;
 	else if (keydata.key == MLX_KEY_K)
 		fdf->draw_values.z += 1;
-
+	else if (keydata.key == MLX_KEY_R)
+		rotate_ninety_degrees(fdf);
 	return ;
 }
 

@@ -58,21 +58,44 @@ static void	scale_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 	return ;
 }
 
+static int	find_add_coord(t_coord *orig, t_coord **new, t_rot *rotate)
+{
+	(void) orig;
+	(void) new;
+	(void) rotate;
+	// loop forward by (width * j) + i in orig.
+	// add that node to the end of the new list.
+	return (TRUE);
+}
+
 static void	zero_to_ninety(t_fdf *fdf)
 {
-	int	temp, w, h;
+	// rotate struct needed...
+	//int	temp, w, h, i, j;
+	t_rot	rotate;
 	t_coord	*new;
 
-	h = fdf->height;
-	w = fdf->width;
-
-	temp = fdf->width;
+	new = NULL;
+	rotate.h = fdf->height;
+	rotate.w = fdf->width;
+	rotate.i = 0;
+	while (rotate.i < rotate.w)
+	{
+		rotate.j = rotate.h;
+		while (rotate.j >= 0)
+		{
+			// loop to node at column 'i', row 'j' and add to new list
+			// e.g. first node should be column 0, last row.
+			if (find_add_coord(fdf->coord_list, &new, &rotate))
+				return ; // handle malloc error
+			(rotate.j)--;
+		}
+		(rotate.i)++;
+	}
+	// after 90 deg rotation, height and width values are swapped.
+	rotate.temp = fdf->width;
 	fdf->width = fdf->height;
-	fdf->height = temp;
-	// the nodes from the first column become the first row
-	(void) new;
-	(void) w;
-	(void) h;
+	fdf->height = rotate.temp;
 	return ;
 }
 

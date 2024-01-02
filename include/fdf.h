@@ -131,6 +131,15 @@ typedef struct s_algo
 	int	e2;
 }		t_algo;
 
+typedef struct s_rot
+{
+	int	w;
+	int	h;
+	int	i;
+	int	j;
+	int	temp;
+}		t_rot;
+
 /***** FUNCTIONS *****/
 
 /* draw_wireframe.c */

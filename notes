@@ -123,6 +123,7 @@ of the program.
 INT16_MAX may be a good limit to impose on the drawn img as this is what MLX42 uses
 
 Looks like the eval includes hexadecimal values - look into converting these.
+	- looks like they are delimited by commas and represent colour.
 
 Fresh compile trouble-shooting:
 $ brew install glfw

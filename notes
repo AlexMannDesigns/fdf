@@ -112,14 +112,6 @@ TODO:
 
 Line drawing algo has now been implemented.
 
-Look further into the geometry of isometric projections:
-https://planetcalc.com/8316/
-https://en.wikipedia.org/wiki/Isometric_projection
-https://en.wikipedia.org/wiki/Rotation_matrix#
-
-Looks like some funky matrix calculations will be needed to factor in the z axis of
-each point. 
-
 Now that isometric projection has been implemented, we need to rethink the logic
 of the program.
 	- fdf_control should be re-factored, the isometric projection math can
@@ -128,15 +120,13 @@ of the program.
 	- we can also start to flesh out draw set-up and think about adding some
 	keyboard controls to move the image around and resize it.
 
-
 INT16_MAX may be a good limit to impose on the drawn img as this is what MLX42 uses
 
+Looks like the eval includes hexadecimal values - look into converting these.
 
-Make sure the build dir inside MLX42 is git ignored and removed from the remote.
-
+Fresh compile trouble-shooting:
 $ brew install glfw
 If the compiler fails to link the library.
 
 Install the 42brew if that doesn't work: https://github.com/kube/42homebrew
 
-j is down and k is up!

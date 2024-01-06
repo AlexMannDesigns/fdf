@@ -82,7 +82,7 @@ static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
  */
 static void	set_current_point(t_draw *draw, t_coord *current)
 {
-	draw->current = TRUE;
+	draw->current = TRUE; // TODO get rid of this - find better way to implement projection calc
 	draw->x0 = current->x;
 	draw->y0 = current->y;
 	draw->z0 = current->z;

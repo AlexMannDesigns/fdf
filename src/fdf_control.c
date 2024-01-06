@@ -12,7 +12,6 @@
 
 #include "fdf.h"
 
-// TODO re-implement RETURN_SUCCESS/ERROR as EXIT_SUCCESS/FAILURE ??
 // TODO check neither WIDTH nor HEIGHT exceed int_max, or some arbitrary lower value,
 // e.g. something reasonable given the dimensions of modern monitors
 
@@ -69,7 +68,6 @@ static void	set_initial_draw_values(t_fdf *fdf)
 		w = u * (nr + nc) * ROOT_3 / 2;
 		h = u * (nr + nc) / 2;
 	}
-	printf("width = %d, height = %d, w = %d, h = %d, u = %d\n", WIDTH, HEIGHT, w, h, u);
 	fdf->draw_values.x = (WIDTH / 2) - (w / 2) + (int) (COS_30 * u * nr);
 	fdf->draw_values.y = (HEIGHT / 2) - (h / 2); 
 	fdf->draw_values.width = u;
@@ -94,6 +92,6 @@ void	fdf_control(t_fdf *fdf)
 	mlx_key_hook(fdf->draw.mlx, &key_events, (void *) fdf);
 	mlx_loop(fdf->draw.mlx);
 	mlx_terminate(fdf->draw.mlx);
-	fdf->exit_status = RETURN_SUCCESS;
+	fdf->exit_status = EXIT_SUCCESS;
 	return ;
 }

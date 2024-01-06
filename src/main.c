@@ -12,13 +12,6 @@
 
 #include "fdf.h"
 
-//TODO debug function: delete
-void	print_array(char **arr)
-{
-	for (int i = 0 ; arr[i] ; i++)
-		printf("%s\n", arr[i]);
-}
-
 /*
  * Increments path_idx variable to the first non-option-flag arg in argv.
  * Sets any valid option flags in the fdf state struct.
@@ -49,30 +42,19 @@ int	main(int argc, char **argv)
 	t_fdf	fdf;
 
 	if (argc == 1)
-		return (print_error(RETURN_SUCCESS, USAGE));
+		return (print_error(EXIT_SUCCESS, USAGE));
 	ft_bzero((void *) &fdf, sizeof(t_fdf));
-	fdf.exit_status = RETURN_ERROR;
+	fdf.exit_status = EXIT_FAILURE;
 	if (!handle_option_flags(&fdf, argv))
-		return (RETURN_ERROR);
+		return (EXIT_FAILURE);
 	if (fdf.help)
-		return (print_error(RETURN_SUCCESS, USAGE_LONG));
+		return (print_error(EXIT_SUCCESS, USAGE_LONG));
 	if (!(argv[fdf.path_idx]))
-		return (print_error(RETURN_SUCCESS, USAGE));
+		return (print_error(EXIT_SUCCESS, USAGE));
 	if (!map_parser_control(&fdf, argv[fdf.path_idx]))
 		return (free_and_exit(&fdf));
-	/*
-	t_coord	*current;
-	current = fdf.coord_list;
-	//print coords for testing
-	while (current)
-	{
-		printf("x = %2d | y = %2d | z = %2d\n", current->x, current->y, current->z);
-		current = current->next;
-	}
-	*/
-	// fdf starts...
 	if (!(fdf.test_parser))
 		fdf_control(&fdf);
-	fdf.exit_status = RETURN_SUCCESS; // for testing, this should be set in fdf_control
+	fdf.exit_status = EXIT_SUCCESS; // for testing, this should be set in fdf_control
 	return (free_and_exit(&fdf));
 }

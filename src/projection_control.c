@@ -11,6 +11,18 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft.h"
+
+static void	scale_points(t_draw *draw, int *x, int *y, int *z)
+{
+	ft_bzero((void *) &(draw->p), sizeof(t_projection));
+	draw->p._x = (float) (*x) * draw->tile_width;
+	draw->p._y = (float) (*y) * draw->tile_width;
+	draw->p._z = (float) (*z) * draw->z_factor;
+	draw->p.diff = (float) draw->tile_width - draw->orig_width;
+	draw->p._z *= (draw->p.diff / draw->orig_width) + 1;
+	return ;
+}
 
 /*
  * Handles the necessary geometry for plotting coordinates in isometric
@@ -20,30 +32,16 @@
  * size, rather than just stretching the image - i.e. the angles stay the same
  * unless the value of z is changed directly.
  */
-static void	isometric_projection(t_draw *draw, int *x, int *y, int *z)
+static void	isometric_projection(t_draw *draw, int *x, int *y)
 {
-	float	_x;
-	float	_y;
-	float	_z;
-	float	diff;
-
-	_x = (float) (*x) * draw->tile_width;
-	_y = (float) (*y) * draw->tile_width;
-	_z = (float) (*z) * draw->z_factor;
-	diff = (float) draw->tile_width - draw->orig_width;
-	_z *= (diff / draw->orig_width) + 1;
-	*x = draw->x_offset + (int) ((_x - _y) * COS_30);
-	*y = draw->y_offset + (int) (-_z + (_x + _y) * SIN_30);
+	*x = (int) ((draw->p._x - draw->p._y) * COS_30);
+	*y = (int) (-(draw->p._z) + (draw->p._x + draw->p._y) * SIN_30);
 	return ;
 }
 
-void	projection_control(t_draw *draw)
+void	projection_control(t_draw *draw, int *x, int *y, int *z)
 {
-	if (draw->current)
-	{
-		draw->current = FALSE;
-		isometric_projection(draw, &(draw->x0), &(draw->y0), &(draw->z0));
-	}
-	isometric_projection(draw, &(draw->x1), &(draw->y1), &(draw->z1));
+	scale_points(draw, x, y, z);
+	isometric_projection(draw, x, y); 
 	return ;
 }

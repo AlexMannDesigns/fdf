@@ -76,6 +76,14 @@ typedef struct s_coord
 	struct s_coord	*next;
 }					t_coord;
 
+typedef struct s_projection
+{
+	int	_x;
+	int	_y;
+	int	_z;
+	int	diff;
+}		t_projection;
+
 typedef struct s_draw
 {
 	int		x0;
@@ -91,6 +99,7 @@ typedef struct s_draw
 	int		tile_width;
 	int		last_row;
 	int		orig_width;
+	t_projection	p;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	mlx_image_t	*bg;
@@ -158,7 +167,7 @@ int		map_parser_control(t_fdf *fdf, char *path);
 void	plot_line(t_draw *draw);
 
 /* projection_control.c */
-void	projection_control(t_draw *draw);
+void	projection_control(t_draw *draw, int *x, int *y, int *z);
 
 /* utils.c */
 int		print_error(int ret, char *msg);

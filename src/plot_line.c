@@ -120,7 +120,6 @@ void	plot_line(t_draw *draw)
 {
 	t_algo	algo;
 
-	projection_control(draw);
 	if (check_horizontal_and_vertical(draw))
 		return ;
 	plot_line_setup(draw, &algo);

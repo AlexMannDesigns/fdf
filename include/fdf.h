@@ -57,6 +57,7 @@
 # define ERROR_MALLOC "Error: malloc failed"
 # define ERROR_MLX "Error: MLX42 function failed"
 
+# define VALID_CHARS "0123456789AaBbCcDdEeFfXx, \n"
 # define WIDTH 800 
 # define HEIGHT 600
 # define BPP sizeof(int32_t)
@@ -78,10 +79,10 @@ typedef struct s_coord
 
 typedef struct s_projection
 {
-	int	_x;
-	int	_y;
-	int	_z;
-	int	diff;
+	float	_x;
+	float	_y;
+	float	_z;
+	float	diff;
 }		t_projection;
 
 typedef struct s_draw

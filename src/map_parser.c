@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft.h"
 
 /*
  * File-name for the map file must have extension '.fdf'
@@ -33,8 +34,11 @@ static int	validate_line_chars(char *line)
 {
 	while (*line)
 	{
-		if (!ft_isdigit(*line) && *line != SPACE)
+		if (!ft_strchr(VALID_CHARS, *line))
+		{
+			printf("%c\n", *line);
 			return (FALSE);
+		}
 		line++;
 	}
 	return (TRUE);

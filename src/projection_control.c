@@ -15,12 +15,11 @@
 
 static void	scale_points(t_draw *draw, int *x, int *y, int *z)
 {
-	ft_bzero((void *) &(draw->p), sizeof(t_projection));
 	draw->p._x = (float) (*x) * draw->tile_width;
 	draw->p._y = (float) (*y) * draw->tile_width;
 	draw->p._z = (float) (*z) * draw->z_factor;
 	draw->p.diff = (float) draw->tile_width - draw->orig_width;
-	draw->p._z *= (draw->p.diff / draw->orig_width) + 1;
+	draw->p._z *= (float) ((draw->p.diff / draw->orig_width) + 1);
 	return ;
 }
 

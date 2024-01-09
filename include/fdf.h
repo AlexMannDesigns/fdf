@@ -155,6 +155,10 @@ typedef struct s_rot
 /* draw_wireframe.c */
 void	draw_wireframe(t_fdf *fdf);
 
+/* draw_utils.c */
+void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y);
+int		new_image(mlx_t *mlx, mlx_image_t **img);
+
 /* fdf_control.c */
 void	fdf_control(t_fdf *fdf);
 
@@ -173,7 +177,5 @@ void	projection_control(t_draw *draw, int *x, int *y, int *z);
 /* utils.c */
 int		print_error(int ret, char *msg);
 int		free_and_exit(t_fdf *fdf);
-void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y);
-int		new_image(mlx_t *mlx, mlx_image_t **img);
 
 #endif

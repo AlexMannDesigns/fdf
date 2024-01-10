@@ -27,6 +27,8 @@ static void	re_draw_image(t_fdf *fdf)
 
 static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
+	// the whole image should still be visibile via movements
+	// Even when zoomed in really far
 	if (keydata.key == MLX_KEY_RIGHT && fdf->draw_values.x < WIDTH)
 		fdf->draw_values.x += 10;
 	else if (keydata.key == MLX_KEY_LEFT && fdf->draw_values.x > 0)

@@ -27,13 +27,13 @@ static void	re_draw_image(t_fdf *fdf)
 
 static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
-	if (keydata.key == MLX_KEY_RIGHT)
+	if (keydata.key == MLX_KEY_RIGHT && fdf->draw_values.x < WIDTH)
 		fdf->draw_values.x += 10;
-	else if (keydata.key == MLX_KEY_LEFT)
+	else if (keydata.key == MLX_KEY_LEFT && fdf->draw_values.x > 0)
 		fdf->draw_values.x -= 10;
-	else if (keydata.key == MLX_KEY_DOWN)
+	else if (keydata.key == MLX_KEY_DOWN && fdf->draw_values.y < HEIGHT)
 		fdf->draw_values.y += 10;
-	else if (keydata.key == MLX_KEY_UP)
+	else if (keydata.key == MLX_KEY_UP && fdf->draw_values.y > 0)
 		fdf->draw_values.y -= 10;
 	return ;
 }

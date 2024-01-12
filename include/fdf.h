@@ -18,7 +18,6 @@
 # include <fcntl.h>
 # include <stdio.h>  // TODO delete
 
-# include "libft.h"
 # include "MLX42/MLX42.h"
 
 /***** CONSTANTS *****/
@@ -53,11 +52,13 @@
 # define ERROR_INVALID_PERMISSIONS "Error: map file could not be opened"
 # define ERROR_INVALID_VALUES "Error: map must only contain numeric " \
 	"characters, spaces: ' ', and newlines: '\\n'"
+# define ERROR_INVALID_Z "Error: z values must be between 0 and INT16_MAX"
 # define ERROR_INVALID_LENGTH "Error: all lines must be of equal length"
 # define ERROR_MALLOC "Error: malloc failed"
 # define ERROR_MLX "Error: MLX42 function failed"
 
-# define VALID_CHARS "0123456789AaBbCcDdEeFfXx, \n"
+# define VALID_CHARS "-0123456789AaBbCcDdEeFfXx, \n"
+# define MAX_VAL 32767
 # define WIDTH 800 
 # define HEIGHT 600
 # define BPP sizeof(int32_t)

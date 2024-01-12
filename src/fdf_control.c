@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft.h"
+#include "MLX42/MLX42.h"
 
 // TODO check neither WIDTH nor HEIGHT exceed int_max, or some arbitrary lower value,
 // e.g. something reasonable given the dimensions of modern monitors

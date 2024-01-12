@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft.h"
 
 /*
  * Increments path_idx variable to the first non-option-flag arg in argv.

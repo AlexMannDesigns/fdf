@@ -35,10 +35,7 @@ static int	validate_line_chars(char *line)
 	while (*line)
 	{
 		if (!ft_strchr(VALID_CHARS, *line))
-		{
-			printf("%c\n", *line);
 			return (FALSE);
-		}
 		line++;
 	}
 	return (TRUE);
@@ -70,6 +67,8 @@ static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 	coord->x = i;
 	coord->y = row;
 	coord->z = ft_atoi(val);
+	if (coord->z > MAX_VAL || coord->z < 0)
+		return (print_error(FALSE, ERROR_INVALID_Z));
 	return (TRUE);
 }
 

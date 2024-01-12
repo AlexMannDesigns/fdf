@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42.h"
 #include "fdf.h"
+#include "MLX42/MLX42.h"
+#include <stdlib.h>
 
 static void	re_draw_image(t_fdf *fdf)
 {

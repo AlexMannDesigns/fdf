@@ -1,4 +1,5 @@
 #include "fdf.h"
+#include "MLX42/MLX42.h"
 
 static int	get_colour(t_draw *draw)
 {

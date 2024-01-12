@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "libft.h"
 
 static void	scale_points(t_draw *draw, int *x, int *y, int *z)
 {

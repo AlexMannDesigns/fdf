@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft.h"
 
 /*
  * Frees any heap-allocated memory and then returns the exit value

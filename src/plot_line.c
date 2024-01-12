@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft.h"
 
 /*
  * Plots either a horizontal or vertical line. In some situations 'a' will be

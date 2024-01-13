@@ -14,10 +14,8 @@ void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y)
 {
 	if (
 		draw->img
-		&& x >= 0
-		&& y >= 0
-		&& x < WIDTH
-		&& y < HEIGHT
+		&& x >= 0 && y >= 0
+		&& x < WIDTH && y < HEIGHT
 	)
 		mlx_put_pixel(draw->img, x, y, get_colour(draw));
 	return ;
@@ -34,4 +32,20 @@ int	new_image(mlx_t *mlx, mlx_image_t **img)
 	if (mlx_image_to_window(mlx, *img, 0, 0) == -1)
 		return (print_error(FALSE, ERROR_MLX));
 	return (TRUE);
+}
+		
+/*
+ * Finds the actual width of an isometric projection
+ */
+int	get_actual_width(int tile_width, int height, int width)
+{
+	 return (tile_width * (height + width) * ROOT_3 / 2);
+}
+
+/*
+ * Finds the actual height of an isometric projection
+ */
+int	get_actual_height(int tile_width, int height, int width)
+{
+	return (tile_width * (height + width) / 2);
 }

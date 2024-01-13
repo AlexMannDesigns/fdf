@@ -159,6 +159,8 @@ void	draw_wireframe(t_fdf *fdf);
 /* draw_utils.c */
 void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y);
 int		new_image(mlx_t *mlx, mlx_image_t **img);
+int	get_actual_height(int tile_width, int height, int width);
+int	get_actual_width(int tile_width, int height, int width);
 
 /* fdf_control.c */
 void	fdf_control(t_fdf *fdf);

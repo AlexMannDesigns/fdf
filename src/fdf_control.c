@@ -56,21 +56,17 @@ static void	set_initial_draw_values(t_fdf *fdf)
 	int	w;
 	int	h;
 	int	u;
-	int	nr;
-	int	nc;
 
-	nc = fdf->width - 1;
-	nr = fdf->height;
-	u = 20; 
-	w = u * (nr + nc) * ROOT_3 / 2;
-	h = u * (nr + nc) / 2;
+	u = 20;
+	w = get_actual_width(u, fdf->height, fdf->width - 1);
+	h = get_actual_height(u, fdf->height, fdf->width - 1);
 	while ((w > WIDTH || h > HEIGHT) && u > 3)
 	{
 		u--;
-		w = u * (nr + nc) * ROOT_3 / 2;
-		h = u * (nr + nc) / 2;
+		w = get_actual_width(u, fdf->height, fdf->width - 1);
+		h = get_actual_height(u, fdf->height, fdf->width - 1);
 	}
-	fdf->draw_values.x = (WIDTH / 2) - (w / 2) + (int) (COS_30 * u * nr);
+	fdf->draw_values.x = (WIDTH / 2) - (w / 2) + (int) (COS_30 * u * fdf->height);
 	fdf->draw_values.y = (HEIGHT / 2) - (h / 2); 
 	fdf->draw_values.width = u;
 	fdf->draw_values.z = 1;

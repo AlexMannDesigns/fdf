@@ -28,15 +28,28 @@ static void	re_draw_image(t_fdf *fdf)
 
 static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
-	// the whole image should still be visibile via movements
-	// Even when zoomed in really far
-	if (keydata.key == MLX_KEY_RIGHT && fdf->draw_values.x < WIDTH)
+	int	img_h;
+	int	buffer;
+	int	iso_w;
+	int	iso_h;
+
+	buffer = 20;
+	img_h = get_actual_height(
+		fdf->draw.tile_width, fdf->height, fdf->width
+	);
+	iso_h = (int) (COS_30 * fdf->draw.tile_width * fdf->height);
+	iso_w = (int) (SIN_30 * fdf->draw.tile_width * fdf->width);
+	if (keydata.key == MLX_KEY_RIGHT
+		&& fdf->draw_values.x < WIDTH - buffer + iso_h) 
 		fdf->draw_values.x += 10;
-	else if (keydata.key == MLX_KEY_LEFT && fdf->draw_values.x > 0)
+	else if (keydata.key == MLX_KEY_LEFT
+		&& fdf->draw_values.x > 0 - iso_w)
 		fdf->draw_values.x -= 10;
-	else if (keydata.key == MLX_KEY_DOWN && fdf->draw_values.y < HEIGHT)
+	else if (keydata.key == MLX_KEY_DOWN
+		&& fdf->draw_values.y < HEIGHT - buffer)
 		fdf->draw_values.y += 10;
-	else if (keydata.key == MLX_KEY_UP && fdf->draw_values.y > 0)
+	else if (keydata.key == MLX_KEY_UP
+		&& fdf->draw_values.y > 0 - img_h - buffer)
 		fdf->draw_values.y -= 10;
 	return ;
 }

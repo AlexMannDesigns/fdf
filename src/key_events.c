@@ -29,29 +29,27 @@ static void	re_draw_image(t_fdf *fdf)
 static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
 	int	img_h;
-	int	buffer;
 	int	img_w;
-	int	edge_len;
+	int	h_edge_len;
+	int	w_edge_len;
 
-	buffer = 20;
 	img_h = get_actual_height(
 		fdf->draw.tile_width, fdf->height, fdf->width
 	);
 	img_w = get_actual_width(
 		fdf->draw.tile_width, fdf->height, fdf->width
 	);
-	edge_len = COS_30 * fdf->draw.tile_width * fdf->height;
+	h_edge_len = COS_30 * fdf->draw.tile_width * fdf->height;
+	w_edge_len = SIN_30 * fdf->draw.tile_width * (fdf->width - 1);
 	if (keydata.key == MLX_KEY_RIGHT
-		&& fdf->draw_values.x < WIDTH + edge_len)
+		&& fdf->draw_values.x < WIDTH + h_edge_len)
 		fdf->draw_values.x += 10;
 	else if (keydata.key == MLX_KEY_LEFT
-		&& fdf->draw_values.x > 0 - (img_w - edge_len)) 
+		&& fdf->draw_values.x > w_edge_len - img_w)
 		fdf->draw_values.x -= 10;
-	else if (keydata.key == MLX_KEY_DOWN
-		&& fdf->draw_values.y < HEIGHT - buffer)
+	else if (keydata.key == MLX_KEY_DOWN && fdf->draw_values.y < HEIGHT)
 		fdf->draw_values.y += 10;
-	else if (keydata.key == MLX_KEY_UP
-		&& fdf->draw_values.y > 0 - img_h - buffer)
+	else if (keydata.key == MLX_KEY_UP && fdf->draw_values.y > 0 - img_h)
 		fdf->draw_values.y -= 10;
 	return ;
 }

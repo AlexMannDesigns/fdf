@@ -30,20 +30,22 @@ static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
 	int	img_h;
 	int	buffer;
-	int	iso_w;
-	int	iso_h;
+	int	img_w;
+	int	edge_len;
 
 	buffer = 20;
 	img_h = get_actual_height(
 		fdf->draw.tile_width, fdf->height, fdf->width
 	);
-	iso_h = (int) (COS_30 * fdf->draw.tile_width * fdf->height);
-	iso_w = (int) (SIN_30 * fdf->draw.tile_width * fdf->width);
+	img_w = get_actual_width(
+		fdf->draw.tile_width, fdf->height, fdf->width
+	);
+	edge_len = COS_30 * fdf->draw.tile_width * fdf->height;
 	if (keydata.key == MLX_KEY_RIGHT
-		&& fdf->draw_values.x < WIDTH - buffer + iso_h) 
+		&& fdf->draw_values.x < WIDTH + edge_len)
 		fdf->draw_values.x += 10;
 	else if (keydata.key == MLX_KEY_LEFT
-		&& fdf->draw_values.x > 0 - iso_w)
+		&& fdf->draw_values.x > 0 - (img_w - edge_len)) 
 		fdf->draw_values.x -= 10;
 	else if (keydata.key == MLX_KEY_DOWN
 		&& fdf->draw_values.y < HEIGHT - buffer)

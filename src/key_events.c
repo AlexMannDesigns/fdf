@@ -28,6 +28,12 @@ static void	re_draw_image(t_fdf *fdf)
 
 static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
+	// on second thoughts, maybe we could simplify this process
+	// Rather than doing complicated calculations we could probably
+	// just add a check which makes sure pixels are actually being
+	// plotted.
+
+
 	int	img_h;
 	int	img_w;
 	int	h_edge_len;

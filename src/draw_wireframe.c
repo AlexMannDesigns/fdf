@@ -116,7 +116,7 @@ void	draw_wireframe(t_fdf *fdf)
 	if (!draw->mlx || !draw->img || !draw_setup(fdf, draw))
 		return ;
 	current = fdf->coord_list;
-	while (current->next)
+	while (current && current->next)
 	{
 		set_current_point(draw, current);
 		if (find_next_point_across(draw, current))

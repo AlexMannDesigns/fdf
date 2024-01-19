@@ -1,10 +1,17 @@
 #include "fdf.h"
 #include "MLX42/MLX42.h"
+#include "libft.h"
 
-static int	get_colour(t_draw *draw)
+void	re_draw_image(t_fdf *fdf)
 {
-	(void) draw;
-	return COLOUR;
+	mlx_delete_image(fdf->draw.mlx, fdf->draw.img);
+	if (!new_image(fdf->draw.mlx, &(fdf->draw.img)))
+	{
+		mlx_terminate(fdf->draw.mlx);
+		exit(EXIT_FAILURE);
+	}
+	draw_wireframe(fdf);
+	return ;
 }
 
 /*
@@ -17,7 +24,10 @@ void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y)
 		&& x >= 0 && y >= 0
 		&& x < WIDTH && y < HEIGHT
 	)
-		mlx_put_pixel(draw->img, x, y, get_colour(draw));
+	{
+		draw->img_visible = TRUE;
+		mlx_put_pixel(draw->img, x, y, COLOUR);
+	}
 	return ;
 }
 

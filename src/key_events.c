@@ -12,50 +12,19 @@
 
 #include "fdf.h"
 #include "MLX42/MLX42.h"
+#include "libft.h"
 #include <stdlib.h>
-
-static void	re_draw_image(t_fdf *fdf)
-{
-	mlx_delete_image(fdf->draw.mlx, fdf->draw.img);
-	if (!new_image(fdf->draw.mlx, &(fdf->draw.img)))
-	{
-		mlx_terminate(fdf->draw.mlx);
-		exit(EXIT_FAILURE);
-	}
-	draw_wireframe(fdf);
-	return ;
-}
 
 static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
-	// on second thoughts, maybe we could simplify this process
-	// Rather than doing complicated calculations we could probably
-	// just add a check which makes sure pixels are actually being
-	// plotted.
-
-
-	int	img_h;
-	int	img_w;
-	int	h_edge_len;
-	int	w_edge_len;
-
-	img_h = get_actual_height(
-		fdf->draw.tile_width, fdf->height, fdf->width
-	);
-	img_w = get_actual_width(
-		fdf->draw.tile_width, fdf->height, fdf->width
-	);
-	h_edge_len = COS_30 * fdf->draw.tile_width * fdf->height;
-	w_edge_len = SIN_30 * fdf->draw.tile_width * (fdf->width - 1);
-	if (keydata.key == MLX_KEY_RIGHT
-		&& fdf->draw_values.x < WIDTH + h_edge_len)
+	fdf->draw.img_visible = FALSE;
+	if (keydata.key == MLX_KEY_RIGHT)
 		fdf->draw_values.x += 10;
-	else if (keydata.key == MLX_KEY_LEFT
-		&& fdf->draw_values.x > w_edge_len - img_w)
+	else if (keydata.key == MLX_KEY_LEFT)
 		fdf->draw_values.x -= 10;
-	else if (keydata.key == MLX_KEY_DOWN && fdf->draw_values.y < HEIGHT)
+	else if (keydata.key == MLX_KEY_DOWN)
 		fdf->draw_values.y += 10;
-	else if (keydata.key == MLX_KEY_UP && fdf->draw_values.y > 0 - img_h)
+	else if (keydata.key == MLX_KEY_UP)
 		fdf->draw_values.y -= 10;
 	return ;
 }
@@ -80,81 +49,17 @@ static void	scale_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 	return ;
 }
 
-static int	find_add_coord(t_coord *orig, t_coord **new, t_rot *rotate)
-{
-	(void) orig;
-	(void) new;
-	(void) rotate;
-	// loop forward by (width * j) + i in orig.
-	// add that node to the end of the new list.
-	return (TRUE);
-}
-
-static void	zero_to_ninety(t_fdf *fdf)
-{
-	// rotate struct needed...
-	//int	temp, w, h, i, j;
-	t_rot	rotate;
-	t_coord	*new;
-
-	new = NULL;
-	rotate.h = fdf->height;
-	rotate.w = fdf->width;
-	rotate.i = 0;
-	while (rotate.i < rotate.w)
-	{
-		rotate.j = rotate.h;
-		while (rotate.j >= 0)
-		{
-			// loop to node at column 'i', row 'j' and add to new list
-			// e.g. first node should be column 0, last row.
-			if (find_add_coord(fdf->coord_list, &new, &rotate))
-				return ; // handle malloc error
-			(rotate.j)--;
-		}
-		(rotate.i)++;
-	}
-	// after 90 deg rotation, height and width values are swapped.
-	rotate.temp = fdf->width;
-	fdf->width = fdf->height;
-	fdf->height = rotate.temp;
-	return ;
-}
-
-static void	back_to_zero(t_fdf *fdf)
-{
-	fdf->rotate_angle = 0;
-	return ;
-}
-
-void	rotate_ninety_degrees(t_fdf *fdf)
-{
-	fdf->rotate_angle += 90;
-	if (fdf->rotate_angle == 90)
-		zero_to_ninety(fdf);
-	if (fdf->rotate_angle == 360)
-		back_to_zero(fdf);
-	return ;
-}
-
 static void	modify_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
 	if (keydata.key == MLX_KEY_J)
 		fdf->draw_values.z -= 1;
 	else if (keydata.key == MLX_KEY_K)
 		fdf->draw_values.z += 1;
-	else if (keydata.key == MLX_KEY_R)
-		rotate_ninety_degrees(fdf);
 	return ;
 }
 
-void	key_events(mlx_key_data_t keydata, void *fdf_ptr)
+static void	handle_keys(t_fdf *fdf, mlx_key_data_t keydata)
 {
-	t_fdf	*fdf;
-
-	fdf = (t_fdf *) fdf_ptr;
-	if (keydata.action != MLX_PRESS)
-		return ;
 	if (keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_DOWN
 		|| keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_LEFT)
 		move_image_event(fdf, keydata);
@@ -167,6 +72,27 @@ void	key_events(mlx_key_data_t keydata, void *fdf_ptr)
 		mlx_terminate(fdf->draw.mlx);
 		exit(EXIT_SUCCESS);
 	}
+	return ;
+}
+
+void	key_events(mlx_key_data_t keydata, void *fdf_ptr)
+{
+	t_fdf	*fdf;
+	int	orig_x;
+	int	orig_y;
+
+	fdf = (t_fdf *) fdf_ptr;
+	orig_x = fdf->draw_values.x;
+	orig_y = fdf->draw_values.y;
+	if (keydata.action != MLX_PRESS)
+		return ;
+	handle_keys(fdf, keydata);
 	re_draw_image(fdf);
+	if (!(fdf->draw.img_visible))
+	{
+		fdf->draw_values.x = orig_x;
+		fdf->draw_values.y = orig_y;
+		re_draw_image(fdf);
+	}
 	return ;
 }

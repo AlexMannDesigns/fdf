@@ -101,6 +101,7 @@ typedef struct s_draw
 	int		tile_width;
 	int		last_row;
 	int		orig_width;
+	int		img_visible;
 	t_projection	p;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
@@ -125,6 +126,7 @@ typedef struct s_fdf
 	int		help;
 	int		exit_status;
 	int		rotate_angle;
+	int		move;
 	t_coord		*coord_list;
 	t_draw		draw;
 	t_draw_values	draw_values;
@@ -161,6 +163,7 @@ void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y);
 int		new_image(mlx_t *mlx, mlx_image_t **img);
 int	get_actual_height(int tile_width, int height, int width);
 int	get_actual_width(int tile_width, int height, int width);
+void	re_draw_image(t_fdf *fdf);
 
 /* fdf_control.c */
 void	fdf_control(t_fdf *fdf);

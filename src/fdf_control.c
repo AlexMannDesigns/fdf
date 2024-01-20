@@ -83,7 +83,7 @@ static void	set_initial_draw_values(t_fdf *fdf)
  */
 void	fdf_control(t_fdf *fdf)
 {
-	if (!mlx_setup(&(fdf->draw)))
+	if (!fdf->coord_list || !mlx_setup(&(fdf->draw)))
 		return ;
 	set_initial_draw_values(fdf);
 	draw_wireframe(fdf);

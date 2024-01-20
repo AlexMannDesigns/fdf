@@ -17,7 +17,6 @@
 
 static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
-	fdf->draw.img_visible = FALSE;
 	if (keydata.key == MLX_KEY_RIGHT)
 		fdf->draw_values.x += 10;
 	else if (keydata.key == MLX_KEY_LEFT)
@@ -60,6 +59,7 @@ static void	modify_event(t_fdf *fdf, mlx_key_data_t keydata)
 
 static void	handle_keys(t_fdf *fdf, mlx_key_data_t keydata)
 {
+	fdf->draw.img_visible = FALSE;
 	if (keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_DOWN
 		|| keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_LEFT)
 		move_image_event(fdf, keydata);
@@ -77,21 +77,24 @@ static void	handle_keys(t_fdf *fdf, mlx_key_data_t keydata)
 
 void	key_events(mlx_key_data_t keydata, void *fdf_ptr)
 {
-	t_fdf	*fdf;
-	int	orig_x;
-	int	orig_y;
+	t_fdf		*fdf;
+	t_draw_values	orig;
 
 	fdf = (t_fdf *) fdf_ptr;
-	orig_x = fdf->draw_values.x;
-	orig_y = fdf->draw_values.y;
+	orig.x = fdf->draw_values.x;
+	orig.y = fdf->draw_values.y;
+	orig.z = fdf->draw_values.z;
+	orig.width = fdf->draw_values.width;
 	if (keydata.action != MLX_PRESS)
 		return ;
 	handle_keys(fdf, keydata);
 	re_draw_image(fdf);
 	if (!(fdf->draw.img_visible))
 	{
-		fdf->draw_values.x = orig_x;
-		fdf->draw_values.y = orig_y;
+		fdf->draw_values.x = orig.x;
+		fdf->draw_values.y = orig.y;
+		fdf->draw_values.z = orig.z;
+		fdf->draw_values.width = orig.width;
 		re_draw_image(fdf);
 	}
 	return ;

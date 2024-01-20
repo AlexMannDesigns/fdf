@@ -56,6 +56,5 @@ int	main(int argc, char **argv)
 		return (free_and_exit(&fdf));
 	if (!(fdf.test_parser))
 		fdf_control(&fdf);
-	fdf.exit_status = EXIT_SUCCESS; // for testing, this should be set in fdf_control
 	return (free_and_exit(&fdf));
 }

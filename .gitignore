@@ -9,6 +9,7 @@ maps/invalid_permission.fdf
 maps/alice.fdf
 maps/bible.fdf
 .cache/
+.venv/
 venv/
 .idea/
 __pycache__/

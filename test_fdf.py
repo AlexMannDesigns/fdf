@@ -56,6 +56,7 @@ def _run_fdf(args: list | None) -> CompletedProcess | None:
 		("maps/invalid_permission.fdf", NO_OUTPUT, ERROR_INVALID_PERMISSIONS, 1),
 		("maps/invalid_values.fdf", NO_OUTPUT, ERROR_INVALID_VALUES, 1),
 		("maps/unequal_lines.fdf", NO_OUTPUT, ERROR_INVALID_LENGTH, 1),
+		("maps/test.fdf", NO_OUTPUT, NO_OUTPUT, 1),
 	],
 )
 def test_invalid_maps(path_to_map: str, expected_output: str, expected_error_output: str, expected_return_value: int) -> None:
@@ -80,7 +81,7 @@ def test_valid_map() -> None:
 	result = _run_fdf([TEST_FLAG, VALID_MAP])
 
 	assert result is not None, "Error: subprocess failed"
-	assert result.returncode == 0, "Error: incorrect return value"
+	assert result.returncode == 1, "Error: incorrect return value"
 	assert result.stderr == NO_OUTPUT, "Error: incorrect error message"
 	assert result.stdout == NO_OUTPUT, "Error: incorrect output"
 
@@ -133,7 +134,7 @@ def test_no_args_prints_usage() -> None:
 		(["  ", "--help", VALID_MAP], NO_OUTPUT, ERROR_INVALID_FILE, 1),
 		(["a", "b", "c", VALID_MAP], NO_OUTPUT, ERROR_INVALID_FILE, 1),
 		(["", "", "", " ", "x", "123", VALID_MAP], NO_OUTPUT, ERROR_INVALID_FILE, 1),
-		([TEST_FLAG, VALID_MAP, "x", "y", "z", "--", "x", "123"], NO_OUTPUT, NO_OUTPUT, 0),
+		([TEST_FLAG, VALID_MAP, "x", "y", "z", "--", "x", "123"], NO_OUTPUT, NO_OUTPUT, 1),
 	],
 )
 def test_multiple_args(

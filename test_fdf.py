@@ -21,6 +21,7 @@ ERROR_INVALID_FILE: Final = "Error: map file must be plain-text format and have 
 ERROR_INVALID_PERMISSIONS: Final = "Error: map file could not be opened\n"
 ERROR_INVALID_VALUES: Final = "Error: map must only contain numeric characters, spaces: ' ', and newlines: '\\n'\n"
 ERROR_INVALID_LENGTH: Final = "Error: all lines must be of equal length\n"
+ERROR_NO_VALUES: Final = "Error: no coordinates in file\n"
 USAGE: Final = "Usage:\n./fdf [options...] [path-to-map]\n"
 USAGE_LONG: Final = "Welcome to FDF!\n\nUsage:\n./fdf [options...] [path-to-map]\n" \
 	"\noptions:\n--help: displays this message\n--test-parser: map will be parsed but fdf window will not open\n" \
@@ -56,7 +57,8 @@ def _run_fdf(args: list | None) -> CompletedProcess | None:
 		("maps/invalid_permission.fdf", NO_OUTPUT, ERROR_INVALID_PERMISSIONS, 1),
 		("maps/invalid_values.fdf", NO_OUTPUT, ERROR_INVALID_VALUES, 1),
 		("maps/unequal_lines.fdf", NO_OUTPUT, ERROR_INVALID_LENGTH, 1),
-		("maps/test.fdf", NO_OUTPUT, NO_OUTPUT, 1),
+		("maps/test.fdf", NO_OUTPUT, ERROR_NO_VALUES, 1),
+		("maps/empty.fdf", NO_OUTPUT, ERROR_NO_VALUES, 1),
 	],
 )
 def test_invalid_maps(path_to_map: str, expected_output: str, expected_error_output: str, expected_return_value: int) -> None:

@@ -31,7 +31,7 @@ int	mlx_setup(t_draw *draw)
 	ft_bzero((void *) draw, sizeof(t_draw));
 	draw->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
 	if (!draw->mlx)
-		return (FALSE); // Error handling for mlx42 needed
+		return (print_error(FALSE, ERROR_MLX));
 	if (!new_image(draw->mlx, &(draw->bg)))
 		return (FALSE);
 	i = 0;
@@ -43,7 +43,7 @@ int	mlx_setup(t_draw *draw)
 		i++;
 	}
 	if (!new_image(draw->mlx, &(draw->img)))
-		return (FALSE);
+		return (print_error(FALSE, ERROR_MLX));
 	return (TRUE);
 }
 
@@ -83,7 +83,9 @@ static void	set_initial_draw_values(t_fdf *fdf)
  */
 void	fdf_control(t_fdf *fdf)
 {
-	if (!fdf->coord_list || !mlx_setup(&(fdf->draw)))
+	if (!fdf->coord_list) 
+		return ((void) print_error(FALSE, ERROR_NO_VALUES));
+	if (!mlx_setup(&(fdf->draw)))
 		return ;
 	set_initial_draw_values(fdf);
 	draw_wireframe(fdf);

@@ -54,6 +54,7 @@
 	"characters, spaces: ' ', and newlines: '\\n'"
 # define ERROR_INVALID_Z "Error: z values must be between 0 and INT16_MAX"
 # define ERROR_INVALID_LENGTH "Error: all lines must be of equal length"
+# define ERROR_NO_VALUES "Error: no coordinates in file"
 # define ERROR_MALLOC "Error: malloc failed"
 # define ERROR_MLX "Error: MLX42 function failed"
 

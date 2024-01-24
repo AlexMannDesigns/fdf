@@ -29,14 +29,14 @@ static void	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 	{
 		while (a != b)
 		{
-			draw_pixel(d, (uint32_t) a, (uint32_t) d->y0);
+			draw_pixel(d, d->img, (uint32_t) a, (uint32_t) d->y0, COLOUR);
 			a += sign;
 		}
 		return ;
 	}
 	while (a != b)
 	{
-		draw_pixel(d, (uint32_t) d->x0, (uint32_t) a);
+		draw_pixel(d, d->img, (uint32_t) d->x0, (uint32_t) a, COLOUR);
 		a += sign;
 	}
 	return ;
@@ -126,7 +126,7 @@ void	plot_line(t_draw *draw)
 	plot_line_setup(draw, &algo);
 	while (TRUE)
 	{
-		draw_pixel(draw, algo.x, algo.y);
+		draw_pixel(draw, draw->img, algo.x, algo.y, COLOUR);
 		if (!bresenham(&algo, draw))
 			break ;
 	}

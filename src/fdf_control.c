@@ -13,9 +13,28 @@
 #include "fdf.h"
 #include "libft.h"
 #include "MLX42/MLX42.h"
+#include <stdint.h>
 
 // TODO check neither WIDTH nor HEIGHT exceed int_max, or some arbitrary lower value,
 // e.g. something reasonable given the dimensions of modern monitors
+
+int	draw_background(t_draw *draw, uint32_t height, uint32_t width)
+{
+	uint32_t	i;
+	uint32_t	j;
+
+	if (!new_image(draw->mlx, &(draw->bg), *draw))
+		return (FALSE);
+	i = 0;
+	while (i < height)
+	{
+		j = 0;
+		while (j < width)
+			draw_pixel(draw, draw->bg, j++, i, BLACK);
+		i++;
+	}
+	return (TRUE);
+}
 
 /**
  * This is where we set up the window, and mlx background img.
@@ -25,24 +44,15 @@
  */
 int	mlx_setup(t_draw *draw)
 {
-	uint32_t	i;
-	uint32_t	j;
-
 	ft_bzero((void *) draw, sizeof(t_draw));
-	draw->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
+	draw->current_win_h = HEIGHT;
+	draw->current_win_w = WIDTH;
+	draw->mlx = mlx_init(draw->current_win_w, draw->current_win_h, "fdf", true);
 	if (!draw->mlx)
 		return (print_error(FALSE, ERROR_MLX));
-	if (!new_image(draw->mlx, &(draw->bg)))
+	if (!draw_background(draw, draw->current_win_h, draw->current_win_w))
 		return (FALSE);
-	i = 0;
-	while (i < HEIGHT)
-	{
-		j = 0;
-		while (j < WIDTH)
-			mlx_put_pixel(draw->bg, j++, i, BLACK);
-		i++;
-	}
-	if (!new_image(draw->mlx, &(draw->img)))
+	if (!new_image(draw->mlx, &(draw->img), *draw))
 		return (print_error(FALSE, ERROR_MLX));
 	return (TRUE);
 }
@@ -75,6 +85,30 @@ static void	set_initial_draw_values(t_fdf *fdf)
 }
 
 /*
+ * When the window is resized, the background must be re-drawn with the new dimensions,
+ * gathered from the mlx42 event hook. We then also need to redraw the wireframe on top
+ * of the background.
+ */
+void	resize_event(int32_t width, int32_t height, void* fdf_ptr)
+{
+	t_fdf	*fdf;
+
+	fdf = (t_fdf *) fdf_ptr;
+	mlx_delete_image(fdf->draw.mlx, fdf->draw.img);
+	mlx_delete_image(fdf->draw.mlx, fdf->draw.img);
+	fdf->draw.current_win_h = height;
+	fdf->draw.current_win_w = width;
+	draw_background(&(fdf->draw), fdf->draw.current_win_h, fdf->draw.current_win_w);
+	if (!new_image(fdf->draw.mlx, &(fdf->draw.img), fdf->draw))
+	{
+		mlx_terminate(fdf->draw.mlx);
+		exit(EXIT_FAILURE);
+	}
+	draw_wireframe(fdf);
+	return ;
+}
+
+/*
  * Control function which handles the setup of the mlx functionality.
  * Here we create our window and call our hooks.
  * We set some initial default values to center the fdf image in the window.
@@ -89,6 +123,9 @@ void	fdf_control(t_fdf *fdf)
 		return ;
 	set_initial_draw_values(fdf);
 	draw_wireframe(fdf);
+
+	mlx_resize_hook(fdf->draw.mlx, &resize_event, (void *) fdf);
+
 	mlx_key_hook(fdf->draw.mlx, &key_events, (void *) fdf);
 	mlx_loop(fdf->draw.mlx);
 	mlx_terminate(fdf->draw.mlx);

@@ -103,6 +103,8 @@ typedef struct s_draw
 	int		last_row;
 	int		orig_width;
 	int		img_visible;
+	uint32_t	current_win_h;
+	uint32_t	current_win_w;
 	t_projection	p;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
@@ -160,8 +162,8 @@ typedef struct s_rot
 void	draw_wireframe(t_fdf *fdf);
 
 /* draw_utils.c */
-void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y);
-int		new_image(mlx_t *mlx, mlx_image_t **img);
+void	draw_pixel(t_draw *draw, mlx_image_t *img, uint32_t x, uint32_t y, uint32_t colour);
+int	new_image(mlx_t *mlx, mlx_image_t **img, t_draw draw);
 int	get_actual_height(int tile_width, int height, int width);
 int	get_actual_width(int tile_width, int height, int width);
 void	re_draw_image(t_fdf *fdf);

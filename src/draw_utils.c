@@ -5,7 +5,7 @@
 void	re_draw_image(t_fdf *fdf)
 {
 	mlx_delete_image(fdf->draw.mlx, fdf->draw.img);
-	if (!new_image(fdf->draw.mlx, &(fdf->draw.img)))
+	if (!new_image(fdf->draw.mlx, &(fdf->draw.img), fdf->draw))
 	{
 		mlx_terminate(fdf->draw.mlx);
 		exit(EXIT_FAILURE);
@@ -17,16 +17,16 @@ void	re_draw_image(t_fdf *fdf)
 /*
  * Checks coord respect img boundaries before plotting a pixel there
  */
-void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y)
+void	draw_pixel(t_draw *draw, mlx_image_t *img, uint32_t x, uint32_t y, uint32_t colour)
 {
 	if (
-		draw->img
+		img
 		&& x >= 0 && y >= 0
-		&& x < WIDTH && y < HEIGHT
+		&& x < draw->current_win_w && y < draw->current_win_h 
 	)
 	{
 		draw->img_visible = TRUE;
-		mlx_put_pixel(draw->img, x, y, COLOUR);
+		mlx_put_pixel(img, x, y, colour);
 	}
 	return ;
 }
@@ -34,9 +34,9 @@ void	draw_pixel(t_draw *draw, uint32_t x, uint32_t y)
 /*
  * Generates a new mlx image and draws it to the window.
  */
-int	new_image(mlx_t *mlx, mlx_image_t **img)
+int	new_image(mlx_t *mlx, mlx_image_t **img, t_draw draw)
 {
-	*img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	*img = mlx_new_image(mlx, draw.current_win_w, draw.current_win_h);
 	if (!img)
 		return (print_error(FALSE, ERROR_MLX));
 	if (mlx_image_to_window(mlx, *img, 0, 0) == -1)

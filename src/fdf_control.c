@@ -20,18 +20,22 @@
 
 int	draw_background(t_draw *draw, uint32_t height, uint32_t width)
 {
-	uint32_t	i;
-	uint32_t	j;
+	t_pixel	pixel;
 
 	if (!new_image(draw->mlx, &(draw->bg), *draw))
 		return (FALSE);
-	i = 0;
-	while (i < height)
+	pixel.colour = BLACK;
+	pixel.img = draw->bg;
+	pixel.y = 0;
+	while (pixel.y < height)
 	{
-		j = 0;
-		while (j < width)
-			draw_pixel(draw, draw->bg, j++, i, BLACK);
-		i++;
+		pixel.x = 0;
+		while (pixel.x < width)
+		{
+			draw_pixel(draw, pixel);
+			(pixel.x)++;
+		}
+		(pixel.y)++;
 	}
 	return (TRUE);
 }

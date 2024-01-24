@@ -16,6 +16,7 @@
 /***** LIBRARIES *****/
 
 # include <fcntl.h>
+#include <stdint.h>
 # include <stdio.h>  // TODO delete
 
 # include "MLX42/MLX42.h"
@@ -147,14 +148,13 @@ typedef struct s_algo
 	int	e2;
 }		t_algo;
 
-typedef struct s_rot
+typedef struct s_pixel
 {
-	int	w;
-	int	h;
-	int	i;
-	int	j;
-	int	temp;
-}		t_rot;
+	uint32_t	x;
+	uint32_t	y;
+	uint32_t	colour;
+	mlx_image_t	*img;
+}			t_pixel;
 
 /***** FUNCTIONS *****/
 
@@ -162,7 +162,7 @@ typedef struct s_rot
 void	draw_wireframe(t_fdf *fdf);
 
 /* draw_utils.c */
-void	draw_pixel(t_draw *draw, mlx_image_t *img, uint32_t x, uint32_t y, uint32_t colour);
+void	draw_pixel(t_draw *draw, t_pixel pixel); 
 int	new_image(mlx_t *mlx, mlx_image_t **img, t_draw draw);
 int	get_actual_height(int tile_width, int height, int width);
 int	get_actual_width(int tile_width, int height, int width);

@@ -17,16 +17,17 @@ void	re_draw_image(t_fdf *fdf)
 /*
  * Checks coord respect img boundaries before plotting a pixel there
  */
-void	draw_pixel(t_draw *draw, mlx_image_t *img, uint32_t x, uint32_t y, uint32_t colour)
+void	draw_pixel(t_draw *draw, t_pixel pixel) 
 {
 	if (
-		img
-		&& x >= 0 && y >= 0
-		&& x < draw->current_win_w && y < draw->current_win_h 
+		pixel.img
+		&& pixel.x >= 0 && pixel.y >= 0
+		&& pixel.x < draw->current_win_w
+		&& pixel.y < draw->current_win_h 
 	)
 	{
 		draw->img_visible = TRUE;
-		mlx_put_pixel(img, x, y, colour);
+		mlx_put_pixel(pixel.img, pixel.x, pixel.y, pixel.colour);
 	}
 	return ;
 }

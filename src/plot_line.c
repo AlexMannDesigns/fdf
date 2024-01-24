@@ -12,6 +12,7 @@
 
 #include "fdf.h"
 #include "libft.h"
+#include <stdint.h>
 
 /*
  * Plots either a horizontal or vertical line. In some situations 'a' will be
@@ -21,7 +22,10 @@
 static void	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 {
 	int	sign;
+	t_pixel	pixel;
 
+	pixel.img = d->img;
+	pixel.colour = COLOUR;
 	sign = 1;
 	if (a > b)
 		sign = -1;
@@ -29,14 +33,18 @@ static void	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 	{
 		while (a != b)
 		{
-			draw_pixel(d, d->img, (uint32_t) a, (uint32_t) d->y0, COLOUR);
+			pixel.x = (uint32_t) a;
+			pixel.y = (uint32_t) d->y0;
+			draw_pixel(d, pixel); 
 			a += sign;
 		}
 		return ;
 	}
 	while (a != b)
 	{
-		draw_pixel(d, d->img, (uint32_t) d->x0, (uint32_t) a, COLOUR);
+		pixel.x = (uint32_t) d->x0;
+		pixel.y = (uint32_t) a;
+		draw_pixel(d, pixel); 
 		a += sign;
 	}
 	return ;
@@ -120,13 +128,18 @@ static int	bresenham(t_algo *algo, t_draw *draw)
 void	plot_line(t_draw *draw)
 {
 	t_algo	algo;
+	t_pixel pixel;
 
+	pixel.colour = COLOUR;
+	pixel.img = draw->img;
 	if (check_horizontal_and_vertical(draw))
 		return ;
 	plot_line_setup(draw, &algo);
 	while (TRUE)
 	{
-		draw_pixel(draw, draw->img, algo.x, algo.y, COLOUR);
+		pixel.x = algo.x;
+		pixel.y = algo.y;
+		draw_pixel(draw, pixel);
 		if (!bresenham(&algo, draw))
 			break ;
 	}

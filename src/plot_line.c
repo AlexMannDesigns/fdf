@@ -29,22 +29,19 @@ static void	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 	sign = 1;
 	if (a > b)
 		sign = -1;
-	if (x)
+	while (a != b)
 	{
-		while (a != b)
+		if (x)
 		{
 			pixel.x = (uint32_t) a;
 			pixel.y = (uint32_t) d->y0;
-			draw_pixel(d, pixel); 
-			a += sign;
 		}
-		return ;
-	}
-	while (a != b)
-	{
-		pixel.x = (uint32_t) d->x0;
-		pixel.y = (uint32_t) a;
-		draw_pixel(d, pixel); 
+		else
+		{
+			pixel.x = (uint32_t) d->x0;
+			pixel.y = (uint32_t) a;
+		}
+		draw_pixel(d, pixel);
 		a += sign;
 	}
 	return ;

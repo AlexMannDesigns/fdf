@@ -45,30 +45,10 @@ static int	validate_line_chars(char *line)
 	return (TRUE);
 }
 
-/*
- * Before drawing anything, we must parse the necessary data from the .fdf
- * 'map' file.
- * We need to check all of the following:
- *	- The path to the file is valid.
- *	- The file has a '.fdf' extension and can be opened.
- *	- The file only contains numeric and whitespace characters.
- *	- Each line in the file is of equal length.
- * Once validated, we organise the values into a linked list.
- */
-int	map_parser_control(t_fdf *fdf, char *path)
+static int	map_parser_loop(t_fdf *fdf, int fd)
 {
-	int		fd;
 	char	*line;
-
-	if (!validate_file_name(path))
-	{
-		return (print_error(FALSE, ERROR_INVALID_FILE));
-	}
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-	{
-		return (print_error(FALSE, ERROR_INVALID_PERMISSIONS));
-	}
+	
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -82,6 +62,36 @@ int	map_parser_control(t_fdf *fdf, char *path)
 		}
 		ft_strdel(&line);
 		line = get_next_line(fd);
+	}
+	return (TRUE);
+}
+
+/*
+ * Before drawing anything, we must parse the necessary data from the .fdf
+ * 'map' file.
+ * We need to check all of the following:
+ *	- The path to the file is valid.
+ *	- The file has a '.fdf' extension and can be opened.
+ *	- The file only contains numeric and whitespace characters.
+ *	- Each line in the file is of equal length.
+ * Once validated, we organise the values into a linked list.
+ */
+int	map_parser_control(t_fdf *fdf, char *path)
+{
+	int		fd;
+
+	if (!validate_file_name(path))
+	{
+		return (print_error(FALSE, ERROR_INVALID_FILE));
+	}
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+	{
+		return (print_error(FALSE, ERROR_INVALID_PERMISSIONS));
+	}
+	if (!map_parser_loop(fdf, fd))
+	{
+		return (FALSE);
 	}
 	return (TRUE);
 }

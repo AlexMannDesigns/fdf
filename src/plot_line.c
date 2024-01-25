@@ -28,7 +28,9 @@ static void	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 	pixel.colour = COLOUR;
 	sign = 1;
 	if (a > b)
+	{
 		sign = -1;
+	}
 	while (a != b)
 	{
 		if (x)
@@ -82,9 +84,13 @@ static void	plot_line_setup(t_draw *draw, t_algo *algo)
 	algo->sx = 1;
 	algo->sy = 1;
 	if (algo->x > (int) draw->x1)
+	{
 		algo->sx = -1;
+	}
 	if (algo->y > (int) draw->y1)
+	{
 		algo->sy = -1;
+	}
 	algo->error = algo->dx + algo->dy;
 	return ;
 }
@@ -99,19 +105,25 @@ static void	plot_line_setup(t_draw *draw, t_algo *algo)
 static int	bresenham(t_algo *algo, t_draw *draw)
 {
 	if (algo->x == (int) draw->x1 && algo->y == (int) draw->y1)
+	{
 		return (FALSE);
+	}
 	algo->e2 = 2 * algo->error;
 	if (algo->e2 >= algo->dy)
 	{
 		if (algo->x == (int) draw->x1)
+		{
 			return (FALSE);
+		}
 		algo->error += algo->dy;
 		algo->x += algo->sx;
 	}
 	if (algo->e2 <= algo->dx)
 	{
 		if (algo->y == (int) draw->y1)
+		{
 			return (FALSE);
+		}
 		algo->error += algo->dx;
 		algo->y += algo->sy;
 	}
@@ -130,7 +142,9 @@ void	plot_line(t_draw *draw)
 	pixel.colour = COLOUR;
 	pixel.img = draw->img;
 	if (check_horizontal_and_vertical(draw))
+	{
 		return ;
+	}
 	plot_line_setup(draw, &algo);
 	while (TRUE)
 	{
@@ -138,7 +152,9 @@ void	plot_line(t_draw *draw)
 		pixel.y = algo.y;
 		draw_pixel(draw, pixel);
 		if (!bresenham(&algo, draw))
+		{
 			break ;
+		}
 	}
 	return ;
 }

@@ -23,7 +23,9 @@ static int	validate_file_name(char *path)
 
 	len = ft_strlen(path);
 	if (len < 5 || !ft_strequ(FDF_EXT, path + (len - 4)))
+	{
 		return (FALSE);
+	}
 	return (TRUE);
 }
 
@@ -35,8 +37,34 @@ static int	validate_line_chars(char *line)
 	while (*line)
 	{
 		if (!ft_strchr(VALID_CHARS, *line))
+		{
 			return (FALSE);
+		}
 		line++;
+	}
+	return (TRUE);
+}
+
+static int	coord_list_malloc(t_fdf *fdf, t_coord **coord)
+{
+	if (!(fdf->coord_list))
+	{
+		fdf->coord_list = (t_coord *) ft_memalloc(sizeof(t_coord));
+		*coord = fdf->coord_list;
+	}
+	else
+	{
+		*coord = fdf->coord_list;
+		while ((*coord)->next)
+		{
+			*coord = (*coord)->next;
+		}
+		(*coord)->next = (t_coord *) ft_memalloc(sizeof(t_coord));
+		*coord = (*coord)->next;
+	}
+	if (*coord == NULL)
+	{
+		return (print_error(FALSE, ERROR_MALLOC));
 	}
 	return (TRUE);
 }
@@ -49,26 +77,31 @@ static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 {
 	t_coord	*coord;
 
-	if (!(fdf->coord_list))
+	if (!coord_list_malloc(fdf, &coord))
 	{
-		fdf->coord_list = (t_coord *) ft_memalloc(sizeof(t_coord));
-		coord = fdf->coord_list;
+		return (FALSE);
 	}
-	else
-	{
-		coord = fdf->coord_list;
-		while (coord->next)
-			coord = coord->next;
-		coord->next = (t_coord *) ft_memalloc(sizeof(t_coord));
-		coord = coord->next;
-	}
-	if (coord == NULL)
-		return (print_error(FALSE, ERROR_MALLOC));
 	coord->x = i;
 	coord->y = row;
 	coord->z = ft_atoi(val);
 	if (coord->z > MAX_VAL || coord->z < 0)
+	{
 		return (print_error(FALSE, ERROR_INVALID_Z));
+	}
+	return (TRUE);
+}
+
+static int	coords_check_width_and_height(t_fdf *fdf, int i, int row)
+{
+	if (fdf->width == 0)
+	{
+		fdf->width = i;
+	}
+	else if (fdf->width != i)
+	{
+		return (print_error(FALSE, ERROR_INVALID_LENGTH));
+	}
+	fdf->height = row;
 	return (TRUE);
 }
 
@@ -89,21 +122,24 @@ static int	create_coords(t_fdf *fdf, char *line)
 
 	arr = ft_strsplit(line, SPACE);
 	if (arr == NULL)
+	{
 		return (print_error(FALSE, ERROR_MALLOC));
+	}
 	i = 0;
 	while (arr[i])
 	{
 		if (!add_coord(fdf, i, row, arr[i]))
+		{
 			return (FALSE);
+		}
 		i++;
 	}
 	ft_free_char_array(&arr);
-	if (fdf->width == 0)
-		fdf->width = i;
-	else if (fdf->width != i)
-		return (print_error(FALSE, ERROR_INVALID_LENGTH));
 	++row;
-	fdf->height = row;
+	if (!coords_check_width_and_height(fdf, i, row))
+	{
+		return (FALSE);
+	}
 	return (TRUE);
 }
 
@@ -123,17 +159,25 @@ int	map_parser_control(t_fdf *fdf, char *path)
 	char	*line;
 
 	if (!validate_file_name(path))
+	{
 		return (print_error(FALSE, ERROR_INVALID_FILE));
+	}
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
+	{
 		return (print_error(FALSE, ERROR_INVALID_PERMISSIONS));
+	}
 	line = get_next_line(fd);
 	while (line)
 	{
 		if (!validate_line_chars(line))
+		{
 			return (print_error(FALSE, ERROR_INVALID_VALUES));
+		}
 		if (!create_coords(fdf, line))
+		{
 			return (FALSE);
+		}
 		ft_strdel(&line);
 		line = get_next_line(fd);
 	}

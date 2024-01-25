@@ -12,19 +12,26 @@
 
 #include "fdf.h"
 #include "MLX42/MLX42.h"
-#include "libft.h"
 #include <stdlib.h>
 
 static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
 	if (keydata.key == MLX_KEY_RIGHT)
+	{
 		fdf->draw_values.x += 10;
+	}
 	else if (keydata.key == MLX_KEY_LEFT)
+	{
 		fdf->draw_values.x -= 10;
+	}
 	else if (keydata.key == MLX_KEY_DOWN)
+	{
 		fdf->draw_values.y += 10;
+	}
 	else if (keydata.key == MLX_KEY_UP)
+	{
 		fdf->draw_values.y -= 10;
+	}
 	return ;
 }
 
@@ -36,14 +43,18 @@ static void	scale_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 	{
 		scale = fdf->draw_values.width * 0.1;
 		if (scale == 0)
+		{
 			scale = 1;
+		}
 		fdf->draw_values.width += scale;
 	}
 	else if (keydata.key == MLX_KEY_MINUS)
 	{
 		fdf->draw_values.width *= 0.9;
 		if (fdf->draw_values.width == 0)
+		{
 			fdf->draw_values.width = 1;
+		}
 	}
 	return ;
 }
@@ -51,9 +62,13 @@ static void	scale_image_event(t_fdf *fdf, mlx_key_data_t keydata)
 static void	modify_event(t_fdf *fdf, mlx_key_data_t keydata)
 {
 	if (keydata.key == MLX_KEY_J)
+	{
 		fdf->draw_values.z -= 1;
+	}
 	else if (keydata.key == MLX_KEY_K)
+	{
 		fdf->draw_values.z += 1;
+	}
 	return ;
 }
 
@@ -62,11 +77,17 @@ static void	handle_keys(t_fdf *fdf, mlx_key_data_t keydata)
 	fdf->draw.img_visible = FALSE;
 	if (keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_DOWN
 		|| keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_LEFT)
+	{
 		move_image_event(fdf, keydata);
+	}
 	else if (keydata.key == MLX_KEY_EQUAL || keydata.key == MLX_KEY_MINUS)
+	{
 		scale_image_event(fdf, keydata);
+	}
 	else if (keydata.key == MLX_KEY_J || keydata.key == MLX_KEY_K)
+	{
 		modify_event(fdf, keydata);
+	}
 	else if (keydata.key == MLX_KEY_ESCAPE)
 	{
 		mlx_terminate(fdf->draw.mlx);
@@ -86,7 +107,9 @@ void	key_events(mlx_key_data_t keydata, void *fdf_ptr)
 	orig.z = fdf->draw_values.z;
 	orig.width = fdf->draw_values.width;
 	if (keydata.action != MLX_PRESS)
+	{
 		return ;
+	}
 	handle_keys(fdf, keydata);
 	re_draw_image(fdf);
 	if (!(fdf->draw.img_visible))

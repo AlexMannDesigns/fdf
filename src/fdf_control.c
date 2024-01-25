@@ -23,7 +23,9 @@ int	draw_background(t_draw *draw, uint32_t height, uint32_t width)
 	t_pixel	pixel;
 
 	if (!new_image(draw->mlx, &(draw->bg), *draw))
+	{
 		return (FALSE);
+	}
 	pixel.colour = BLACK;
 	pixel.img = draw->bg;
 	pixel.y = 0;
@@ -53,11 +55,17 @@ int	mlx_setup(t_draw *draw)
 	draw->current_win_w = WIDTH;
 	draw->mlx = mlx_init(draw->current_win_w, draw->current_win_h, "fdf", true);
 	if (!draw->mlx)
+	{
 		return (print_error(FALSE, ERROR_MLX));
+	}
 	if (!draw_background(draw, draw->current_win_h, draw->current_win_w))
+	{
 		return (FALSE);
+	}
 	if (!new_image(draw->mlx, &(draw->img), *draw))
+	{
 		return (print_error(FALSE, ERROR_MLX));
+	}
 	return (TRUE);
 }
 
@@ -121,15 +129,17 @@ void	resize_event(int32_t width, int32_t height, void* fdf_ptr)
  */
 void	fdf_control(t_fdf *fdf)
 {
-	if (!fdf->coord_list) 
+	if (!fdf->coord_list)
+	{
 		return ((void) print_error(FALSE, ERROR_NO_VALUES));
+	}
 	if (!mlx_setup(&(fdf->draw)))
+	{
 		return ;
+	}
 	set_initial_draw_values(fdf);
 	draw_wireframe(fdf);
-
 	mlx_resize_hook(fdf->draw.mlx, &resize_event, (void *) fdf);
-
 	mlx_key_hook(fdf->draw.mlx, &key_events, (void *) fdf);
 	mlx_loop(fdf->draw.mlx);
 	mlx_terminate(fdf->draw.mlx);

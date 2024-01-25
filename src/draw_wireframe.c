@@ -38,11 +38,12 @@ static int	find_next_point_across(t_draw *draw, t_coord *current)
 
 	next = current->next;
 	if (next->x == 0)
+	{
 		return (FALSE);
+	}
 	draw->x1 = next->x;
 	draw->y1 = next->y;
 	draw->z1 = next->z;
-	// scale_points();
 	projection_control(draw, &(draw->x1), &(draw->y1), &(draw->z1));
 	draw->x1 += draw->x_offset;
 	draw->y1 += draw->y_offset;
@@ -60,8 +61,6 @@ static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
 	t_coord	*next;
 	int		i;
 
-	if (draw->last_row)
-		return (FALSE);
 	i = 0;
 	next = current;
 	while (i < width)
@@ -77,7 +76,6 @@ static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
 	draw->x1 = next->x;
 	draw->y1 = next->y;
 	draw->z1 = next->z;
-	// scale_points();
 	projection_control(draw, &(draw->x1), &(draw->y1), &(draw->z1));
 	draw->x1 += draw->x_offset;
 	draw->y1 += draw->y_offset;
@@ -90,11 +88,10 @@ static int	find_next_point_down(t_draw *draw, t_coord *current, int width)
  */
 static void	set_current_point(t_draw *draw, t_coord *current)
 {
-	draw->current = TRUE; // TODO get rid of this - find better way to implement projection calc
+	draw->current = TRUE;
 	draw->x0 = current->x;
 	draw->y0 = current->y;
 	draw->z0 = current->z;
-	// scale_points();
 	projection_control(draw, &(draw->x0), &(draw->y0), &(draw->z0));
 	draw->x0 += draw->x_offset;
 	draw->y0 += draw->y_offset;
@@ -114,15 +111,22 @@ void	draw_wireframe(t_fdf *fdf)
 
 	draw = &(fdf->draw);
 	if (!draw->mlx || !draw->img || !draw_setup(fdf, draw))
+	{
 		return ;
+	}
 	current = fdf->coord_list;
 	while (current && current->next)
 	{
 		set_current_point(draw, current);
 		if (find_next_point_across(draw, current))
+		{
 			plot_line(draw);
-		if (find_next_point_down(draw, current, fdf->width))
+		}
+		if (!(draw->last_row)
+			&& find_next_point_down(draw, current, fdf->width))
+		{
 			plot_line(draw);
+		}
 		current = current->next;
 	}
 	return ;

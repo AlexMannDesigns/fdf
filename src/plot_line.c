@@ -33,15 +33,12 @@ static void	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
 	}
 	while (a != b)
 	{
+		pixel.x = (uint32_t) d->x0;
+		pixel.y = (uint32_t) a;
 		if (x)
 		{
 			pixel.x = (uint32_t) a;
 			pixel.y = (uint32_t) d->y0;
-		}
-		else
-		{
-			pixel.x = (uint32_t) d->x0;
-			pixel.y = (uint32_t) a;
 		}
 		draw_pixel(d, pixel);
 		a += sign;

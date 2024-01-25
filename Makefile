@@ -16,7 +16,7 @@ MLX_INCLUDE_DIR := $(MLX_DIR)/include/
 
 SRC_DIR = ./src
 
-SRC_FILES = projection_control.c draw_wireframe.c fdf_control.c plot_line.c key_events.c utils.c main.c draw_utils.c map_parser.c
+SRC_FILES = projection_control.c draw_wireframe.c fdf_control.c plot_line.c key_events.c coords.c utils.c main.c draw_utils.c map_parser.c
 
 OBJ_DIR = ./obj
 OBJS := $(patsubst %, $(OBJ_DIR)/%, $(SRC_FILES:.c=.o))

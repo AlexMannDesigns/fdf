@@ -158,6 +158,9 @@ typedef struct s_pixel
 
 /***** FUNCTIONS *****/
 
+/* coords.c */
+int	create_coords(t_fdf *fdf, char *line);
+
 /* draw_wireframe.c */
 void	draw_wireframe(t_fdf *fdf);
 

@@ -23,7 +23,9 @@ int	free_and_exit(t_fdf *fdf)
 
 	coord = fdf->coord_list;
 	if (!coord)
+	{
 		return (fdf->exit_status);
+	}
 	while (coord)
 	{
 		next = coord->next;

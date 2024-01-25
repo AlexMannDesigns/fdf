@@ -39,9 +39,13 @@ int	new_image(mlx_t *mlx, mlx_image_t **img, t_draw draw)
 {
 	*img = mlx_new_image(mlx, draw.current_win_w, draw.current_win_h);
 	if (!img)
+	{
 		return (print_error(FALSE, ERROR_MLX));
+	}
 	if (mlx_image_to_window(mlx, *img, 0, 0) == -1)
+	{
 		return (print_error(FALSE, ERROR_MLX));
+	}
 	return (TRUE);
 }
 		

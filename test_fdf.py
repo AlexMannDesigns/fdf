@@ -30,7 +30,7 @@ def _run_fdf(args: list | None) -> CompletedProcess | None:
 	Runs fdf with the passed arg list in a sub-process
 	"""
 	argv: list = [FDF]
-	if args:
+	if args is not None:
 		argv += args
 	result: None | CompletedProcess = None
 	try:

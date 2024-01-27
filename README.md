@@ -8,6 +8,8 @@ This project serves as an introduction to graphical programming. The aim is to r
 
 I learned a lot about the challenges of graphical programming in the early days of computing. I also learned some interesting new mathematical concepts, as some geometry was needed to render an isometric projection.
 
+![42.fdf](https://github.com/AlexMannDesigns/fdf/blob/master/assets/screenshot.jpg?raw=true)
+
 ## Installation
 
 Todo: write some installation instructions.

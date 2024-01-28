@@ -15,33 +15,6 @@
 #include "MLX42/MLX42.h"
 #include <stdint.h>
 
-// TODO check neither WIDTH nor HEIGHT exceed int_max, or some arbitrary lower value,
-// e.g. something reasonable given the dimensions of modern monitors
-
-int	draw_background(t_draw *draw, uint32_t height, uint32_t width)
-{
-	t_pixel	pixel;
-
-	if (!new_image(draw->mlx, &(draw->bg), *draw))
-	{
-		return (FALSE);
-	}
-	pixel.colour = BLACK;
-	pixel.img = draw->bg;
-	pixel.y = 0;
-	while (pixel.y < height)
-	{
-		pixel.x = 0;
-		while (pixel.x < width)
-		{
-			draw_pixel(draw, pixel);
-			(pixel.x)++;
-		}
-		(pixel.y)++;
-	}
-	return (TRUE);
-}
-
 /**
  * This is where we set up the window, and mlx background img.
  * The background image is set to black, pixel by pixel, when the program
@@ -93,30 +66,6 @@ static void	set_initial_draw_values(t_fdf *fdf)
 	fdf->draw_values.width = u;
 	fdf->draw_values.z = 1;
 	fdf->draw.orig_width = u;
-	return ;
-}
-
-/*
- * When the window is resized, the background must be re-drawn with the new dimensions,
- * gathered from the mlx42 event hook. We then also need to redraw the wireframe on top
- * of the background.
- */
-void	resize_event(int32_t width, int32_t height, void* fdf_ptr)
-{
-	t_fdf	*fdf;
-
-	fdf = (t_fdf *) fdf_ptr;
-	mlx_delete_image(fdf->draw.mlx, fdf->draw.img);
-	mlx_delete_image(fdf->draw.mlx, fdf->draw.img);
-	fdf->draw.current_win_h = height;
-	fdf->draw.current_win_w = width;
-	draw_background(&(fdf->draw), fdf->draw.current_win_h, fdf->draw.current_win_w);
-	if (!new_image(fdf->draw.mlx, &(fdf->draw.img), fdf->draw))
-	{
-		mlx_terminate(fdf->draw.mlx);
-		exit(EXIT_FAILURE);
-	}
-	draw_wireframe(fdf);
 	return ;
 }
 

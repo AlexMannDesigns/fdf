@@ -161,6 +161,9 @@ typedef struct s_pixel
 /* coords.c */
 int	create_coords(t_fdf *fdf, char *line);
 
+/* draw_background.c */
+int	draw_background(t_draw *draw, uint32_t height, uint32_t width);
+
 /* draw_wireframe.c */
 void	draw_wireframe(t_fdf *fdf);
 
@@ -185,6 +188,9 @@ void	plot_line(t_draw *draw);
 
 /* projection_control.c */
 void	projection_control(t_draw *draw, int *x, int *y, int *z);
+
+/* resize_event.c */
+void	resize_event(int32_t width, int32_t height, void* fdf_ptr);
 
 /* utils.c */
 int		print_error(int ret, char *msg);

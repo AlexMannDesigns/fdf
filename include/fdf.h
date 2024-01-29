@@ -150,9 +150,9 @@ typedef struct s_algo
 
 typedef struct s_pixel
 {
-	uint32_t	x;
-	uint32_t	y;
-	uint32_t	colour;
+	int		x;
+	int		y;
+	int		colour;
 	mlx_image_t	*img;
 }			t_pixel;
 

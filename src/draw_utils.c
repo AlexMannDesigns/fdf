@@ -1,6 +1,7 @@
 #include "fdf.h"
 #include "MLX42/MLX42.h"
 #include "libft.h"
+#include <stdint.h>
 
 void	re_draw_image(t_fdf *fdf)
 {
@@ -22,12 +23,17 @@ void	draw_pixel(t_draw *draw, t_pixel pixel)
 	if (
 		pixel.img
 		&& pixel.x >= 0 && pixel.y >= 0
-		&& pixel.x < draw->current_win_w
-		&& pixel.y < draw->current_win_h 
+		&& pixel.x < (int) draw->current_win_w
+		&& pixel.y < (int) draw->current_win_h 
 	)
 	{
 		draw->img_visible = TRUE;
-		mlx_put_pixel(pixel.img, pixel.x, pixel.y, pixel.colour);
+		mlx_put_pixel(
+			pixel.img,
+			(uint32_t) pixel.x,
+			(uint32_t) pixel.y,
+			pixel.colour
+		);
 	}
 	return ;
 }

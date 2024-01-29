@@ -17,10 +17,10 @@ int	draw_background(t_draw *draw, uint32_t height, uint32_t width)
 	pixel.colour = BLACK;
 	pixel.img = draw->bg;
 	pixel.y = 0;
-	while (pixel.y < height)
+	while (pixel.y < (int) height)
 	{
 		pixel.x = 0;
-		while (pixel.x < width)
+		while (pixel.x < (int) width)
 		{
 			draw_pixel(draw, pixel);
 			(pixel.x)++;

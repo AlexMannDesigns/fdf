@@ -20,6 +20,20 @@ To compile this program you will need:
 
 This program was developed on MacOS. It has been tested on linux but it is not 'supported' - so no guarantees it will work.
 
+Compile the program:
+
+```
+$ make
+```
+
+Run the program:
+
+```
+$ ./fdf [path to map]
+```
+
+You can use the option `--help` when running the program for more info.
+
 If you have trouble getting the libraries to link, try running `brew install glfw` in the command line.
 
 ## Key events

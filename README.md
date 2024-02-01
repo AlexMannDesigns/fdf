@@ -22,3 +22,13 @@ This program was developed on MacOS. It has been tested on linux but it is not '
 
 If you have trouble getting the libraries to link, try running `brew install glfw` in the command line.
 
+## Key events
+
+The image can be manipulated using the following keys:
+
+```
+    - Arrow keys: Move the image
+    - j, k: Adjust the slope gradients
+    - -, =: Zoom out and in, respectively (= is more user-friendly than + on us keyboard layout!)
+    - esc: Closes the program
+```

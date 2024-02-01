@@ -12,4 +12,13 @@ I learned a lot about the challenges of graphical programming in the early days 
 
 ## Installation
 
-Todo: write some installation instructions.
+To compile this program you will need:
+
+    - A Unix-like operating system
+    - GNU Make 3.81
+    - Apple clang version 15.0.0 (clang-1500.0.40.1)
+
+This program was developed on MacOS. It has been tested on linux but it is not 'supported' - so no guarantees it will work.
+
+If you have trouble getting the libraries to link, try running `brew install glfw` in the command line.
+

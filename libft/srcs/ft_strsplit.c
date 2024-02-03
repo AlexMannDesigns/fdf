@@ -59,6 +59,11 @@ static char	**final_res_malloc(char **res, const char *s)
 	return (final_res);
 }
 
+// this needs to be re-worked. The quick fix would be to add 2 to the strlen division.
+// The other option would be to not halve the strlen at all....
+// However, this feels a little sloppy.
+// Lets make the overall process a lot more solid by accurately calculating the number
+// of str pointers we needed, rather than roughly allocating and then reallocating.
 char	**ft_strsplit(char const *s, char c)
 {
 	int		pos;

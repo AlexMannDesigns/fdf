@@ -43,7 +43,7 @@ $(NAME): $(LIBFT) $(MLX) $(OBJS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
-	$(CC) $(GCC_FLAGS) $(INCLUDE_FLAGS) -I"/usr/local/include" -c $< -o $@
+	$(CC) $(GCC_FLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)

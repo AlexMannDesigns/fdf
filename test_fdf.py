@@ -19,6 +19,7 @@ ERROR_INVALID_PERMISSIONS: Final = "Error: map file could not be opened\n"
 ERROR_INVALID_VALUES: Final = "Error: map must only contain numeric characters, spaces: ' ', and newlines: '\\n'\n"
 ERROR_INVALID_LENGTH: Final = "Error: all lines must be of equal length\n"
 ERROR_NO_VALUES: Final = "Error: no coordinates in file\n"
+ERROR_MIN_MAX: Final = "Error: z values must be between INT16_MIN and INT16_MAX\n"
 USAGE: Final = "Usage:\n./fdf [options...] [path-to-map]\n"
 USAGE_LONG: Final = "Welcome to FDF!\n\nUsage:\n./fdf [options...] [path-to-map]\n" \
 	"\noptions:\n--help: displays this message\n--test-parser: map will be parsed but fdf window will not open\n" \
@@ -149,3 +150,25 @@ def test_multiple_args(
 	assert result.returncode == expected_return_value, "Error: incorrect return value"
 	assert result.stderr == expected_error_output, "Error: incorrect error message"
 	assert result.stdout == expected_output, "Error: incorrect output"
+
+
+@pytest.mark.parametrize(
+	PARAMS,
+	[
+		(["maps/max_val_test.fdf"], NO_OUTPUT, ERROR_MIN_MAX, 1),
+		(["maps/min_val_test.fdf"], NO_OUTPUT, ERROR_MIN_MAX, 1),
+	],
+)
+def test_min_max(
+	option: list, expected_output: str, expected_error_output: str, expected_return_value: int
+) -> None:
+	"""
+	Test ensures that an error is returned when a map with z values over min and max is parsed 
+	"""
+	result = _run_fdf(option)
+
+	assert result is not None, "Error: subprocess failed"
+	assert result.returncode == expected_return_value, "Error: incorrect return value"
+	assert result.stderr == expected_error_output, "Error: incorrect error message"
+	assert result.stdout == expected_output, "Error: incorrect output"
+

@@ -49,7 +49,7 @@ static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 	coord->x = i;
 	coord->y = row;
 	coord->z = ft_atoi(val);
-	if (coord->z > MAX_VAL || coord->z < 0)
+	if (coord->z > MAX_VAL || coord->z < MIN_VAL)
 	{
 		return (print_error(FALSE, ERROR_INVALID_Z));
 	}

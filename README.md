@@ -18,7 +18,7 @@ To compile this program you will need:
 
 This program was developed on MacOS. It has been tested on linux but it is not 'supported' - so no guarantees it will work.
 
-You will also need everything needed to compile [MLX42](https://github.com/codam-coding-college/MLX42).
+You will also need everything needed to compile [MLX42](https://github.com/codam-coding-college/MLX42). System specific installation instructions can be found in the readme [here](https://github.com/codam-coding-college/MLX42?tab=readme-ov-file#installation-%EF%B8%8F).
 
 Compile the program:
 

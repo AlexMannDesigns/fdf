@@ -23,21 +23,11 @@ OBJS := $(patsubst %, $(OBJ_DIR)/%, $(SRC_FILES:.c=.o))
 
 GCC_FLAGS = -Wall -Wextra -Werror -g
 
-OS := $(shell uname)
-
-ifeq ($(OS), Linux)
-	 GLFW_FLAGS = -L"/usr/local/lib" -lglfw -lrt -lm -ldl -lX11 -lpthread -lxcb -lXau -lXdmcp
-else ifeq ($(OS), Darwin)
-	ifeq ($(USER), alex)
-		GLFW_FLAGS = -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -lglfw 
-	else
-		GLFW_FLAGS = -L"/Users/$(USER)/.brew/opt/glfw/lib/" -lglfw 
-	endif
-endif
-
-MLX_FLAGS = -L"$(MLX_DIR)/build" -lmlx42
-
 LIBFT_FLAGS := -L"$(LIBFT_DIR)" -lft
+
+MLX_FLAGS := -L"$(MLX_DIR)/build" -lmlx42
+
+GLFW_FLAGS = $(shell pkg-config --static --libs glfw3)
 
 INCLUDE_FLAGS := -I$(INCLUDE_DIR) -I$(LIBFT_INCLUDE_DIR) -I$(GNL_INCLUDE_DIR) -I$(MLX_INCLUDE_DIR)
 

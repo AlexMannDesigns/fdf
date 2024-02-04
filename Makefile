@@ -23,11 +23,19 @@ OBJS := $(patsubst %, $(OBJ_DIR)/%, $(SRC_FILES:.c=.o))
 
 GCC_FLAGS = -Wall -Wextra -Werror -g
 
-ifeq ($(USER), alex)
-MLX_FLAGS = -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -lglfw -L"$(MLX_DIR)/build" -lmlx42
-else
-MLX_FLAGS = -L"/Users/$(USER)/.brew/opt/glfw/lib/" -lglfw -L"$(MLX_DIR)/build" -lmlx42
+OS := $(shell uname)
+
+ifeq ($(OS), Linux)
+	 GLFW_FLAGS = -L"/usr/local/lib" -lglfw -lrt -lm -ldl -lX11 -lpthread -lxcb -lXau -lXdmcp
+else ifeq ($(OS), Darwin)
+	ifeq ($(USER), alex)
+		GLFW_FLAGS = -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -lglfw 
+	else
+		GLFW_FLAGS = -L"/Users/$(USER)/.brew/opt/glfw/lib/" -lglfw 
+	endif
 endif
+
+MLX_FLAGS = -L"$(MLX_DIR)/build" -lmlx42
 
 LIBFT_FLAGS := -L"$(LIBFT_DIR)" -lft
 
@@ -41,11 +49,11 @@ INCLUDE_FLAGS := -I$(INCLUDE_DIR) -I$(LIBFT_INCLUDE_DIR) -I$(GNL_INCLUDE_DIR) -I
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJS)
-	$(CC) $(GCC_FLAGS) $(OBJS) -o $(NAME) $(LIBFT_FLAGS) $(MLX_FLAGS)
+	$(CC) $(GCC_FLAGS) $(OBJS) -o $(NAME) $(LIBFT_FLAGS) $(MLX_FLAGS) $(GLFW_FLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
-	$(CC) $(GCC_FLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+	$(CC) $(GCC_FLAGS) $(INCLUDE_FLAGS) -I"/usr/local/include" -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)

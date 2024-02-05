@@ -34,6 +34,12 @@ static int	coord_list_malloc(t_fdf *fdf, t_coord **coord)
 	return (TRUE);
 }
 
+int	get_colour(char *str)
+{
+	printf("%s\n",str);
+	return 1;
+}
+
 /*
  * The coordinates for the image are added to a linked list, contained
  * in the t_fdf state struct.
@@ -41,6 +47,7 @@ static int	coord_list_malloc(t_fdf *fdf, t_coord **coord)
 static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 {
 	t_coord	*coord;
+	char	*colour;
 
 	if (!coord_list_malloc(fdf, &coord))
 	{
@@ -52,6 +59,11 @@ static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 	if (coord->z > MAX_VAL || coord->z < MIN_VAL)
 	{
 		return (print_error(FALSE, ERROR_INVALID_Z));
+	}
+	colour = ft_strchr(val, ',');
+	if (colour && colour + 1)
+	{
+		coord->colour = get_colour(colour + 1);
 	}
 	return (TRUE);
 }

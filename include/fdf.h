@@ -78,6 +78,7 @@ typedef struct s_coord
 	int		x;
 	int		y;
 	int		z;
+	int		colour;
 	struct s_coord	*next;
 }					t_coord;
 

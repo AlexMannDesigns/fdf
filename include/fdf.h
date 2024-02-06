@@ -78,9 +78,9 @@ typedef struct s_coord
 	int		x;
 	int		y;
 	int		z;
-	int		colour;
+	uint32_t	colour;
 	struct s_coord	*next;
-}					t_coord;
+}			t_coord;
 
 typedef struct s_projection
 {
@@ -154,7 +154,7 @@ typedef struct s_pixel
 {
 	int		x;
 	int		y;
-	int		colour;
+	uint32_t	colour;
 	mlx_image_t	*img;
 }			t_pixel;
 
@@ -186,7 +186,7 @@ void	key_events(mlx_key_data_t keydata, void *fdf_ptr);
 int		map_parser_control(t_fdf *fdf, char *path);
 
 /* plot_line.c */
-void	plot_line(t_draw *draw);
+void	plot_line(t_draw *draw, uint32_t colour);
 
 /* projection_control.c */
 void	projection_control(t_draw *draw, int *x, int *y, int *z);

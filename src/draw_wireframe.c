@@ -120,12 +120,12 @@ void	draw_wireframe(t_fdf *fdf)
 		set_current_point(draw, current);
 		if (find_next_point_across(draw, current))
 		{
-			plot_line(draw);
+			plot_line(draw, current->colour);
 		}
 		if (!(draw->last_row)
 			&& find_next_point_down(draw, current, fdf->width))
 		{
-			plot_line(draw);
+			plot_line(draw, current->colour);
 		}
 		current = current->next;
 	}

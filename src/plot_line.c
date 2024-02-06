@@ -131,12 +131,12 @@ static int	bresenham(t_algo *algo, t_draw *draw)
  * Called in a loop from fdf_control, handles the drawing of a line between
  * two points in the image.
  */
-void	plot_line(t_draw *draw)
+void	plot_line(t_draw *draw, uint32_t colour)
 {
 	t_algo	algo;
 	t_pixel pixel;
 
-	pixel.colour = COLOUR;
+	pixel.colour = colour;
 	pixel.img = draw->img;
 	if (check_horizontal_and_vertical(draw))
 	{

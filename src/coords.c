@@ -1,5 +1,6 @@
 #include "fdf.h"
 #include "libft.h"
+#include <stdint.h>
 
 /*
  * Handles memory allocation process for new node in coord list.
@@ -34,10 +35,11 @@ static int	coord_list_malloc(t_fdf *fdf, t_coord **coord)
 	return (TRUE);
 }
 
-int	get_colour(char *str)
+// convert the hexadecimal string to an uint32_t
+uint32_t	get_colour(char *str)
 {
 	printf("%s\n",str);
-	return 1;
+	return COLOUR;
 }
 
 /*
@@ -47,7 +49,7 @@ int	get_colour(char *str)
 static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 {
 	t_coord	*coord;
-	char	*colour;
+	char	*colour_str;
 
 	if (!coord_list_malloc(fdf, &coord))
 	{
@@ -60,10 +62,11 @@ static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 	{
 		return (print_error(FALSE, ERROR_INVALID_Z));
 	}
-	colour = ft_strchr(val, ',');
-	if (colour && colour + 1)
+	coord->colour = COLOUR; 
+	colour_str = ft_strchr(val, ',');
+	if (colour_str && colour_str + 1)
 	{
-		coord->colour = get_colour(colour + 1);
+		coord->colour = get_colour(colour_str + 1);
 	}
 	return (TRUE);
 }

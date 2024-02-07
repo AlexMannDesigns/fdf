@@ -36,24 +36,18 @@ static int	coord_list_malloc(t_fdf *fdf, t_coord **coord)
 }
 
 // convert the hexadecimal string to an uint32_t
-uint32_t	get_colour(char *str)
+uint32_t	get_colour(char *hex)
 {
-	printf("%s\n", str);
-
-	//validate string is in hex valid 32bit hex format
-	//starts 0x and is 8 or 6 characters long with only x,a-f and 0-9
 	uint32_t	val;
 	uint8_t		byte;
 	size_t		i;
-	char		*hex;
 
-	hex = ft_strchr(str, 'x') + 1;
+	// TODO must confirm hex string is valid (eg hex could be null here).
 	val = 0;
 	i = 0;
 	while (hex[i])
 	{
-		byte = hex[i]; 
-		// transform hex character to the 4bit equivalent number, using the ascii table indexes
+		byte = hex[i];
 		if (byte >= '0' && byte <= '9')
 		{
 			byte = byte - '0';
@@ -62,17 +56,14 @@ uint32_t	get_colour(char *str)
 		{
 			byte = byte - 'A' + 10;
 		}
-		// shift 4 to make space for new digit, and add the 4 bits of the new digit 
 		val = (val << 4) | (byte & 0xF);
 		i++;
 	}
-	if (i == 6)
+	if (i != 6)
 	{
-		val <<= 8;
-		val += 255;
+		return (val);
 	}
-	printf("%u\n", val); 
-	return val; 
+	return ((val << 8) + 255);
 }
 
 /*
@@ -99,7 +90,7 @@ static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 	colour_str = ft_strchr(val, ',');
 	if (colour_str && colour_str + 1)
 	{
-		coord->colour = get_colour(colour_str + 1);
+		coord->colour = get_colour(ft_strchr(colour_str + 1, 'x') + 1);
 	}
 	return (TRUE);
 }

@@ -38,8 +38,41 @@ static int	coord_list_malloc(t_fdf *fdf, t_coord **coord)
 // convert the hexadecimal string to an uint32_t
 uint32_t	get_colour(char *str)
 {
-	printf("%s\n",str);
-	return COLOUR;
+	printf("%s\n", str);
+
+	//validate string is in hex valid 32bit hex format
+	//starts 0x and is 8 or 6 characters long with only x,a-f and 0-9
+	uint32_t	val;
+	uint8_t		byte;
+	size_t		i;
+	char		*hex;
+
+	hex = ft_strchr(str, 'x') + 1;
+	val = 0;
+	i = 0;
+	while (hex[i])
+	{
+		byte = hex[i]; 
+		// transform hex character to the 4bit equivalent number, using the ascii table indexes
+		if (byte >= '0' && byte <= '9')
+		{
+			byte = byte - '0';
+		}
+		else if (byte >= 'A' && byte <='F')
+		{
+			byte = byte - 'A' + 10;
+		}
+		// shift 4 to make space for new digit, and add the 4 bits of the new digit 
+		val = (val << 4) | (byte & 0xF);
+		i++;
+	}
+	if (i == 6)
+	{
+		val <<= 8;
+		val += 255;
+	}
+	printf("%u\n", val); 
+	return val; 
 }
 
 /*

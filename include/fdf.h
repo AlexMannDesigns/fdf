@@ -154,6 +154,8 @@ typedef struct s_pixel
 {
 	int		x;
 	int		y;
+	int		a;
+	int		b;
 	uint32_t	colour;
 	mlx_image_t	*img;
 }			t_pixel;

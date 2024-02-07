@@ -19,29 +19,27 @@
  * 'ahead' of 'b', for example when drawing an isometric projection. The
  * sign variable takes care of this.
  */
-static void	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
+static void	draw_horizontal_vertical(t_draw *d, t_pixel *pixel, int x)
 {
 	int	sign;
-	t_pixel	pixel;
 
-	pixel.img = d->img;
-	pixel.colour = COLOUR;
+	pixel->img = d->img;
 	sign = 1;
-	if (a > b)
+	if (pixel->a > pixel->b)
 	{
 		sign = -1;
 	}
-	while (a != b)
+	while (pixel->a != pixel->b)
 	{
-		pixel.x = (uint32_t) d->x0;
-		pixel.y = (uint32_t) a;
+		pixel->x = d->x0;
+		pixel->y = pixel->a;
 		if (x)
 		{
-			pixel.x = (uint32_t) a;
-			pixel.y = (uint32_t) d->y0;
+			pixel->x = pixel->a;
+			pixel->y = d->y0;
 		}
-		draw_pixel(d, pixel);
-		a += sign;
+		draw_pixel(d, *pixel);
+		pixel->a += sign;
 	}
 	return ;
 }
@@ -51,16 +49,23 @@ static void	draw_horizontal_vertical(t_draw *d, int a, int b, int x)
  * We can just increment/decrement the x or y value in a loop, plotting pixels
  * as we go.
  */
-static int	check_horizontal_and_vertical(t_draw *d)
+static int	check_horizontal_and_vertical(t_draw *d, uint32_t colour)
 {
+	t_pixel	pixel;
+
+	pixel.colour = colour;
 	if (d->y0 == d->y1)
 	{
-		draw_horizontal_vertical(d, d->x0, d->x1, TRUE);
+		pixel.a = d->x0;
+		pixel.b = d->x1;
+		draw_horizontal_vertical(d, &pixel, TRUE);
 		return (TRUE);
 	}
 	if (d->x0 == d->x1)
 	{
-		draw_horizontal_vertical(d, d->y0, d->y1, FALSE);
+		pixel.a = d->y0;
+		pixel.b = d->y1;
+		draw_horizontal_vertical(d, &pixel, FALSE);
 		return (TRUE);
 	}
 	return (FALSE);
@@ -138,7 +143,7 @@ void	plot_line(t_draw *draw, uint32_t colour)
 
 	pixel.colour = colour;
 	pixel.img = draw->img;
-	if (check_horizontal_and_vertical(draw))
+	if (check_horizontal_and_vertical(draw, colour))
 	{
 		return ;
 	}

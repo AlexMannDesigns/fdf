@@ -28,6 +28,7 @@ void	draw_pixel(t_draw *draw, t_pixel pixel)
 	)
 	{
 		draw->img_visible = TRUE;
+		// printf("%u\n", pixel.colour);
 		mlx_put_pixel(
 			pixel.img,
 			(uint32_t) pixel.x,

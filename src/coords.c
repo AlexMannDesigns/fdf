@@ -35,37 +35,6 @@ static int	coord_list_malloc(t_fdf *fdf, t_coord **coord)
 	return (TRUE);
 }
 
-// convert the hexadecimal string to an uint32_t
-uint32_t	get_colour(char *hex)
-{
-	uint32_t	val;
-	uint8_t		byte;
-	size_t		i;
-
-	// TODO must confirm hex string is valid (eg hex could be null here).
-	val = 0;
-	i = 0;
-	while (hex[i])
-	{
-		byte = hex[i];
-		if (byte >= '0' && byte <= '9')
-		{
-			byte = byte - '0';
-		}
-		else if (byte >= 'A' && byte <='F')
-		{
-			byte = byte - 'A' + 10;
-		}
-		val = (val << 4) | (byte & 0xF);
-		i++;
-	}
-	if (i != 6)
-	{
-		return (val);
-	}
-	return ((val << 8) + 255);
-}
-
 /*
  * The coordinates for the image are added to a linked list, contained
  * in the t_fdf state struct.

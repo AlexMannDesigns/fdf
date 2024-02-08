@@ -162,6 +162,9 @@ typedef struct s_pixel
 
 /***** FUNCTIONS *****/
 
+/* colours.c */
+uint32_t	get_colour(char *hex);
+
 /* coords.c */
 int	create_coords(t_fdf *fdf, char *line);
 

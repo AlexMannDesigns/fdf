@@ -2,6 +2,10 @@
 #include "libft.h"
 #include <stdint.h>
 
+/*
+ * Confirms a valid hex string. If the hex is invalid we just set the colour
+ * to white rather than throwing an error.
+ */
 static int	validate_hex(char *hex)
 {
 	size_t	i;
@@ -15,9 +19,16 @@ static int	validate_hex(char *hex)
 		}
 		i++;
 	}
+	if (i != 6 && i != 8)
+	{
+		return (FALSE);
+	}
 	return (TRUE);
 }
-	
+
+/*
+ * We use some bitwise magic to go from str to 32bit int.
+ */
 static size_t	hex_conversion_loop(char *hex, uint32_t *val)
 {
 	size_t	i;
@@ -41,6 +52,11 @@ static size_t	hex_conversion_loop(char *hex, uint32_t *val)
 	return (i);
 }
 
+/*
+ * The last byte of the number is for the alpha value or opacity.
+ * This is not present in the hex strings from some test maps, so
+ * in this scenario we assume 100% opacity.
+ */
 static uint32_t	handle_last_byte(size_t len, uint32_t val)
 {
 	if (len != 6)
@@ -50,6 +66,11 @@ static uint32_t	handle_last_byte(size_t len, uint32_t val)
 	return ((val << 8) + 255);
 }
 
+/*
+ * Validates the hexadecimal from the map file if there is one present, then
+ * converts it into an integer so that it can be passed to the plot pixel
+ * function.
+ */
 uint32_t	get_colour(char *hex)
 {
 	uint32_t	val;
@@ -63,4 +84,3 @@ uint32_t	get_colour(char *hex)
 	len = hex_conversion_loop(hex, &val);
 	return (handle_last_byte(len, val));
 }
-

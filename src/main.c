@@ -6,13 +6,12 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:57:33 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 16:07:14 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:05:04 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
-#include <stdlib.h>
 
 static void	print_long_usage(void)
 {

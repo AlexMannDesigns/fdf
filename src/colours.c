@@ -6,13 +6,12 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 14:03:23 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 14:04:24 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:02:41 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
-#include <stdint.h>
 
 /*
  * Confirms a valid hex string. If the hex is invalid we just set the colour

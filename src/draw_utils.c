@@ -6,14 +6,12 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 14:08:30 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 14:09:19 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:10:25 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "MLX42/MLX42.h"
 #include "libft.h"
-#include <stdint.h>
 
 void	re_draw_image(t_fdf *fdf)
 {

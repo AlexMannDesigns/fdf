@@ -6,13 +6,12 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 14:01:19 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 14:23:03 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:05:21 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
-#include <stdint.h>
 
 /*
  * Plots either a horizontal or vertical line. In some situations 'a' will be

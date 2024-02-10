@@ -6,12 +6,11 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:56:14 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 14:21:57 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:10:51 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "MLX42/MLX42.h"
 #include <stdlib.h>
 
 static void	move_image_event(t_fdf *fdf, mlx_key_data_t keydata)

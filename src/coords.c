@@ -6,13 +6,12 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 14:04:46 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 16:12:13 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:02:57 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
-#include <stdint.h>
 
 /*
  * Handles memory allocation process for new node in coord list.

@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 14:05:44 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 16:36:38 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:10:08 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define FDF_H
 
 /***** LIBRARIES *****/
-
-# include <fcntl.h>
-# include <stdint.h>
 
 # include "MLX42/MLX42.h"
 

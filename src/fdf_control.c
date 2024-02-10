@@ -6,14 +6,12 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:52:23 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 14:12:57 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:10:36 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
-#include "MLX42/MLX42.h"
-#include <stdint.h>
 
 /**
  * This is where we set up the window, and mlx background img.

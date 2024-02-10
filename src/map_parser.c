@@ -6,12 +6,13 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:59:09 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 16:08:26 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:09:40 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
+#include <fcntl.h>
 
 /*
  * File-name for the map file must have extension '.fdf'

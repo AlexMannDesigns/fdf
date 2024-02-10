@@ -13,7 +13,7 @@ static int	validate_hex(char *hex)
 	i = 0;
 	while (hex[i])
 	{
-		if (!ft_strchr("0123456789abcdefABCDEF", hex[i]))
+		if (!ft_strchr(VALID_HEX_CHARS, hex[i]))
 		{
 			return (FALSE);
 		}

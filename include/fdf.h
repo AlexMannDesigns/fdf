@@ -60,6 +60,7 @@
 # define ERROR_MLX "Error: MLX42 function failed"
 
 # define VALID_CHARS "-0123456789AaBbCcDdEeFfXx, \n"
+# define VALID_HEX_CHARS "0123456789abcdefABCDEF"
 # define MAX_VAL 32767
 # define MIN_VAL -32768
 # define WIDTH 800 

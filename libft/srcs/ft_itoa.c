@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 16:24:03 by amann             #+#    #+#             */
-/*   Updated: 2021/12/01 13:33:13 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:25:49 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*negative_res_malloc(char *s, int len, int min)
 		else
 			res[i] = s[i - 1];
 		i++;
-	}	
+	}
 	return (res);
 }
 

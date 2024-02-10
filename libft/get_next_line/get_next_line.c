@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 14:06:31 by amann             #+#    #+#             */
-/*   Updated: 2022/07/15 16:36:29 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:24:17 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ static void	gnl_read(t_gnl *gnl, int fd, char *buff)
 	void	*read_ptr;
 	size_t	n_bytes;
 
-	read_ptr = (void *) (buff + gnl->len);
-	n_bytes = (size_t) (BUFF_SIZE - gnl->len);
+	read_ptr = (void *)(buff + gnl->len);
+	n_bytes = (size_t)(BUFF_SIZE - gnl->len);
 	gnl->r_ret = read(fd, read_ptr, n_bytes);
 	return ;
 }
@@ -111,7 +111,7 @@ static int	gnl_setup(t_gnl *gnl, int fd, char *buff)
 }
 
 /*
- * Returns either the read line or null in the event of an error or nothing 
+ * Returns either the read line or null in the event of an error or nothing
  * else to read
  * Should be able to read from stdin
  */
@@ -119,7 +119,7 @@ char	*get_next_line(const int fd)
 {
 	static char	buff[MAX_FD][BUFF_SIZE + 1];
 	t_gnl		gnl;
-	
+
 	if (!gnl_setup(&gnl, fd, buff[fd]))
 		return (gnl.line);
 	gnl_read(&gnl, fd, buff[fd]);

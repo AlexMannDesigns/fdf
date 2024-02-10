@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:59:09 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 14:22:26 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:08:26 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static int	map_parser_loop(t_fdf *fdf, int fd)
 	{
 		if (!validate_line_chars(line))
 		{
-			return (print_error(FALSE, ERROR_INVALID_VALUES));
+			ft_putstr_fd(ERROR_INVALID_VALUES_0, STDERR_FILENO);
+			return (print_error(FALSE, ERROR_INVALID_VALUES_1));
 		}
 		if (!create_coords(fdf, line))
 		{
@@ -82,7 +83,8 @@ int	map_parser_control(t_fdf *fdf, char *path)
 
 	if (!validate_file_name(path))
 	{
-		return (print_error(FALSE, ERROR_INVALID_FILE));
+		ft_putstr_fd(ERROR_INVALID_FILE_0, STDERR_FILENO);
+		return (print_error(FALSE, ERROR_INVALID_FILE_1));
 	}
 	fd = open(path, O_RDONLY);
 	if (fd == -1)

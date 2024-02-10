@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 14:04:46 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 14:06:20 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:12:13 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 	coord->z = ft_atoi(val);
 	if (coord->z > MAX_VAL || coord->z < MIN_VAL)
 	{
-		return (print_error(FALSE, ERROR_INVALID_Z));
+		ft_putstr_fd(ERROR_INVALID_Z_0, STDERR_FILENO);
+		return (print_error(FALSE, ERROR_INVALID_Z_1));
 	}
 	coord->colour = COLOUR;
 	colour_str = ft_strchr(val, ',');

@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 14:05:44 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 14:46:18 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 15:59:18 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,31 @@
 # define HELP_FLAG "--help"
 # define TEST_PARSER "--test-parser"
 
-# define USAGE_LONG "Welcome to FDF!\n\nUsage:\n" \
-	"./fdf [options...] [path-to-map]\n" \
-	"\n" \
-	"options:\n--help: displays this message\n" \
-	"--test-parser: map will be parsed but fdf window will not open\n" \
-	"\n" \
-	"path-to-map:\n" \
-	"Must be a file path to a valid fdf map, with file-extension '.fdf'"
+# define USAGE_LONG_0 "Welcome to FDF!\n\nUsage:\n"
+# define USAGE_LONG_1 "./fdf [options...] [path-to-map]\n\n"
+# define USAGE_LONG_2 "options:\n--help: displays this message\n"
+# define USAGE_LONG_3 "--test-parser: map will be parsed but"
+# define USAGE_LONG_4 "fdf window will not open\n\n"
+# define USAGE_LONG_5 "path-to-map:\n"
+# define USAGE_LONG_6 "Must be a file path to a valid"
+# define USAGE_LONG_7 "fdf map, with file-extension '.fdf'\n"
+
 # define USAGE "Usage:\n./fdf [options...] [path-to-map]"
 
-# define ERROR_INVALID_OPTION "Error: invalid option. For help, use " \
-	"'./fdf --help'"
-# define ERROR_INVALID_FILE "Error: map file must be plain-text format and " \
-	"have '.fdf' extension"
+# define ERROR_INVALID_OPTION_0 "Error: invalid option. For help, use "
+# define ERROR_INVALID_OPTION_1 "'./fdf --help'"
+
+# define ERROR_INVALID_FILE_0 "Error: map file must be plain-text format and "
+# define ERROR_INVALID_FILE_1 "have '.fdf' extension"
+
 # define ERROR_INVALID_PERMISSIONS "Error: map file could not be opened"
-# define ERROR_INVALID_VALUES "Error: map must only contain numeric " \
-	"characters, spaces: ' ', and newlines: '\\n'"
-# define ERROR_INVALID_Z "Error: z values must be between INT16_MIN and INT16_MAX"
+
+# define ERROR_INVALID_VALUES_0 "Error: map must only contain numeric "
+# define ERROR_INVALID_VALUES_1 "characters, spaces: ' ', and newlines: '\\n'"
+
+# define ERROR_INVALID_Z_0 "Error: z values must be between"
+# define ERROR_INVALID_Z_1 " INT16_MIN and INT16_MAX"
+
 # define ERROR_INVALID_LENGTH "Error: all lines must be of equal length"
 # define ERROR_NO_VALUES "Error: no coordinates in file"
 # define ERROR_MALLOC "Error: malloc failed"
@@ -75,12 +82,12 @@
 
 typedef struct s_coord
 {
-	int		x;
-	int		y;
-	int		z;
-	uint32_t	colour;
+	int				x;
+	int				y;
+	int				z;
+	uint32_t		colour;
 	struct s_coord	*next;
-}			t_coord;
+}					t_coord;
 
 typedef struct s_projection
 {
@@ -92,27 +99,27 @@ typedef struct s_projection
 
 typedef struct s_draw
 {
-	int		x0;
-	int		y0;
-	int		z0;
-	int		x1;
-	int		y1;
-	int		z1;
-	int		current;
-	int		x_offset;
-	int		y_offset;
-	int		z_factor;
-	int		tile_width;
-	int		last_row;
-	int		orig_width;
-	int		img_visible;
-	uint32_t	current_win_h;
-	uint32_t	current_win_w;
+	int				x0;
+	int				y0;
+	int				z0;
+	int				x1;
+	int				y1;
+	int				z1;
+	int				current;
+	int				x_offset;
+	int				y_offset;
+	int				z_factor;
+	int				tile_width;
+	int				last_row;
+	int				orig_width;
+	int				img_visible;
+	uint32_t		current_win_h;
+	uint32_t		current_win_w;
 	t_projection	p;
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	mlx_image_t	*bg;
-}			t_draw;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	mlx_image_t		*bg;
+}					t_draw;
 
 typedef struct s_draw_values
 {
@@ -124,17 +131,17 @@ typedef struct s_draw_values
 
 typedef struct s_fdf
 {
-	char		*error;
-	int		width;
-	int		height;
-	size_t		path_idx;
-	int		test_parser;
-	int		help;
-	int		exit_status;
-	int		rotate_angle;
-	int		move;
-	t_coord		*coord_list;
-	t_draw		draw;
+	char			*error;
+	int				width;
+	int				height;
+	size_t			path_idx;
+	int				test_parser;
+	int				help;
+	int				exit_status;
+	int				rotate_angle;
+	int				move;
+	t_coord			*coord_list;
+	t_draw			draw;
 	t_draw_values	draw_values;
 }					t_fdf;
 
@@ -152,13 +159,13 @@ typedef struct s_algo
 
 typedef struct s_pixel
 {
-	int		x;
-	int		y;
-	int		a;
-	int		b;
+	int			x;
+	int			y;
+	int			a;
+	int			b;
 	uint32_t	colour;
 	mlx_image_t	*img;
-}			t_pixel;
+}				t_pixel;
 
 /***** FUNCTIONS *****/
 
@@ -166,41 +173,41 @@ typedef struct s_pixel
 uint32_t	get_colour(char *hex);
 
 /* coords.c */
-int	create_coords(t_fdf *fdf, char *line);
+int			create_coords(t_fdf *fdf, char *line);
 
 /* draw_background.c */
-int	draw_background(t_draw *draw, uint32_t height, uint32_t width);
+int			draw_background(t_draw *draw, uint32_t height, uint32_t width);
 
 /* draw_wireframe.c */
-void	draw_wireframe(t_fdf *fdf);
+void		draw_wireframe(t_fdf *fdf);
 
 /* draw_utils.c */
-void	draw_pixel(t_draw *draw, t_pixel pixel); 
-int	new_image(mlx_t *mlx, mlx_image_t **img, t_draw draw);
-int	get_actual_height(int tile_width, int height, int width);
-int	get_actual_width(int tile_width, int height, int width);
-void	re_draw_image(t_fdf *fdf);
+void		draw_pixel(t_draw *draw, t_pixel pixel);
+int			new_image(mlx_t *mlx, mlx_image_t **img, t_draw draw);
+int			get_actual_width(int tile_width, int height, int width);
+int			get_actual_height(int tile_width, int height, int width);
+void		re_draw_image(t_fdf *fdf);
 
 /* fdf_control.c */
-void	fdf_control(t_fdf *fdf);
+void		fdf_control(t_fdf *fdf);
 
 /* key_events.c */
-void	key_events(mlx_key_data_t keydata, void *fdf_ptr);
+void		key_events(mlx_key_data_t keydata, void *fdf_ptr);
 
 /* map_parser.c */
-int		map_parser_control(t_fdf *fdf, char *path);
+int			map_parser_control(t_fdf *fdf, char *path);
 
 /* plot_line.c */
-void	plot_line(t_draw *draw, uint32_t colour);
+void		plot_line(t_draw *draw, uint32_t colour);
 
 /* projection_control.c */
-void	projection_control(t_draw *draw, int *x, int *y, int *z);
+void		projection_control(t_draw *draw, int *x, int *y, int *z);
 
 /* resize_event.c */
-void	resize_event(int32_t width, int32_t height, void* fdf_ptr);
+void		resize_event(int32_t width, int32_t height, void *fdf_ptr);
 
 /* utils.c */
-int		print_error(int ret, char *msg);
-int		free_and_exit(t_fdf *fdf);
+int			print_error(int ret, char *msg);
+int			free_and_exit(t_fdf *fdf);
 
 #endif

@@ -6,13 +6,32 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:57:33 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 13:58:56 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:07:14 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
 #include <stdlib.h>
+
+static void	print_long_usage(void)
+{
+	ft_putstr_fd(USAGE_LONG_0, STDERR_FILENO);
+	ft_putstr_fd(USAGE_LONG_1, STDERR_FILENO);
+	ft_putstr_fd(USAGE_LONG_2, STDERR_FILENO);
+	ft_putstr_fd(USAGE_LONG_3, STDERR_FILENO);
+	ft_putstr_fd(USAGE_LONG_4, STDERR_FILENO);
+	ft_putstr_fd(USAGE_LONG_5, STDERR_FILENO);
+	ft_putstr_fd(USAGE_LONG_6, STDERR_FILENO);
+	ft_putstr_fd(USAGE_LONG_7, STDERR_FILENO);
+	return ;
+}
+
+static int	print_invalid_option(void)
+{
+	ft_putstr_fd(ERROR_INVALID_OPTION_0, STDERR_FILENO);
+	return (print_error(FALSE, ERROR_INVALID_OPTION_1));
+}
 
 /*
  * Increments path_idx variable to the first non-option-flag arg in argv.
@@ -40,7 +59,7 @@ static int	handle_option_flags(t_fdf *fdf, char **argv)
 		}
 		else
 		{
-			return (print_error(FALSE, ERROR_INVALID_OPTION));
+			return (print_invalid_option());
 		}
 		(fdf->path_idx)++;
 	}
@@ -59,7 +78,7 @@ static int	flags(t_fdf *fdf, char **argv)
 	if (fdf->help)
 	{
 		fdf->exit_status = EXIT_SUCCESS;
-		print_error(EXIT_SUCCESS, USAGE_LONG);
+		print_long_usage();
 		return (FALSE);
 	}
 	if (!(argv[fdf->path_idx]))

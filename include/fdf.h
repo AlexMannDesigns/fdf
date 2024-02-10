@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 14:05:44 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 15:14:43 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 14:46:18 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 /***** LIBRARIES *****/
 
 # include <fcntl.h>
-#include <stdint.h>
-# include <stdio.h>  // TODO delete
+# include <stdint.h>
 
 # include "MLX42/MLX42.h"
 
@@ -63,9 +62,9 @@
 # define VALID_HEX_CHARS "0123456789abcdefABCDEF"
 # define MAX_VAL 32767
 # define MIN_VAL -32768
-# define WIDTH 800 
+# define WIDTH 800
 # define HEIGHT 600
-# define BPP sizeof(int32_t)
+# define BPP 4
 # define COLOUR 0XFFFFFFFF
 # define BLACK 0X000000FF
 # define COS_30 0.8660254

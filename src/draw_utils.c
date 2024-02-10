@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/10 14:08:30 by amann             #+#    #+#             */
+/*   Updated: 2024/02/10 14:09:19 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 #include "MLX42/MLX42.h"
 #include "libft.h"
@@ -18,23 +30,22 @@ void	re_draw_image(t_fdf *fdf)
 /*
  * Checks coord respect img boundaries before plotting a pixel there
  */
-void	draw_pixel(t_draw *draw, t_pixel pixel) 
+void	draw_pixel(t_draw *draw, t_pixel pixel)
 {
 	if (
 		pixel.img
 		&& pixel.x >= 0 && pixel.y >= 0
 		&& pixel.x < (int) draw->current_win_w
-		&& pixel.y < (int) draw->current_win_h 
+		&& pixel.y < (int) draw->current_win_h
 	)
 	{
 		draw->img_visible = TRUE;
-		// printf("%u\n", pixel.colour);
 		mlx_put_pixel(
 			pixel.img,
 			(uint32_t) pixel.x,
 			(uint32_t) pixel.y,
 			pixel.colour
-		);
+			);
 	}
 	return ;
 }
@@ -55,13 +66,13 @@ int	new_image(mlx_t *mlx, mlx_image_t **img, t_draw draw)
 	}
 	return (TRUE);
 }
-		
+
 /*
  * Finds the actual width of an isometric projection
  */
 int	get_actual_width(int tile_width, int height, int width)
 {
-	 return (tile_width * (height + width) * ROOT_3 / 2);
+	return (tile_width * (height + width) * ROOT_3 / 2);
 }
 
 /*

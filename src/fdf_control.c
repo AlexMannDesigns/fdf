@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:52:23 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 15:16:34 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 14:12:57 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	set_initial_draw_values(t_fdf *fdf)
 	int	w;
 	int	h;
 	int	u;
+	int	formula;
 
 	u = 20;
 	w = get_actual_width(u, fdf->height, fdf->width - 1);
@@ -61,8 +62,9 @@ static void	set_initial_draw_values(t_fdf *fdf)
 		w = get_actual_width(u, fdf->height, fdf->width - 1);
 		h = get_actual_height(u, fdf->height, fdf->width - 1);
 	}
-	fdf->draw_values.x = (WIDTH / 2) - (w / 2) + (int) (COS_30 * u * fdf->height);
-	fdf->draw_values.y = (HEIGHT / 2) - (h / 2); 
+	formula = (int)(COS_30 * u * fdf->height);
+	fdf->draw_values.x = (WIDTH / 2) - (w / 2) + formula;
+	fdf->draw_values.y = (HEIGHT / 2) - (h / 2);
 	fdf->draw_values.width = u;
 	fdf->draw_values.z = 1;
 	fdf->draw.orig_width = u;

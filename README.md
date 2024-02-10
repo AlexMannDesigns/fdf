@@ -36,6 +36,8 @@ You can use the option `--help` when running the program for more info.
 
 If you have trouble getting the libraries to link, try running `brew install glfw` in the command line.
 
+The Makefile also utilises pkg-config to find the necessary dependencies to link the glfw library. This can be very convoluted and is system dependent. Doing it this way makes the program more portable, but your computer may not have it installed. It should be there on most modern macs and linux systems but if it's not you can run `brew install pkg-config` or use whatever package manager your linux distro has (as mentioned, linux not supported so you'll have to figure it out!).
+
 ## Key events
 
 The image can be manipulated using the following keys:

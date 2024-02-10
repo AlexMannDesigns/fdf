@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colours.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/10 14:03:23 by amann             #+#    #+#             */
+/*   Updated: 2024/02/10 14:04:24 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 #include "libft.h"
 #include <stdint.h>
@@ -42,7 +54,7 @@ static size_t	hex_conversion_loop(char *hex, uint32_t *val)
 		{
 			byte = byte - '0';
 		}
-		else if (byte >= 'A' && byte <='F')
+		else if (byte >= 'A' && byte <= 'F')
 		{
 			byte = byte - 'A' + 10;
 		}

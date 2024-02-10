@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 14:01:19 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 14:02:03 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 14:23:03 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ static int	bresenham(t_algo *algo, t_draw *draw)
 void	plot_line(t_draw *draw, uint32_t colour)
 {
 	t_algo	algo;
-	t_pixel pixel;
+	t_pixel	pixel;
 
 	pixel.colour = colour;
 	pixel.img = draw->img;

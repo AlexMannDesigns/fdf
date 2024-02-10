@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:56:14 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 14:30:48 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 14:21:57 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static void	handle_keys(t_fdf *fdf, mlx_key_data_t keydata)
 
 void	key_events(mlx_key_data_t keydata, void *fdf_ptr)
 {
-	t_fdf		*fdf;
+	t_fdf			*fdf;
 	t_draw_values	orig;
 
 	fdf = (t_fdf *) fdf_ptr;

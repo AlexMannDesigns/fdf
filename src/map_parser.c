@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 13:59:09 by amann             #+#    #+#             */
-/*   Updated: 2023/12/30 15:14:16 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 14:22:26 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	validate_line_chars(char *line)
 static int	map_parser_loop(t_fdf *fdf, int fd)
 {
 	char	*line;
-	
+
 	line = get_next_line(fd);
 	while (line)
 	{

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   coords.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/10 14:04:46 by amann             #+#    #+#             */
+/*   Updated: 2024/02/10 14:06:20 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 #include "libft.h"
 #include <stdint.h>
@@ -55,7 +67,7 @@ static int	add_coord(t_fdf *fdf, int i, int row, char *val)
 	{
 		return (print_error(FALSE, ERROR_INVALID_Z));
 	}
-	coord->colour = COLOUR; 
+	coord->colour = COLOUR;
 	colour_str = ft_strchr(val, ',');
 	if (colour_str && colour_str + 1)
 	{

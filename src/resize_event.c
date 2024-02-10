@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   resize_event.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/10 14:40:43 by amann             #+#    #+#             */
+/*   Updated: 2024/02/10 14:43:10 by amann            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 #include <stdlib.h>
 
 /*
- * When the window is resized, the background must be re-drawn with the new dimensions,
- * gathered from the mlx42 event hook. We then also need to redraw the wireframe on top
- * of the background.
+ * When the window is resized, the background must be re-drawn with the
+ * new dimensions, gathered from the mlx42 event hook. We then also need
+ * to redraw the wireframe on top of the background.
  */
-void	resize_event(int32_t width, int32_t height, void* fdf_ptr)
+void	resize_event(int32_t width, int32_t height, void *fdf_ptr)
 {
 	t_fdf	*fdf;
 
@@ -15,7 +27,11 @@ void	resize_event(int32_t width, int32_t height, void* fdf_ptr)
 	mlx_delete_image(fdf->draw.mlx, fdf->draw.img);
 	fdf->draw.current_win_h = height;
 	fdf->draw.current_win_w = width;
-	draw_background(&(fdf->draw), fdf->draw.current_win_h, fdf->draw.current_win_w);
+	draw_background(
+		&(fdf->draw),
+		fdf->draw.current_win_h,
+		fdf->draw.current_win_w
+		);
 	if (!new_image(fdf->draw.mlx, &(fdf->draw.img), fdf->draw))
 	{
 		mlx_terminate(fdf->draw.mlx);

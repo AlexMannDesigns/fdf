@@ -6,7 +6,7 @@
 /*   By: amann <amann@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 14:05:44 by amann             #+#    #+#             */
-/*   Updated: 2024/02/10 15:59:18 by amann            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:36:38 by amann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@
 # define USAGE_LONG_0 "Welcome to FDF!\n\nUsage:\n"
 # define USAGE_LONG_1 "./fdf [options...] [path-to-map]\n\n"
 # define USAGE_LONG_2 "options:\n--help: displays this message\n"
-# define USAGE_LONG_3 "--test-parser: map will be parsed but"
+# define USAGE_LONG_3 "--test-parser: map will be parsed but "
 # define USAGE_LONG_4 "fdf window will not open\n\n"
 # define USAGE_LONG_5 "path-to-map:\n"
-# define USAGE_LONG_6 "Must be a file path to a valid"
+# define USAGE_LONG_6 "Must be a file path to a valid "
 # define USAGE_LONG_7 "fdf map, with file-extension '.fdf'\n"
 
 # define USAGE "Usage:\n./fdf [options...] [path-to-map]"

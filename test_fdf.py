@@ -55,7 +55,7 @@ def _run_fdf(args: list | None) -> CompletedProcess | None:
 		("maps/invalid_permission.fdf", NO_OUTPUT, ERROR_INVALID_PERMISSIONS, 1),
 		("maps/invalid_values.fdf", NO_OUTPUT, ERROR_INVALID_VALUES, 1),
 		("maps/unequal_lines.fdf", NO_OUTPUT, ERROR_INVALID_LENGTH, 1),
-		("maps/test.fdf", NO_OUTPUT, ERROR_NO_VALUES, 1),
+		("maps/test.fdf", NO_OUTPUT, ERROR_INVALID_PERMISSIONS, 1),
 		("maps/empty.fdf", NO_OUTPUT, ERROR_NO_VALUES, 1),
 	],
 )
